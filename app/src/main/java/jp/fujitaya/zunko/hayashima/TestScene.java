@@ -5,10 +5,11 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 import jp.fujitaya.zunko.util.GameScene;
+import jp.fujitaya.zunko.util.GameView;
 
 public class TestScene extends GameScene{
-    public TestScene(Context context){
-        super(context);
+    public TestScene(GameView parent){
+        super(parent);
     }
 
     @Override

@@ -3,6 +3,8 @@ package jp.fujitaya.zunko.util;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -27,12 +29,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private FpsCounter fpswatch;
     private GameScene scene;
     private float scale;
+    private Matrix scaler;
+    private Matrix invScaler;
 
     public GameView(Context context){
         super(context);
         scheduler = null;
         fpswatch = new FpsCounter();
-        scene = new SceneMenu(this.getContext());
+        scene = new SceneMenu(this);
         getHolder().addCallback(this);
     }
 
@@ -41,6 +45,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         scene.update();
     }
     private void doDraw(Canvas canvas){
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        canvas.drawRect(0f,0f,720f,1280f,paint);
         scene.draw(canvas);
     }
 
@@ -51,7 +58,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        event.setLocation(event.getX()/scale, event.getY()/scale);
+        float[] mapped = new float[2];
+        mapped[0] = event.getX();
+        mapped[1] = event.getY();
+        invScaler.mapPoints(mapped);
+
+        event.setLocation(mapped[0], mapped[1]);
         scene.interrupt(event);
         return true;
     }
@@ -59,9 +71,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceCreated(final SurfaceHolder holder) {
         //スケール
-        float scaleX = (float)getWidth() / (float)VIEW_WIDTH;
-        float scaleY = (float)getHeight() /  (float)VIEW_HEIGHT;
-        scale = scaleX > scaleY ? scaleY : scaleX;
+        setScale();
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {
@@ -70,10 +80,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 update();
 
                 Canvas canvas = holder.lockCanvas();
-                canvas.drawColor(Color.BLACK);
-                canvas.translate((getWidth() - VIEW_WIDTH)/2.0f*scale,
-                        (getHeight() - VIEW_HEIGHT)/2.0f*scale);
-                canvas.scale(scale, scale);
+                canvas.setMatrix(scaler);
+
+                canvas.drawColor(Color.WHITE);
                 doDraw(canvas);
                 holder.unlockCanvasAndPost(canvas);
             }
@@ -83,9 +92,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         //スケール
-        float scaleX = (float)getWidth() / VIEW_WIDTH;
-        float scaleY = (float)getHeight() /  VIEW_HEIGHT;
-        scale = scaleX > scaleY ? scaleY : scaleX;
+        setScale();
     }
 
     @Override
@@ -97,5 +104,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             scene.dispose();
             scene = null;
         }
+    }
+
+    public void setScale(){
+        float scaleX = (float)getWidth() / (float)VIEW_WIDTH;
+        float scaleY = (float)getHeight() /  (float)VIEW_HEIGHT;
+        scale = scaleX > scaleY ? scaleY : scaleX;
+
+        scaler = new Matrix();
+        scaler.postScale(scale,scale);
+        scaler.postTranslate((getWidth()-VIEW_WIDTH*scale)/2.0f, (getHeight()-VIEW_HEIGHT*scale)/2.0f);
+        invScaler = new Matrix();
+        invScaler.postTranslate(-(getWidth()-VIEW_WIDTH*scale)/2.0f, -(getHeight()-VIEW_HEIGHT*scale)/2.0f);
+        invScaler.postScale(1.0f/scale, 1.0f/scale);
     }
 }
