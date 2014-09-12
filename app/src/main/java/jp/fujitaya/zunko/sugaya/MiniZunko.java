@@ -9,9 +9,14 @@ import java.util.ArrayList;
 public class MiniZunko extends BasicObject{
     MiniZunko(ArrayList<Bitmap> image){
         super(image);
+        toX=x;
+        toY=y;
+        dx=0;
+        dy=0;
     }
     int count=0;
     boolean updateFlag=false;
+    int toX,toY,dx,dy;
     @Override
     public void update(){
         updateFlag=false;
@@ -19,10 +24,11 @@ public class MiniZunko extends BasicObject{
     }
     //moving minizunko
     void move(){
-        if(count%2==0){
-            x++;
+        if(count%1==0){
             updateFlag=true;
         }
+    }
+    public void tatchToMove(int x_,int y_){
     }
     @Override
     public void init(){}

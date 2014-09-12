@@ -76,7 +76,13 @@ public class MainScene extends GameScene {
     }
 
     @Override
-    public void interrupt(MotionEvent event){}
+    public void interrupt(MotionEvent event) {
+        if(event.getAction()==MotionEvent.ACTION_DOWN) {
+            for (int i = 0; i < listMiniZunko.size(); i++) {
+                listMiniZunko.get(i).tatchToMove((int) event.getX(), (int) event.getY());
+            }
+        }
+    }
     @Override
     public void dispose(){}
 
