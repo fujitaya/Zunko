@@ -32,7 +32,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         scheduler = null;
         fpswatch = new FpsCounter();
-        scene = new MainScene(this.getContext());
+        scene = new SceneMenu(this.getContext());
         getHolder().addCallback(this);
     }
 
@@ -51,6 +51,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        event.setLocation(event.getX()/scale, event.getY()/scale);
         scene.interrupt(event);
         return true;
     }
@@ -66,7 +67,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         scheduler.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                fpswatch.update();
                 update();
 
                 Canvas canvas = holder.lockCanvas();
@@ -74,7 +74,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 canvas.translate((getWidth() - VIEW_WIDTH)/2.0f*scale,
                         (getHeight() - VIEW_HEIGHT)/2.0f*scale);
                 canvas.scale(scale, scale);
-                canvas.drawColor(Color.BLACK);
                 doDraw(canvas);
                 holder.unlockCanvasAndPost(canvas);
             }
