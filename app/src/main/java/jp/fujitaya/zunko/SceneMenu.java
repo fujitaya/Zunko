@@ -21,7 +21,7 @@ public class SceneMenu extends GameScene {
 
     public void init() {
         res = viewContext.getResources();
-        menuTitle = BitmapFactory.decodeResource(res,R.drawable.menutitle);
+        menuTitle = BitmapFactory.decodeResource(res,R.drawable.menuTitle);
     }
 
     @Override
