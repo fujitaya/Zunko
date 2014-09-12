@@ -70,6 +70,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 update();
 
                 Canvas canvas = holder.lockCanvas();
+                canvas.drawColor(Color.BLACK);
                 canvas.translate((getWidth() - VIEW_WIDTH)/2.0f*scale,
                         (getHeight() - VIEW_HEIGHT)/2.0f*scale);
                 canvas.scale(scale, scale);

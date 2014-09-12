@@ -38,7 +38,8 @@ public class MainScene extends GameScene {
         listField.add(new Field(tempf));
 
         ArrayList<Bitmap> tempm=new ArrayList<Bitmap>();
-        tempf.add(BitmapFactory.decodeResource(res, R.drawable.ic_launcher));
+        tempm.add(BitmapFactory.decodeResource(res, R.drawable.ic_launcher));
+        tempm.add(BitmapFactory.decodeResource(res, R.drawable.ic_launcher));
         listMiniZunko.add(new MiniZunko(tempm));
 
 
