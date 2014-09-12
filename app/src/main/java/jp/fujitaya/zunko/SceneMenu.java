@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 
 import jp.fujitaya.zunko.util.GameScene;
 
@@ -14,7 +15,6 @@ public class SceneMenu extends GameScene {
     Resources res;
     Bitmap menuTitle;
 
-<<<<<<< HEAD
     public SceneMenu(Context viewContext){
         super(viewContext);
     }
@@ -24,8 +24,6 @@ public class SceneMenu extends GameScene {
         menuTitle = BitmapFactory.decodeResource(res,R.drawable.menutitle);
     }
 
-=======
->>>>>>> origin/master
     @Override
     public void update() {
 
@@ -38,6 +36,11 @@ public class SceneMenu extends GameScene {
 
     @Override
     public void dispose() {
+
+    }
+
+    @Override
+    public void interrupt(MotionEvent event) {
 
     }
 }

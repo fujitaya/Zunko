@@ -10,11 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-<<<<<<< HEAD
 import jp.fujitaya.zunko.SceneMenu;
-=======
-import jp.fujitaya.zunko.R;
->>>>>>> origin/master
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public static final int FPS = 60;
