@@ -1,14 +1,26 @@
 package jp.fujitaya.zunko;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import jp.fujitaya.zunko.util.GameScene;
 
 public class SceneMenu extends GameScene {
+    Context viewContext;
+    Resources res;
+    Bitmap menuTitle;
 
-    @Override
+    public SceneMenu(Context viewContext){
+        super(viewContext);
+    }
+
     public void init() {
-
+        res = viewContext.getResources();
+        menuTitle = BitmapFactory.decodeResource(res,R.drawable.menutitle);
     }
 
     @Override
@@ -18,7 +30,7 @@ public class SceneMenu extends GameScene {
 
     @Override
     public void draw(Canvas canvas) {
-
+        canvas.drawBitmap(menuTitle,0,0,new Paint());
     }
 
     @Override
