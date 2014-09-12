@@ -3,7 +3,7 @@ package jp.fujitaya.zunko.sugaya;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class Icon extends Object{
+public class Icon extends BasicObject{
     Icon(Bitmap image){super(image);}
     public void update(){}
     public void init(){}

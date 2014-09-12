@@ -13,8 +13,6 @@ import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.*;
 
 public class MainScene extends GameScene {
-
-    Context viewContext;
     Resources res;
 
     //object list

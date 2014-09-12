@@ -3,7 +3,7 @@ package jp.fujitaya.zunko.sugaya;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-public class MiniZunko extends Object{
+public class MiniZunko extends BasicObject{
     MiniZunko(Bitmap image){
         super(image);
     }
