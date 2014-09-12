@@ -7,11 +7,6 @@ import jp.fujitaya.zunko.util.GameScene;
 public class SceneMenu extends GameScene {
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
     public void update() {
 
     }

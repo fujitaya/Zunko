@@ -2,6 +2,7 @@ package jp.fujitaya.zunko.util;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -9,15 +10,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import jp.fujitaya.zunko.R;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public static final int FPS = 60;
     public static final long INTERVAL = (long)(Math.floor(
             (double)TimeUnit.SECONDS.toNanos(1L) / (double)FPS));
 
     private ScheduledExecutorService scheduler;
-
-    protected FpsCounter fpswatch;
-    protected GameScene scene;
+    private FpsCounter fpswatch;
+    private GameScene scene;
 
     public GameView(Context context){
         super(context);
@@ -37,6 +39,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void changeScene(GameScene next){
         if(scene != null) scene.dispose();
         scene = next;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        scene.interrupt(event);
+        return true;
     }
 
     @Override
