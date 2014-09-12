@@ -7,7 +7,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Icon extends BasicObject{
-    Icon(ArrayList<Bitmap> listImage){super(listImage);}
+    Icon(ArrayList<Bitmap> image){super(image);}
     @Override public void update(){}
     @Override public void init(){}
     @Override public void draw(Canvas canvas){}

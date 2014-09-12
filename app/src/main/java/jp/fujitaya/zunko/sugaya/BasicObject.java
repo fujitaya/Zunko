@@ -2,12 +2,17 @@ package jp.fujitaya.zunko.sugaya;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
-public abstract class Object {
+import java.util.ArrayList;
+
+public abstract class BasicObject{
     int x,y;
-    Bitmap image;
-    Object(Bitmap image){
-        this.image=image;
+    ArrayList<Bitmap> listImage;
+    BasicObject(ArrayList<Bitmap> image){
+        x=0;
+        y=0;
+        this.listImage=image;
     }
 
     public abstract void update();

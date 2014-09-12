@@ -32,7 +32,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         scheduler = null;
         fpswatch = new FpsCounter();
-        scene = new SceneMenu(this.getContext());
+        scene = new MainScene(this.getContext());
         getHolder().addCallback(this);
     }
 

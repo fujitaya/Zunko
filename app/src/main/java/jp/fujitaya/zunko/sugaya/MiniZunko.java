@@ -7,8 +7,8 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 
 public class MiniZunko extends BasicObject{
-    MiniZunko(ArrayList<Bitmap> listImage){
-        super(listImage);
+    MiniZunko(ArrayList<Bitmap> image){
+        super(image);
     }
     int count=0;
     boolean updateFlag=false;

@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 
 public class Field extends BasicObject {
-    Field(ArrayList<Bitmap> listImage){super(listImage);}
+    Field(ArrayList<Bitmap> image){super(image);}
 
     @Override public void update(){}
     @Override public void init(){}
