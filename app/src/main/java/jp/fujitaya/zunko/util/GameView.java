@@ -10,8 +10,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import jp.fujitaya.zunko.R;
-
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public static final int FPS = 60;
     public static final long INTERVAL = (long)(Math.floor(
