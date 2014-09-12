@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko;
+package jp.fujitaya.zunko.util;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,39 +10,33 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
-    //Frame Per Second
     public static final int FPS = 60;
-    //1フレームあたりの実行間隔
     public static final long INTERVAL = (long)(Math.floor(
             (double)TimeUnit.SECONDS.toNanos(1L) / (double)FPS));
 
-    //FPS維持のための定期実行スケジューラ
     private ScheduledExecutorService scheduler;
-    //FPSカウンタ
-    private GameScene fpswatch;
+
+    protected FpsCounter fpswatch;
+    protected GameScene scene;
 
     public GameView(Context context){
         super(context);
-        init();
-    }
-
-    //初期化
-    private void init(){
         scheduler = null;
-        //コールバック登録
+        fpswatch = new FpsCounter();
         getHolder().addCallback(this);
-        fpswatch = new SceneFpsCounter();
     }
 
-    //定期更新処理
     private void update(){
-        if (fpswatch != null) fpswatch.update();
+        fpswatch.update();
+        scene.update();
+    }
+    private void doDraw(Canvas canvas){
+        scene.draw(canvas);
     }
 
-    //定期描画処理
-    //draw(Canvas)だと名前が被るので変更
-    private void doDraw(Canvas canvas){
-        if (fpswatch != null) fpswatch.draw(canvas);
+    public void changeScene(GameScene next){
+        if(scene != null) scene.dispose();
+        scene = next;
     }
 
     @Override
@@ -51,6 +45,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         scheduler.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
+                fpswatch.update();
                 update();
 
                 Canvas canvas = holder.lockCanvas();
@@ -69,7 +64,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void surfaceDestroyed(SurfaceHolder holder) {
         scheduler.shutdown();
         holder.removeCallback(this);
-        fpswatch.dispose();
         fpswatch = null;
     }
 }

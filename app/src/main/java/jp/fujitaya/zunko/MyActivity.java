@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import jp.fujitaya.zunko.util.GameView;
+
 
 public class MyActivity extends Activity {
 

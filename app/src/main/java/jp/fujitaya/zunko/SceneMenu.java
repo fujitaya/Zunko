@@ -2,6 +2,8 @@ package jp.fujitaya.zunko;
 
 import android.graphics.Canvas;
 
+import jp.fujitaya.zunko.util.GameScene;
+
 public class SceneMenu extends GameScene {
 
     @Override
