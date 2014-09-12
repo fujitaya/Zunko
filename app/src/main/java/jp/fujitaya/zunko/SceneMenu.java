@@ -11,12 +11,12 @@ import android.view.MotionEvent;
 import jp.fujitaya.zunko.util.GameScene;
 
 public class SceneMenu extends GameScene {
-    Context viewContext;
     Resources res;
     Bitmap menuTitle;
 
     public SceneMenu(Context viewContext){
         super(viewContext);
+        init();
     }
 
     public void init() {
