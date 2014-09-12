@@ -11,6 +11,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.sugaya.MainScene;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public static final int FPS = 60;
@@ -25,7 +26,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         scheduler = null;
         fpswatch = new FpsCounter();
-        scene = new SceneMenu(this.getContext());
+        scene = new MainScene(this.getContext());
         getHolder().addCallback(this);
     }
 
