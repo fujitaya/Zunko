@@ -3,14 +3,18 @@ package jp.fujitaya.zunko.util;
 import android.graphics.Canvas;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class DrawSystem {
     private ArrayList<SpriteNode> nodes;
     private Canvas canvas;
+    private SpriteNode.ZSort comparator;
 
     public DrawSystem(Canvas canvas){
         this.canvas = canvas;
+        nodes = new ArrayList<SpriteNode>();
+        comparator = new SpriteNode.ZSort();
     }
 
     public void add(SpriteNode node){
@@ -24,6 +28,8 @@ public class DrawSystem {
     }
 
     public void draw(){
+        Collections.sort(nodes, comparator);
+
         SpriteNode node;
         Iterator iter = nodes.iterator();
         while(iter.hasNext()){
@@ -31,5 +37,4 @@ public class DrawSystem {
             node.draw(canvas, 0, 0, 1, 1, 0);
         }
     }
-
 }
