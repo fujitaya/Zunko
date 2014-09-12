@@ -14,6 +14,7 @@ public class SceneMenu extends GameScene {
     Resources res;
     Bitmap menuTitle;
 
+<<<<<<< HEAD
     public SceneMenu(Context viewContext){
         super(viewContext);
     }
@@ -23,6 +24,8 @@ public class SceneMenu extends GameScene {
         menuTitle = BitmapFactory.decodeResource(res,R.drawable.menutitle);
     }
 
+=======
+>>>>>>> origin/master
     @Override
     public void update() {
 
