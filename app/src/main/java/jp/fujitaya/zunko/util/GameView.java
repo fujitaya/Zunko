@@ -16,7 +16,7 @@ import jp.fujitaya.zunko.SceneMenu;
 import jp.fujitaya.zunko.sugaya.MainScene;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
-    public  static final int VIEW_WIDTH = 800;
+    public  static final int VIEW_WIDTH = 720;
     public  static final int VIEW_HEIGHT = 1280;
 
     public static final int FPS = 60;
@@ -74,7 +74,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 canvas.translate((getWidth() - VIEW_WIDTH)/2.0f*scale,
                         (getHeight() - VIEW_HEIGHT)/2.0f*scale);
                 canvas.scale(scale, scale);
-                //canvas.drawColor(Color.GRAY);
+                canvas.drawColor(Color.BLACK);
                 doDraw(canvas);
                 holder.unlockCanvasAndPost(canvas);
             }
