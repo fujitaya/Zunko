@@ -37,10 +37,10 @@ public class MainScene extends GameScene {
         tempf.add(BitmapFactory.decodeResource(res, R.drawable.menutitle));
         listField.add(new Field(tempf));
 
-        /*ArrayList<Bitmap> tempm=new ArrayList<Bitmap>();
+        ArrayList<Bitmap> tempm=new ArrayList<Bitmap>();
         tempf.add(BitmapFactory.decodeResource(res, R.drawable.ic_launcher));
         listMiniZunko.add(new MiniZunko(tempm));
-        */
+
 
 
 
@@ -57,7 +57,7 @@ public class MainScene extends GameScene {
            listField.get(i).update();
         }
         for(int i=0;i<listMiniZunko.size();i++){
-            //listMiniZunko.get(i).update();
+            listMiniZunko.get(i).update();
         }
         for(int i=0;i<listMiniZunko.size();i++){
             //listField.get(i).update();
@@ -69,9 +69,9 @@ public class MainScene extends GameScene {
         for(int i=0;i<listField.size();i++){
             listField.get(i).draw(canvas);
         }
-        /*for(int i=0;i<listMiniZunko.size();i++){
+        for(int i=0;i<listMiniZunko.size();i++){
             listMiniZunko.get(i).draw(canvas);
-        }*/
+        }
     }
 
     @Override
