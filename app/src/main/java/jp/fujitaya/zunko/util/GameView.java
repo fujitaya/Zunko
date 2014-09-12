@@ -3,6 +3,7 @@ package jp.fujitaya.zunko.util;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -12,6 +13,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.sugaya.MainScene;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public  static final int VIEW_WIDTH = 800;

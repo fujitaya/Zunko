@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -13,8 +14,6 @@ import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.*;
 
 public class MainScene extends GameScene {
-
-    Context viewContext;
     Resources res;
 
     //object list
@@ -26,14 +25,26 @@ public class MainScene extends GameScene {
         super(viewContext);
         init();
     }
-    public void init(){
+    private void init(){
         res = viewContext.getResources();
         //create lists
         listField=new ArrayList<Field>();
         listMiniZunko=new ArrayList<MiniZunko>();
         listIcon=new ArrayList<Icon>();
 
-        listField.add(new Field(BitmapFactory.decodeResource(res, R.drawable.menutitle)));
+        //Get bitmap data
+        ArrayList<Bitmap> tempf=new ArrayList<Bitmap>();
+        tempf.add(BitmapFactory.decodeResource(res, R.drawable.menutitle));
+        listField.add(new Field(tempf));
+
+        /*ArrayList<Bitmap> tempm=new ArrayList<Bitmap>();
+        tempf.add(BitmapFactory.decodeResource(res, R.drawable.ic_launcher));
+        listMiniZunko.add(new MiniZunko(tempm));
+        */
+
+
+
+
         //create temp object
         //listField.add(new Field());
 
@@ -46,7 +57,7 @@ public class MainScene extends GameScene {
            listField.get(i).update();
         }
         for(int i=0;i<listMiniZunko.size();i++){
-            //listField.get(i).update();
+            //listMiniZunko.get(i).update();
         }
         for(int i=0;i<listMiniZunko.size();i++){
             //listField.get(i).update();
@@ -54,11 +65,13 @@ public class MainScene extends GameScene {
     }
     @Override
     public void draw(Canvas canvas){
+
         for(int i=0;i<listField.size();i++){
             listField.get(i).draw(canvas);
         }
-
-
+        /*for(int i=0;i<listMiniZunko.size();i++){
+            listMiniZunko.get(i).draw(canvas);
+        }*/
     }
 
     @Override
