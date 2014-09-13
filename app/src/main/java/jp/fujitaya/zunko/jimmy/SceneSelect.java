@@ -5,11 +5,12 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 import jp.fujitaya.zunko.util.GameScene;
+import jp.fujitaya.zunko.util.GameView;
 
 public class SceneSelect extends GameScene{
 
-    public SceneSelect(Context viewContext){
-        super(viewContext);
+    public SceneSelect(GameView parent){
+        super(parent);
     }
 
     @Override

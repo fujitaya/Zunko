@@ -5,10 +5,10 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 
 public abstract class GameScene {
-    protected Context viewContext;
+    protected GameView parent;
 
-    public GameScene(Context viewContext){
-        this.viewContext = viewContext;
+    public GameScene(GameView parent){
+        this.parent = parent;
     }
     public abstract void update();
     public abstract void draw(Canvas canvas);
