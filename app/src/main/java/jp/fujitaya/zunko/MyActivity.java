@@ -15,7 +15,7 @@ public class MyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        setContentView(new GameView(this));
+        setContentView(new GameViewFront(this));
     }
 
 

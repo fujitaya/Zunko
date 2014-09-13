@@ -4,5 +4,10 @@
     <string name="app_name">ずん子</string>
     <string name="hello_world">ずん子の世界にようこそ</string>
     <string name="action_settings">設定</string>
+    
+    <string name="msg_test1">メッセージウィンドウ</string>
+    <string name="msg_test2">こんにてゃ、ずん子です。</string>
+    <string name="msg_test3">現在位置は東北地方です。</string>
+    <string name="msg_test4">現在のちびずん子の数は直打ちです。</string>
 
 </resources>

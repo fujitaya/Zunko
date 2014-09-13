@@ -13,6 +13,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.hayashima.MessageWindowScene;
 import jp.fujitaya.zunko.sugaya.MainScene;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
@@ -25,15 +26,17 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     private ScheduledExecutorService scheduler;
     private FpsCounter fpswatch;
-    private GameScene scene;
     private float scale;
+
+    private DrawSystem ds;
+    protected GameScene scene;
 
     public GameView(Context context){
         super(context);
         scheduler = null;
         fpswatch = new FpsCounter();
-        scene = new SceneMenu(this.getContext());
         getHolder().addCallback(this);
+        ds = new DrawSystem();
     }
 
     private void update(){
@@ -51,7 +54,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        event.setLocation(event.getX()/scale, event.getY()/scale);
+//        event.setLocation(event.getX()/scale, event.getY()/scale);
         scene.interrupt(event);
         return true;
     }
@@ -71,9 +74,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
                 Canvas canvas = holder.lockCanvas();
                 canvas.drawColor(Color.BLACK);
-                canvas.translate((getWidth() - VIEW_WIDTH)/2.0f*scale,
-                        (getHeight() - VIEW_HEIGHT)/2.0f*scale);
-                canvas.scale(scale, scale);
+//                canvas.translate((getWidth() - VIEW_WIDTH) / 2.0f * scale,
+//                        (getHeight() - VIEW_HEIGHT) / 2.0f * scale);
+//                canvas.scale(scale, scale);
                 doDraw(canvas);
                 holder.unlockCanvasAndPost(canvas);
             }

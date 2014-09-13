@@ -5,4 +5,8 @@
     <string name="hello_world">Zunko World!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="msg_test1">Message Window</string>
+    <string name="msg_test2">こんにてゃ、ずん子です。</string>
+    <string name="msg_test3">現在位置は東北地方です。</string>
+    <string name="msg_test4">現在のちびずん子の数は直打ちです。</string>
 </resources>
