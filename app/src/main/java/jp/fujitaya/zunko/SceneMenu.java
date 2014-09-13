@@ -13,21 +13,23 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import jp.fujitaya.zunko.jimmy.InsideRectF;
+import jp.fujitaya.zunko.jimmy.SceneSelect;
 import jp.fujitaya.zunko.jimmy.TouchableBitmap;
 import jp.fujitaya.zunko.util.GameScene;
+import jp.fujitaya.zunko.util.GameView;
 
 public class SceneMenu extends GameScene {
     Resources res;
     Bitmap menuTitle;
     TouchableBitmap butStart, butExtra, butExit;
 
-    public SceneMenu(Context viewContext){
-        super(viewContext);
+    public SceneMenu(GameView parent){
+        super(parent);
         init();
     }
 
     public void init() {
-        res = viewContext.getResources();
+        res = parent.getContext().getResources();
 
         menuTitle = BitmapFactory.decodeResource(res,R.drawable.menutitle);
         butStart = (new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.startbutton),
@@ -35,7 +37,7 @@ public class SceneMenu extends GameScene {
         butExtra = (new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.extrabutton),
                 new RectF(250f,1000f,550f,1100f),this,new InsideRectF(new RectF(250f,1000f,550f,1100f))));
         butExit = (new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.exitbutton),
-                new RectF(250f,1200f,550f,1300f),this,new InsideRectF(new RectF(250f,1200f,550f,1300f))));
+                new RectF(250f,1180f,550f,1280f),this,new InsideRectF(new RectF(250f,1180f,550f,1280f))));
     }
 
     @Override
@@ -53,7 +55,17 @@ public class SceneMenu extends GameScene {
 
     @Override
     public void dispose() {
-
+        if(butStart != null){
+            butStart.dispose();
+        }
+        if(butExtra != null){
+            butExtra.dispose();
+        }
+        if(butExit != null){
+            butExit.dispose();
+        }
+        res = null;
+        parent = null;
     }
 
     @Override
@@ -63,6 +75,7 @@ public class SceneMenu extends GameScene {
             float y = event.getY();
 
             if (butStart.isInside(new PointF(x,y))){
+                parent.changeScene(new SceneSelect(parent));
             }
         }
     }

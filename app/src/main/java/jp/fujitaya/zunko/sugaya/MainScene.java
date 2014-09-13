@@ -21,12 +21,12 @@ public class MainScene extends GameScene {
     ArrayList<MiniZunko> listMiniZunko;
     ArrayList<Icon> listIcon;
 
-    public MainScene(Context viewContext){
-        super(viewContext);
+    public MainScene(GameView parent){
+        super(parent);
         init();
     }
     private void init(){
-        res = viewContext.getResources();
+        res = parent.getContext().getResources();
         //create lists
         listField=new ArrayList<Field>();
         listMiniZunko=new ArrayList<MiniZunko>();

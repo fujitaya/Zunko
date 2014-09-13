@@ -39,4 +39,10 @@ public class TouchableBitmap{
     public boolean isInside(PointF point){
         return strategy.isInside(point);
     }
+
+    public void dispose(){
+        if (bitmap != null) bitmap.recycle();
+        bitmap = null;
+        parent = null;
+    }
 }
