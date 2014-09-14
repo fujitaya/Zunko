@@ -14,6 +14,7 @@ import java.util.Map;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
+import jp.fujitaya.zunko.util.Sound;
 import jp.fujitaya.zunko.util.SpriteNodeImage;
 
 public class MessageWindowScene extends GameScene{
@@ -50,7 +51,16 @@ public class MessageWindowScene extends GameScene{
         img = new SpriteNodeImage(null);
         img.changeImage(zunkoImage.get(ImageName.Z09));
         img.moveTo(-128, -60);
+
+        Sound sound = Sound.getInstance();
+        Sound.SoundCard sc = sound.loadBGM(R.raw.title_theme_02);
+        sound.playBGM(sc);
+
+        secard1 = sound.loadSE(R.raw.se_gun02);
+        secard2 = sound.loadSE(R.raw.se_gun04);
     }
+    Sound.SoundCard secard1, secard2;
+    int counter = 0;
 
     public void appendMessage(String msg){
         if(msgs.size() == LINE_NUM) msgs.remove(0);
@@ -71,10 +81,17 @@ public class MessageWindowScene extends GameScene{
         for(Map.Entry<ImageName, Bitmap> e : zunkoImage.entrySet()){
             e.getValue().recycle();
         }
+        Sound.getInstance().stopBGM();
     }
 
     @Override
-    public void update(){}
+    public void update(){
+        if(++counter%(60*5) == 60*3){
+            Sound.getInstance().playSE(secard1);
+        }else if(counter%(60*5) == 0){
+            Sound.getInstance().playSE(secard2);
+        }
+    }
 
     @Override
     public void interrupt(MotionEvent event){}
