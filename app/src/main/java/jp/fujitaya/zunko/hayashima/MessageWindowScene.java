@@ -37,9 +37,6 @@ public class MessageWindowScene extends GameScene{
 
         wnd = new SpriteNodeImage(BitmapFactory.decodeResource(parent.getResources(), R.drawable.window));
 
-        bg = new SpriteNodeImage(BitmapFactory.decodeResource(parent.getResources(), R.drawable.map_tohoku_layered_x2));
-        bg.moveTo(-872, -90);
-
         zunkoImage = new HashMap<ImageName, Bitmap>();
         zunkoImage.put(ImageName.Z01, (BitmapFactory.decodeResource(parent.getResources(), R.drawable.zunko01)));
         zunkoImage.put(ImageName.Z05, (BitmapFactory.decodeResource(parent.getResources(), R.drawable.zunko05)));
@@ -52,11 +49,6 @@ public class MessageWindowScene extends GameScene{
         img = new SpriteNodeImage(null);
         img.changeImage(zunkoImage.get(ImageName.Z09));
         img.moveTo(-128, -60);
-//        img.moveTo(-175, -175);   // hdpi?
-
-//        Typeface typeFace = Typeface.createFromAsset(parent.getContext().getAssets(), "myfont.ttf");
-//        msgPaint.setTypeface(Typeface.);
-
     }
 
     public void appendMessage(String msg){
@@ -74,57 +66,11 @@ public class MessageWindowScene extends GameScene{
     @Override
     public void dispose(){}
 
-    int counter = 0;
-    int msgCounter = 0;
     @Override
-    public void update(){
-        ++counter;
-        if(counter%60 == 0){
-            if(msgCounter == 20){
-                clearMessage();
-                changeImage(ImageName.Z08);
-                msgCounter = 0;
-            }
-            ++msgCounter;
-            appendMessage(String.format("%2d番目のメッセージです。", msgCounter));
-        }
-    }
+    public void update(){}
 
-    boolean eventOn = false;
-    float ex, ey;
-    float th = 10f;
     @Override
-    public void interrupt(MotionEvent event){
-        switch(event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                eventOn = true;
-                ex = event.getX();
-                ey = event.getY();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                float dx = event.getX() - ex;
-                float dy = event.getY() - ey;
-                if(dx < -th){
-                    img.moveOffset(-1, 0);
-                    ex = event.getX();
-                }else if(dx > th){
-                    img.moveOffset(1, 0);
-                    ex = event.getX();
-                }
-                if(dy < -th){
-                    img.moveOffset(0, -1);
-                    ey = event.getY();
-                }else if(dy > th){
-                    img.moveOffset(0, 1);
-                    ey = event.getY();
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                eventOn = false;
-                break;
-            default: break;
-        }
-    }
+    public void interrupt(MotionEvent event){}
 
     @Override
     public void draw(Canvas canvas){
@@ -143,8 +89,6 @@ public class MessageWindowScene extends GameScene{
         int baseX = drawX;
         int baseY = drawY;
 
-        drawBg(canvas, 0, 0);
-
         wnd.draw(canvas, baseX+(width-wnd.getWidth())/2, baseY, 1, 1, 0);
 
         img.draw(canvas, baseX, baseY, 1, 1, 0);
@@ -155,8 +99,5 @@ public class MessageWindowScene extends GameScene{
         for(int i=0; i < msgs.size(); ++i){
             canvas.drawText(msgs.get(i), msgX, msgY + i*diffY, msgPaint);
         }
-    }
-    private void drawBg(Canvas canvas, int bx, int by){
-        bg.draw(canvas, bx, by, 1, 1, 0);
     }
 }

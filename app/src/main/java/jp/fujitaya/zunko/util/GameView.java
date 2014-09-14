@@ -31,7 +31,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     private ScheduledExecutorService scheduler;
     private FpsCounter fpswatch;
-    private GameScene scene;
+    protected GameScene scene;
     private float scale;
     private Matrix scaler;
     private Matrix invScaler;
@@ -42,7 +42,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         wasOutside = false;
         scheduler = null;
         fpswatch = new FpsCounter();
-        scene = new SceneMenu(this);
         getHolder().addCallback(this);
     }
 
