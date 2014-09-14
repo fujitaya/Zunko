@@ -1,6 +1,5 @@
 package jp.fujitaya.zunko.util;
 
-import android.graphics.Canvas;
 import android.util.Log;
 
 import java.util.concurrent.TimeUnit;

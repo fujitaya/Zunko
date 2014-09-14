@@ -27,7 +27,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     private ScheduledExecutorService scheduler;
     private FpsCounter fpswatch;
-    private GameScene scene;
+    protected GameScene scene;
     private float scale;
     private Matrix scaler;
     private Matrix invScaler;
@@ -80,7 +80,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 update();
 
                 Canvas canvas = holder.lockCanvas();
-                canvas.setMatrix(scaler);
+//                canvas.setMatrix(scaler);
 
                 canvas.drawColor(Color.WHITE);
                 doDraw(canvas);

@@ -8,6 +8,6 @@ import jp.fujitaya.zunko.util.GameView;
 public class GameViewFront extends GameView {
     public GameViewFront(Context context){
         super(context);
-        scene = new MessageWindowScene(this.getContext());
+        scene = new MessageWindowScene(this);
     }
 }

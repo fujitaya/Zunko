@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -15,6 +15,12 @@ public class SpriteNodeImage extends SpriteNode {
 
     public int getWidth(){return image.getWidth();}
     public int getHeight(){return image.getHeight();}
+
+    public Bitmap changeImage(Bitmap image){
+        Bitmap oldImage = this.image;
+        this.image = image;
+        return oldImage;
+    }
 
     @Override
     protected void drawThis(Canvas canvas, float xbase, float ybase, float xbasescale, float ybasescale){
