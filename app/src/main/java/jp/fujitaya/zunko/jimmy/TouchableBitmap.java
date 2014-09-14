@@ -32,7 +32,8 @@ public class TouchableBitmap{
     }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(bitmap,new Rect(0,0,bitmap.getWidth(),bitmap.getHeight()),
+        if (bitmap != null)
+            canvas.drawBitmap(bitmap,new Rect(0,0,bitmap.getWidth(),bitmap.getHeight()),
                 drawRect,new Paint());
     }
 
