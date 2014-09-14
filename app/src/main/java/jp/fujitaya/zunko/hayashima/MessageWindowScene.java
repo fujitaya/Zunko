@@ -51,13 +51,6 @@ public class MessageWindowScene extends GameScene{
         img = new SpriteNodeImage(null);
         img.changeImage(zunkoImage.get(ImageName.Z09));
         img.moveTo(-128, -60);
-
-        Sound sound = Sound.getInstance();
-        Sound.SoundCard sc = sound.loadBGM(R.raw.title_theme_02);
-        sound.playBGM(sc);
-
-        secard1 = sound.loadSE(R.raw.se_gun02);
-        secard2 = sound.loadSE(R.raw.se_gun04);
     }
     Sound.SoundCard secard1, secard2;
     int counter = 0;
@@ -81,7 +74,6 @@ public class MessageWindowScene extends GameScene{
         for(Map.Entry<ImageName, Bitmap> e : zunkoImage.entrySet()){
             e.getValue().recycle();
         }
-        Sound.getInstance().stopBGM();
     }
 
     @Override
