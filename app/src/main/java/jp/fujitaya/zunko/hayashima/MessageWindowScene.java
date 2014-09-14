@@ -26,7 +26,7 @@ public class MessageWindowScene extends GameScene{
     private static final int FONT_SIZE = 25;
 
     private HashMap<ImageName, Bitmap> zunkoImage;
-    private SpriteNodeImage img, bg, wnd;
+    private SpriteNodeImage img, wnd;
     public MessageWindowScene(GameView parent){
         super(parent);
         msgs = new ArrayList<String>();
