@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.GameScene;
@@ -64,7 +65,13 @@ public class MessageWindowScene extends GameScene{
     }
 
     @Override
-    public void dispose(){}
+    public void dispose(){
+        img.changeImage(null);
+        wnd.changeImage(null).recycle();
+        for(Map.Entry<ImageName, Bitmap> e : zunkoImage.entrySet()){
+            e.getValue().recycle();
+        }
+    }
 
     @Override
     public void update(){}
