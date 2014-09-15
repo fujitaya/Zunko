@@ -1,5 +1,6 @@
 package jp.fujitaya.zunko.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -68,6 +69,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void changeScene(GameScene next){
         if(scene != null) scene.dispose();
         scene = next;
+        if(scene == null) ((Activity)getContext()).finish();
     }
 
     @Override
@@ -108,7 +110,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         setScale();
         //フルスクリーン
         setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY | SYSTEM_UI_FLAG_FULLSCREEN
-        | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {
