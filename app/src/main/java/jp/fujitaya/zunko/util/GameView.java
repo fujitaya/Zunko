@@ -15,6 +15,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.sugaya.MainScene;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     //描画範囲指定
@@ -42,7 +43,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         wasOutside = false;
         scheduler = null;
         fpswatch = new FpsCounter();
-        scene = new SceneMenu(this);
+        scene = new MainScene(this);
         getHolder().addCallback(this);
     }
 
@@ -109,7 +110,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         setScale();
         //フルスクリーン
         setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY | SYSTEM_UI_FLAG_FULLSCREEN
-        | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {
