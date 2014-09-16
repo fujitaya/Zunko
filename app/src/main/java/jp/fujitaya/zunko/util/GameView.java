@@ -43,7 +43,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         wasOutside = false;
         scheduler = null;
-        fpswatch = new FpsCounter();
         scene = new MainScene(this);
         getHolder().addCallback(this);
     }
@@ -121,6 +120,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 //        setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY | SYSTEM_UI_FLAG_FULLSCREEN
 //                | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
+        fpswatch = new FpsCounter();
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -143,12 +143,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         scheduler.shutdown();
-        holder.removeCallback(this);
         fpswatch = null;
-        if(scene != null){
-            scene.dispose();
-            scene = null;
-        }
     }
 
     public void setScale(){
