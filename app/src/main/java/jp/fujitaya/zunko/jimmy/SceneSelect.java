@@ -10,7 +10,9 @@ import android.view.MotionEvent;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
 
-public class SceneSelect extends GameScene implements GestureDetector.OnGestureListener{
+import static android.view.GestureDetector.OnGestureListener;
+
+public class SceneSelect extends GameScene implements OnGestureListener{
     FieldMap map;
     GestureDetector gestureDetector;
 
@@ -48,12 +50,29 @@ public class SceneSelect extends GameScene implements GestureDetector.OnGestureL
 
     @Override
     public boolean onDown(MotionEvent e) {
+        float x = e.getX();
+        float y = e.getY();
+
+        for (TouchableBitmap button : map.getButtons()){
+            if (button.isInside(new PointF(x,y))){
+                button.getGestureListener().onDown(e);
+                return false;
+            }
+        }
         return false;
     }
 
     @Override
     public void onShowPress(MotionEvent e) {
+        float x = e.getX();
+        float y = e.getY();
 
+        for (TouchableBitmap button : map.getButtons()){
+            if (button.isInside(new PointF(x,y))){
+                button.getGestureListener().onShowPress(e);
+                return;
+            }
+        }
     }
 
     @Override
@@ -63,7 +82,7 @@ public class SceneSelect extends GameScene implements GestureDetector.OnGestureL
 
         for (TouchableBitmap button : map.getButtons()){
             if (button.isInside(new PointF(x,y))){
-                button.onClick();
+                button.getGestureListener().onSingleTapUp(e);
                 return false;
             }
         }
@@ -77,7 +96,15 @@ public class SceneSelect extends GameScene implements GestureDetector.OnGestureL
 
     @Override
     public void onLongPress(MotionEvent e) {
+        float x = e.getX();
+        float y = e.getY();
 
+        for (TouchableBitmap button : map.getButtons()){
+            if (button.isInside(new PointF(x,y))){
+                button.getGestureListener().onLongPress(e);
+                return;
+            }
+        }
     }
 
     @Override
