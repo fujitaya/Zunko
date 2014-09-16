@@ -4,7 +4,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -23,6 +25,7 @@ public class SceneMenu extends GameScene implements OnGestureListener{
     private Bitmap menuTitle;
     private ArrayList<TouchableBitmap> buttons;
     private GestureDetector gestureDetector;
+    private Bitmap background;
 
     public SceneMenu(GameView parent){
         super(parent);
@@ -33,12 +36,13 @@ public class SceneMenu extends GameScene implements OnGestureListener{
         Resources res = parent.getContext().getResources();
         buttons = new ArrayList<TouchableBitmap>();
 
+        //背景画像
+        background = BitmapFactory.decodeResource(res, R.drawable.title);
         //タイトル画像
         menuTitle = BitmapFactory.decodeResource(res,R.drawable.menutitle);
         //スタートボタン
         buttons.add(new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.startbutton),
-                new RectF(250f,800f,550f,900f),
-                new InsideRectF(new RectF(250f,800f,550f,900f)),
+                new RectF(200f,800f,520f,900f),
                 new OnGestureListener() {
                     @Override
                     public boolean onDown(MotionEvent motionEvent) {
@@ -65,7 +69,7 @@ public class SceneMenu extends GameScene implements OnGestureListener{
                 }));
         //図鑑ボタン
         buttons.add((new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.extrabutton),
-                new RectF(250f,1000f,550f,1100f),
+                new RectF(200f,1000f,520f,1100f),
                 new InsideRectF(new RectF(250f,1000f,550f,1100f)),
                 new OnGestureListener() {
                     @Override
@@ -90,7 +94,7 @@ public class SceneMenu extends GameScene implements OnGestureListener{
                         return false;
                     }
                 })));
-
+        //タッチジェスチャ監視
         gestureDetector = new GestureDetector(parent.getContext(), this);
     }
 
@@ -101,7 +105,11 @@ public class SceneMenu extends GameScene implements OnGestureListener{
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(menuTitle, 0, 0, null);
+        //背景描画
+        canvas.drawBitmap(background, new Rect(0, 0, background.getWidth(), background.getHeight()),
+                new Rect(0, 0, 720, 1280), new Paint());
+        //タイトル描画
+        //canvas.drawBitmap(menuTitle, 0, 0, null);
 
         for (TouchableBitmap button : buttons){
             button.draw(canvas);
@@ -110,6 +118,14 @@ public class SceneMenu extends GameScene implements OnGestureListener{
 
     @Override
     public void dispose() {
+        if (background != null){
+            background.recycle();
+            background = null;
+        }
+        if (menuTitle != null){
+            menuTitle.recycle();
+            menuTitle = null;
+        }
         for (TouchableBitmap button : buttons){
             button.dispose();
         }
