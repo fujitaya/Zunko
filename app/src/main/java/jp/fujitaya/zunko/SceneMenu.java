@@ -1,12 +1,10 @@
 package jp.fujitaya.zunko;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -14,13 +12,14 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import jp.fujitaya.zunko.jimmy.InsideRectF;
-import jp.fujitaya.zunko.jimmy.OnClick;
 import jp.fujitaya.zunko.jimmy.SceneSelect;
 import jp.fujitaya.zunko.jimmy.TouchableBitmap;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
 
-public class SceneMenu extends GameScene implements GestureDetector.OnGestureListener{
+import static android.view.GestureDetector.OnGestureListener;
+
+public class SceneMenu extends GameScene implements OnGestureListener{
     private Bitmap menuTitle;
     private ArrayList<TouchableBitmap> buttons;
     private GestureDetector gestureDetector;
@@ -40,20 +39,55 @@ public class SceneMenu extends GameScene implements GestureDetector.OnGestureLis
         buttons.add(new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.startbutton),
                 new RectF(250f,800f,550f,900f),
                 new InsideRectF(new RectF(250f,800f,550f,900f)),
-                new OnClick(){
+                new OnGestureListener() {
                     @Override
-                    public void onClick() {
+                    public boolean onDown(MotionEvent motionEvent) {
+                        return false;
+                    }
+                    @Override
+                    public void onShowPress(MotionEvent motionEvent) { }
+                    @Override
+                    public boolean onSingleTapUp(MotionEvent motionEvent) {
                         parent.changeScene(new SceneSelect(parent));
+                        return false;
+                    }
+                    @Override
+                    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                        return false;
+                    }
+                    @Override
+                    public void onLongPress(MotionEvent motionEvent) {
+                    }
+                    @Override
+                    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                        return false;
                     }
                 }));
         //図鑑ボタン
         buttons.add((new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.extrabutton),
                 new RectF(250f,1000f,550f,1100f),
                 new InsideRectF(new RectF(250f,1000f,550f,1100f)),
-                new OnClick() {
+                new OnGestureListener() {
                     @Override
-                    public void onClick() {
-                        //TODO;図鑑への移動
+                    public boolean onDown(MotionEvent motionEvent) {
+                        return false;
+                    }
+                    @Override
+                    public void onShowPress(MotionEvent motionEvent) { }
+                    @Override
+                    public boolean onSingleTapUp(MotionEvent motionEvent) {
+                        //TODO:図鑑画面への遷移
+                        return false;
+                    }
+                    @Override
+                    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                        return false;
+                    }
+                    @Override
+                    public void onLongPress(MotionEvent motionEvent) { }
+                    @Override
+                    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                        return false;
                     }
                 })));
 
@@ -90,12 +124,29 @@ public class SceneMenu extends GameScene implements GestureDetector.OnGestureLis
 
     @Override
     public boolean onDown(MotionEvent e) {
+        float x = e.getX();
+        float y = e.getY();
+
+        for (TouchableBitmap button : buttons){
+            if (button.isInside(new PointF(x,y))){
+                button.getGestureListener().onDown(e);
+                return false;
+            }
+        }
         return false;
     }
 
     @Override
     public void onShowPress(MotionEvent e) {
+        float x = e.getX();
+        float y = e.getY();
 
+        for (TouchableBitmap button : buttons){
+            if (button.isInside(new PointF(x,y))){
+                button.getGestureListener().onShowPress(e);
+                return;
+            }
+        }
     }
 
     @Override
@@ -105,7 +156,7 @@ public class SceneMenu extends GameScene implements GestureDetector.OnGestureLis
 
         for (TouchableBitmap button : buttons){
             if (button.isInside(new PointF(x,y))){
-                button.onClick();
+                button.getGestureListener().onSingleTapUp(e);
                 return false;
             }
         }
@@ -119,7 +170,15 @@ public class SceneMenu extends GameScene implements GestureDetector.OnGestureLis
 
     @Override
     public void onLongPress(MotionEvent e) {
+        float x = e.getX();
+        float y = e.getY();
 
+        for (TouchableBitmap button : buttons){
+            if (button.isInside(new PointF(x,y))){
+                button.getGestureListener().onLongPress(e);
+                return;
+            }
+        }
     }
 
     @Override
