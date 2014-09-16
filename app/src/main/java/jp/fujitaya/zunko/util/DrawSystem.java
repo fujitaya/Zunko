@@ -8,13 +8,22 @@ import java.util.Iterator;
 
 public class DrawSystem {
     private ArrayList<SpriteNode> nodes;
-    private Canvas canvas;
     private SpriteNode.ZSort comparator;
 
-    public DrawSystem(Canvas canvas){
-        this.canvas = canvas;
+    private int width, height;
+    private float scale;
+
+    public DrawSystem(){
         nodes = new ArrayList<SpriteNode>();
         comparator = new SpriteNode.ZSort();
+
+        width = 720;
+        height = 1280;
+    }
+
+    public void setScreenSize(int width, int height){
+        this.width = width;
+        this.height = height;
     }
 
     public void add(SpriteNode node){
@@ -27,14 +36,18 @@ public class DrawSystem {
         return nodes.remove(node);
     }
 
-    public void draw(){
+    public void draw(Canvas canvas){
+        float scaleX = (float)canvas.getWidth() / (float)width;
+        float scaleY = (float)canvas.getHeight() /  (float)height;
+        float scale = scaleX > scaleY ? scaleY : scaleX;
+
         Collections.sort(nodes, comparator);
 
         SpriteNode node;
         Iterator iter = nodes.iterator();
         while(iter.hasNext()){
             node = (SpriteNode)iter.next();
-            node.draw(canvas, 0, 0, 1, 1, 0);
+            node.draw(canvas, 0, 0, scale, scale, 0);
         }
     }
 }

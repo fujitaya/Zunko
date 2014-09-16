@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import jp.fujitaya.zunko.util.GameView;
+import jp.fujitaya.zunko.util.Sound;
 
 
 public class MyActivity extends Activity {
@@ -15,7 +16,8 @@ public class MyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        setContentView(new GameView(this));
+        Sound.getInstance().setContext(getApplicationContext());
+        setContentView(new GameViewFront(this));
     }
 
 
@@ -36,5 +38,15 @@ public class MyActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        Sound.getInstance().release();
     }
 }
