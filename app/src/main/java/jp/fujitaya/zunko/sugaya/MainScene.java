@@ -24,6 +24,7 @@ public class MainScene extends GameScene {
         res = parent.getContext().getResources();
         init();
     }
+
     private void init(){
         //res = parent.getContext().getResources();
         //create lists
