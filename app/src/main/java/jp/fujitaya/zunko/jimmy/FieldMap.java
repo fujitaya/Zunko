@@ -81,8 +81,8 @@ public class FieldMap{
 
     }
     public void draw(Canvas canvas){
-        canvas.drawBitmap(background,new Rect(0,0,background.getWidth(),background.getHeight()),
-                new RectF(0f,0f,720f,1024f),new Paint());
+        canvas.drawBitmap(background,null,
+                new RectF(0f,0f,720f,1024f),null);
 
         for (TouchableBitmap button : fieldButtons){
             button.draw(canvas);

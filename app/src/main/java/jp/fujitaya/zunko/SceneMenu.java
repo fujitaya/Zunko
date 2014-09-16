@@ -106,8 +106,8 @@ public class SceneMenu extends GameScene implements OnGestureListener{
     @Override
     public void draw(Canvas canvas) {
         //背景描画
-        canvas.drawBitmap(background, new Rect(0, 0, background.getWidth(), background.getHeight()),
-                new Rect(0, 0, 720, 1280), new Paint());
+        canvas.drawBitmap(background, null,
+                new Rect(0, 0, 720, 1280), null);
         //タイトル描画
         //canvas.drawBitmap(menuTitle, 0, 0, null);
 

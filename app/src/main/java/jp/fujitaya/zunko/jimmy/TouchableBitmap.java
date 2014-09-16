@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import static android.view.GestureDetector.OnGestureListener;
 
 public class TouchableBitmap{
+    //BitmapとdrawRectをArrayListで管理したいが，後回し
     private Bitmap bitmap;
     private InsideStrategy strategy;
     private RectF drawRect;
@@ -42,8 +43,8 @@ public class TouchableBitmap{
 
     public void draw(Canvas canvas){
         if (bitmap != null)
-            canvas.drawBitmap(bitmap,new Rect(0,0,bitmap.getWidth(),bitmap.getHeight()),
-                drawRect,new Paint());
+            canvas.drawBitmap(bitmap,null,
+                drawRect,null);
     }
 
     public boolean isInside(PointF point){
