@@ -89,7 +89,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                         || actionID == MotionEvent.ACTION_OUTSIDE){
                     wasOutside = false;
                 }
-                return true;
+                return false;
             }else {
                 event.setAction(MotionEvent.ACTION_OUTSIDE);
                 if (!(actionID == MotionEvent.ACTION_CANCEL || actionID == MotionEvent.ACTION_UP

@@ -9,17 +9,24 @@ import android.graphics.RectF;
 
 import jp.fujitaya.zunko.util.GameScene;
 
-public class TouchableBitmap{
-    protected Bitmap bitmap;
-    protected GameScene parent;
-    InsideStrategyF strategy;
-    RectF drawRect;
+public class TouchableBitmap {
+    private Bitmap bitmap;
+    private InsideStrategyF strategy;
+    private RectF drawRect;
+    private OnClick onClick;
 
-    public TouchableBitmap(Bitmap bitmap, RectF drawRect, GameScene parent, InsideStrategyF strategy){
+    public TouchableBitmap(Bitmap bitmap, RectF drawRect,
+                           InsideStrategyF strategy, OnClick onClick){
         this.bitmap = bitmap;
         this.drawRect = drawRect;
-        this.parent = parent;
         this.strategy = strategy;
+        this.onClick = onClick;
+    }
+    public TouchableBitmap(Bitmap bitmap, RectF drawRect, OnClick onClick){
+        this.bitmap = bitmap;
+        this.drawRect = drawRect;
+        this.strategy = new InsideRectF(new RectF(drawRect.left,drawRect.top,drawRect.right,drawRect.bottom));
+        this.onClick = onClick;
     }
 
     public void move(float x, float y){
@@ -41,9 +48,12 @@ public class TouchableBitmap{
         return strategy.isInside(point);
     }
 
+    public void onClick(){
+        onClick.onClick();
+    }
+
     public void dispose(){
         if (bitmap != null) bitmap.recycle();
         bitmap = null;
-        parent = null;
     }
 }
