@@ -30,7 +30,7 @@ public class FieldManager {
         }
     }
 
-    public void dispose(){
+    public void release(){
         fieldStore.clear();
         fieldStore = null;
         instance = null;

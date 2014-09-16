@@ -27,13 +27,13 @@ public class SceneMenu extends GameScene implements OnGestureListener{
     private GestureDetector gestureDetector;
     private Bitmap background;
 
-    public SceneMenu(GameView parent){
+    public SceneMenu(GameActivity parent){
         super(parent);
         init();
     }
 
     public void init() {
-        Resources res = parent.getContext().getResources();
+        Resources res = parent.getResources();
         buttons = new ArrayList<TouchableBitmap>();
 
         //背景画像
@@ -95,7 +95,7 @@ public class SceneMenu extends GameScene implements OnGestureListener{
                     }
                 })));
         //タッチジェスチャ監視
-        gestureDetector = new GestureDetector(parent.getContext(), this);
+        gestureDetector = new GestureDetector(parent.getWindow().getContext(), this);
     }
 
     @Override

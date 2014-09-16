@@ -8,8 +8,10 @@ public class FpsCounter {
     private long lastTimeBySec;
     private long frameCount;
     private float fps;
+    private String id;
 
-    public FpsCounter(){
+    public FpsCounter(String id){
+        this.id = id;
         fps = 0f;
         frameCount = 0L;
         lastTimeBySec = System.nanoTime();
@@ -23,7 +25,7 @@ public class FpsCounter {
             fps = (float)((double)TimeUnit.SECONDS.toNanos(frameCount) / elapsedTime);
             lastTimeBySec = currentTime;
             frameCount = 0L;
-            Log.d("FPS", Float.toString(fps));
+            Log.d("FPS-"+id, Float.toString(fps));
         }
     }
     public float get(){

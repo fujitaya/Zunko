@@ -2,11 +2,14 @@ package jp.fujitaya.zunko.util;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import android.view.View;
 
-public abstract class GameScene {
-    protected GameView parent;
+import jp.fujitaya.zunko.GameActivity;
 
-    public GameScene(GameView parent){
+public abstract class GameScene{
+    protected GameActivity parent;
+
+    public GameScene(GameActivity parent){
         this.parent = parent;
     }
     public abstract void update();

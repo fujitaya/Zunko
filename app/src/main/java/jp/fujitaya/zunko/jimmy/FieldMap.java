@@ -4,17 +4,14 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import jp.fujitaya.zunko.GameActivity;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.sugaya.MainScene;
-import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
 
 import static android.view.GestureDetector.OnGestureListener;
@@ -24,16 +21,16 @@ public class FieldMap{
     protected ArrayList<TouchableBitmap> fieldButtons;
     protected FieldGroup group;
     //本当はコールバックに変えたい
-    protected GameView parentView;
+    protected GameActivity parentActivity;
 
-    public FieldMap(FieldGroup group, Resources res, GameView parentView){
-        init(group,res,parentView);
+    public FieldMap(FieldGroup group, Resources res, GameActivity parentActivity){
+        init(group,res, parentActivity);
     }
 
-    private void init(FieldGroup group, Resources res, final GameView parentView){
+    private void init(FieldGroup group, Resources res, final GameActivity parentActivity){
         this.group = group;
         fieldButtons = new ArrayList<TouchableBitmap>();
-        this.parentView = parentView;
+        this.parentActivity = parentActivity;
 
         switch (group){
             case Miyagi:
@@ -51,7 +48,7 @@ public class FieldMap{
                             public void onShowPress(MotionEvent motionEvent) { }
                             @Override
                             public boolean onSingleTapUp(MotionEvent motionEvent) {
-                                parentView.changeScene(new MainScene(parentView));
+                                parentActivity.changeScene(new MainScene(parentActivity));
                                 return false;
                             }
                             @Override
@@ -97,15 +94,15 @@ public class FieldMap{
             button.dispose();
         }
         fieldButtons.clear();
-        parentView = null;
+        parentActivity = null;
     }
 
     public ArrayList<TouchableBitmap> getButtons(){
         return fieldButtons;
     }
 
-    public void changeGroup(FieldGroup group, Resources res, GameView parentView){
+    public void changeGroup(FieldGroup group, Resources res, GameActivity parentActivity){
         dispose();
-        init(group, res, parentView);
+        init(group, res,  parentActivity);
     }
 }

@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import jp.fujitaya.zunko.GameActivity;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
@@ -25,7 +27,7 @@ public class MessageWindowScene extends GameScene{
     private static final int FONT_SIZE = 25;
     private HashMap<ImageName, Bitmap> zunkoImage;
     private SpriteNodeImage img, wnd;
-    public MessageWindowScene(GameView parent){
+    public MessageWindowScene(GameActivity parent){
         super(parent);
         
         msgs = new ArrayList<String>();

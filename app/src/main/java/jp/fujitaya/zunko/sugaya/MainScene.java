@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import jp.fujitaya.zunko.GameActivity;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.*;
 
@@ -19,9 +20,9 @@ public class MainScene extends GameScene {
     //object list
     Field field;
 
-    public MainScene(GameView parent){
+    public MainScene(GameActivity parent){
         super(parent);
-        res = parent.getContext().getResources();
+        res = parent.getResources();
         init();
     }
 

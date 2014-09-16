@@ -7,6 +7,7 @@ import android.graphics.PointF;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+import jp.fujitaya.zunko.GameActivity;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
 
@@ -16,14 +17,14 @@ public class SceneSelect extends GameScene implements OnGestureListener{
     FieldMap map;
     GestureDetector gestureDetector;
 
-    public SceneSelect(GameView parent){
+    public SceneSelect(GameActivity parent){
         super(parent);
         init();
     }
 
     public void init(){
         map = new FieldMap(FieldGroup.Miyagi, parent.getResources(), parent);
-        gestureDetector = new GestureDetector(parent.getContext(), this);
+        gestureDetector = new GestureDetector(parent.getWindow().getContext(), this);
     }
 
     @Override
