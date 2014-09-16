@@ -11,6 +11,7 @@ import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
 import jp.fujitaya.zunko.util.Image;
+import jp.fujitaya.zunko.util.Sound;
 
 public class MessageWindowScene extends GameScene{
     public static enum ImageName{
@@ -25,6 +26,9 @@ public class MessageWindowScene extends GameScene{
     private Image img, wnd;
     private boolean show;
 
+    private StatusWindow statusWindow;
+
+    private Image bg;
     public MessageWindowScene(GameView parent){
         super(parent);
 
@@ -51,6 +55,14 @@ public class MessageWindowScene extends GameScene{
         img = new Image(zunkoImage.get(ImageName.Z09));
         img.setCenter(128, 138);
         img.setScale(2, 2);
+
+//        statusScene = new StatusWindow(parent);
+
+        bg = new Image(R.drawable.map_miyagi);
+
+        Sound sound = Sound.getInstance();
+        Sound.SoundCard sc = sound.loadBGM(R.raw.title_theme_02);
+        sound.playBGM(sc);
     }
 
     public void appendMessage(String msg){
@@ -99,6 +111,8 @@ public class MessageWindowScene extends GameScene{
 // int baseY = (int)(0 + (float)drawY * scale);
         int baseX = drawX;
         int baseY = drawY;
+
+        bg.draw(canvas);
 
         wnd.draw(canvas, baseX+(width-wnd.getWidth())/2, baseY);
         img.draw(canvas, baseX, baseY);

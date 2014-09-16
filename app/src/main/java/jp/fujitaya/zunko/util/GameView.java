@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import jp.fujitaya.zunko.MyActivity;
 import jp.fujitaya.zunko.hayashima.MessageWindowScene;
+import jp.fujitaya.zunko.jimmy.SceneSelect;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     //描画範囲指定
