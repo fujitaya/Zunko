@@ -43,11 +43,16 @@ public class Field extends BasicObject {
         bitmapBuilding.add(BitmapFactory.decodeResource(res, R.drawable.ic_launcher));
 
         bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_aruku1));
+        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_select));
         bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_aruku2));
+        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_attack));
+        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_rest));
+
 
         listBuilding.add(new Building(bitmapBuilding,new Point(50,50)));
         listBuilding.get(0).setHitPoint(0);
         listBuilding.add(new Building(bitmapBuilding,new Point(500,500)));
+        listBuilding.add(new Building(bitmapBuilding,new Point(200,800)));
 
     }
     @Override public void update(){
@@ -106,7 +111,10 @@ public class Field extends BasicObject {
     void createZunkoCreator(){
         for(int i=0;i<listBuilding.size();i++){
             if(listBuilding.get(i).isNowZunkoCreate()){
-                listMiniZunko.add(new MiniZunko(bitmapMiniZunko,new Point(listBuilding.get(i).getVect())));
+                Point p=new Point(bitmapBuilding.get(0).getWidth()/2,bitmapBuilding.get(0).getHeight()/2);
+                p.x=listBuilding.get(i).getVect().x+p.x;
+                p.y=listBuilding.get(i).getVect().y+p.y;
+                listMiniZunko.add(new MiniZunko(bitmapMiniZunko,new Point(p)));
             }
         }
     }
@@ -116,6 +124,7 @@ public class Field extends BasicObject {
                 if(listBuilding.get(j).isZunkoCreator()==false) {
                     if (listMiniZunko.get(i).isHit(listBuilding.get(j).getVect())) {
                         listMiniZunko.get(i).changeState(miniZunkoState.attack);
+                        listMiniZunko.get(i).setAttackBuildingNumber(i);
 
                     }
                 }

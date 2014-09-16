@@ -21,6 +21,8 @@ public class MiniZunko extends BasicObject{
     Point toVect;
     PointF dv=new PointF(0,0);
 
+    //attack
+    int attackBuildingNumber=-1;
     //draw
     Point imageSize;
 
@@ -74,13 +76,24 @@ public class MiniZunko extends BasicObject{
         dv= new PointF(addVect * (vSingle.x / vec), addVect * (vSingle.y / vec));
     }
     //action
+    public void setAttackBuildingNumber(int n){attackBuildingNumber=n;}
     @Override
     public void draw(Canvas canvas){
-        if(selectFlag==false) {
+        //selected
+        if(selectFlag==true &&nowState!=miniZunkoState.wait)  {
+            canvas.drawBitmap(listImage.get(2), vect.x - imageSize.x / 2, vect.y - imageSize.y / 2, new Paint());
+        }
+        if(nowState==miniZunkoState.wait){
             canvas.drawBitmap(listImage.get(0), vect.x-imageSize.x/2, vect.y-imageSize.y/2, new Paint());
         }
-        else{
+        else if(nowState==miniZunkoState.move){
             canvas.drawBitmap(listImage.get(1), vect.x-imageSize.x/2, vect.y-imageSize.y/2, new Paint());
+        }
+        else if(nowState==miniZunkoState.attack){
+            canvas.drawBitmap(listImage.get(3), vect.x-imageSize.x/2, vect.y-imageSize.y/2, new Paint());
+        }
+        else if(nowState==miniZunkoState.rest){
+            canvas.drawBitmap(listImage.get(4), vect.x-imageSize.x/2, vect.y-imageSize.y/2, new Paint());
         }
     }
 }
