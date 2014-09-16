@@ -77,7 +77,7 @@ public class Field extends BasicObject {
             if(selectFlag==false){
                 for(int i=0;i<listMiniZunko.size();i++) {
                     if (listMiniZunko.get(i).isHit(new Point((int) event.getX(), (int) event.getY()))) {
-                        if (listMiniZunko.get(i).isSelect() == false) {
+                        if (listMiniZunko.get(i).isSelect() == false&&listMiniZunko.get(i).getNowState()!=miniZunkoState.attack) {
                             listMiniZunko.get(i).setSelect(true);
                             selectFlag=true;
                             break;
@@ -87,10 +87,14 @@ public class Field extends BasicObject {
             }
             else{
                 for(int i=0;i<listBuilding.size();i++){
-                    if (listBuilding.get(i).isHit(new Point((int) event.getX(), (int) event.getY()))) {
+                    if (listBuilding.get(i).isZunkoCreator()==false && listBuilding.get(i).isHit(new Point((int) event.getX(), (int) event.getY()))) {
                         for(int j=0;j<listMiniZunko.size();j++) {
+                            //cant moving
                             if(listMiniZunko.get(j).isSelect()) {
                                 listMiniZunko.get(j).tatchToMove(new Point((int) event.getX(), (int) event.getY()));
+                                listMiniZunko.get(j).setSelect(false);
+                                selectFlag=false;
+                                break;
                             }
                         }
                     }
@@ -102,17 +106,17 @@ public class Field extends BasicObject {
     void createZunkoCreator(){
         for(int i=0;i<listBuilding.size();i++){
             if(listBuilding.get(i).isNowZunkoCreate()){
-                Point v=listBuilding.get(i).getVect();
-                listMiniZunko.add(new MiniZunko(bitmapMiniZunko,v));
+                listMiniZunko.add(new MiniZunko(bitmapMiniZunko,new Point(listBuilding.get(i).getVect())));
             }
         }
     }
     void setMiniZunkoAttack(){
         for(int i=0;i<listMiniZunko.size();i++){
             for(int j=0;j<listBuilding.size();j++){
-                if(listBuilding.get(j).isNowZunkoCreate()==false) {
+                if(listBuilding.get(j).isZunkoCreator()==false) {
                     if (listMiniZunko.get(i).isHit(listBuilding.get(j).getVect())) {
                         listMiniZunko.get(i).changeState(miniZunkoState.attack);
+
                     }
                 }
             }

@@ -29,7 +29,7 @@ public class MiniZunko extends BasicObject{
 
         createNumber++;
         //temp size 50
-        tatchSize=50;
+        tatchSize=(int)Math.sqrt(image.get(0).getWidth()*image.get(0).getWidth()+image.get(0).getHeight()*image.get(0).getHeight())/2;
 
         addVect=10;
         toVect=vect;
@@ -62,6 +62,7 @@ public class MiniZunko extends BasicObject{
 
     //moving minizunko
     void move(){
+
             vect.x += dv.x;
             vect.y += dv.y;
     }
