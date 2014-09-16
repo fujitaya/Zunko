@@ -16,62 +16,51 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import jp.fujitaya.zunko.GameActivity;
 import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.jimmy.OnDraw;
+
+import static jp.fujitaya.zunko.GameActivity.VIEW_WIDTH;
+import static jp.fujitaya.zunko.GameActivity.VIEW_HEIGHT;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
-    //描画範囲指定
-    //この範囲で描画し，画面解像度と異なる場合は拡大される
-    //本来はResourcesあたりに書いておくべき
-    public  static final int VIEW_WIDTH = 720;
-    public  static final int VIEW_HEIGHT = 1280;
-
-    //FPSの指定
-    //やっぱり本来はResourcesに書きたい
-    public static final int FPS = 60;
+    public static final int FPS = 30;
     public static final long INTERVAL = (long)(Math.floor(
-            (double)TimeUnit.SECONDS.toNanos(1L) / (double)FPS));
+            (double) TimeUnit.SECONDS.toNanos(1L) / (double)FPS));
 
-    protected ScheduledExecutorService scheduler;
-    protected FpsCounter fpswatch;
-    protected GameScene scene;
     protected float scale;
     protected Matrix scaler;
     protected Matrix invScaler;
     protected boolean wasOutside;
+    private FpsCounter fpswatch;
+    private ScheduledExecutorService scheduler;
+    private OnTouchListener onTouchListener;
+    private OnDraw onDraw;
 
-    public GameView(Context context){
+    public GameView(Context context, OnTouchListener onTouchListener, OnDraw onDraw){
         super(context);
+        fpswatch = new FpsCounter("draw");
+        this.onTouchListener = onTouchListener;
+        this.onDraw = onDraw;
         wasOutside = false;
-        scheduler = null;
-        fpswatch = new FpsCounter();
-        scene = new SceneMenu(this);
         getHolder().addCallback(this);
     }
 
-    private void update(){
-        fpswatch.update();
-        scene.update();
-    }
     private void doDraw(Canvas canvas){
         RectF mappedArea;
 
+        fpswatch.update();
         //全範囲クリア
         canvas.drawColor(Color.BLACK);
         //拡縮指定
         canvas.setMatrix(scaler);
         //描画範囲限定
-        canvas.clipRect(new Rect(0,0,VIEW_WIDTH,VIEW_HEIGHT));
+        canvas.clipRect(new Rect(0,0, VIEW_WIDTH,VIEW_HEIGHT));
         //描画範囲クリア
         //drawColorだと左側余白も描画される模様
         canvas.drawColor(Color.WHITE);
 
-        scene.draw(canvas);
-    }
-
-    public void changeScene(GameScene next){
-        if(scene != null) scene.dispose();
-        scene = next;
-        if(scene == null) ((Activity)getContext()).finish();
+        onDraw.draw(canvas);
     }
 
     @Override
@@ -102,7 +91,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             }
         }
 
-        scene.interrupt(event);
+        onTouchListener.onTouch(this, event);
         return true;
     }
 
@@ -119,8 +108,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         scheduler.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                update();
-
                 Canvas canvas = holder.lockCanvas();
                 doDraw(canvas);
                 holder.unlockCanvasAndPost(canvas);
@@ -139,10 +126,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         scheduler.shutdown();
         holder.removeCallback(this);
         fpswatch = null;
-        if(scene != null){
-            scene.dispose();
-            scene = null;
-        }
     }
 
     public void setScale(){
