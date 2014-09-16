@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import jp.fujitaya.zunko.MyActivity;
 import jp.fujitaya.zunko.hayashima.MessageWindowScene;
+import jp.fujitaya.zunko.sugaya.MainScene;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     //描画範囲指定
@@ -43,7 +44,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         wasOutside = false;
         scheduler = null;
         fpswatch = new FpsCounter();
-        scene = new MessageWindowScene(this);
+        scene = new MainScene(this);
         getHolder().addCallback(this);
     }
 
