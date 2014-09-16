@@ -3,7 +3,7 @@ package jp.fujitaya.zunko.jimmy;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-public class InsideRectF implements InsideStrategyF {
+public class InsideRectF implements InsideStrategy {
     RectF rect;
 
     public InsideRectF(RectF rect){

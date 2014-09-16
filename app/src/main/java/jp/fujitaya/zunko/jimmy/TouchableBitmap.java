@@ -7,16 +7,14 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import jp.fujitaya.zunko.util.GameScene;
-
 public class TouchableBitmap {
     private Bitmap bitmap;
-    private InsideStrategyF strategy;
+    private InsideStrategy strategy;
     private RectF drawRect;
     private OnClick onClick;
 
     public TouchableBitmap(Bitmap bitmap, RectF drawRect,
-                           InsideStrategyF strategy, OnClick onClick){
+                           InsideStrategy strategy, OnClick onClick){
         this.bitmap = bitmap;
         this.drawRect = drawRect;
         this.strategy = strategy;

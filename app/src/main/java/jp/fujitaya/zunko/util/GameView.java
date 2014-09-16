@@ -29,13 +29,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public static final long INTERVAL = (long)(Math.floor(
             (double)TimeUnit.SECONDS.toNanos(1L) / (double)FPS));
 
-    private ScheduledExecutorService scheduler;
-    private FpsCounter fpswatch;
-    private GameScene scene;
-    private float scale;
-    private Matrix scaler;
-    private Matrix invScaler;
-    private boolean wasOutside;
+    protected ScheduledExecutorService scheduler;
+    protected FpsCounter fpswatch;
+    protected GameScene scene;
+    protected float scale;
+    protected Matrix scaler;
+    protected Matrix invScaler;
+    protected boolean wasOutside;
 
     public GameView(Context context){
         super(context);
