@@ -20,7 +20,7 @@ public class SceneSelect extends GameScene implements GestureDetector.OnGestureL
     }
 
     public void init(){
-        map = new FieldMap(FieldGroup.Miyagi, parent.getResources());
+        map = new FieldMap(FieldGroup.Miyagi, parent.getResources(), parent);
         gestureDetector = new GestureDetector(parent.getContext(), this);
     }
 

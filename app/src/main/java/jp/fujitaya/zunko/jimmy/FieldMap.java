@@ -11,20 +11,25 @@ import android.graphics.RectF;
 import java.util.ArrayList;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.sugaya.MainScene;
 import jp.fujitaya.zunko.util.GameScene;
+import jp.fujitaya.zunko.util.GameView;
 
 public class FieldMap{
     protected Bitmap background;
     protected ArrayList<TouchableBitmap> fieldButtons;
     protected FieldGroup group;
+    //本当はコールバックに変えたい
+    protected GameView parentView;
 
-    public FieldMap(FieldGroup group, Resources res){
-        init(group,res);
+    public FieldMap(FieldGroup group, Resources res, GameView parentView){
+        init(group,res,parentView);
     }
 
-    private void init(FieldGroup group, Resources res){
+    private void init(FieldGroup group, Resources res, final GameView parentView){
         this.group = group;
         fieldButtons = new ArrayList<TouchableBitmap>();
+        this.parentView = parentView;
 
         switch (group){
             case Miyagi:
@@ -36,14 +41,16 @@ public class FieldMap{
                         new OnClick() {
                             @Override
                             public void onClick() {
-                                //TODO:仙台ステージへの遷移
+                                parentView.changeScene(new MainScene(parentView));
                             }
                         }
                 ));
                 break;
             case Tohoku:
+                background = BitmapFactory.decodeResource(res, R.drawable.map_miyagi);
                 break;
             case World:
+                background = BitmapFactory.decodeResource(res, R.drawable.map_miyagi);
                 break;
             default:
                 break;
@@ -69,14 +76,15 @@ public class FieldMap{
             button.dispose();
         }
         fieldButtons.clear();
+        parentView = null;
     }
 
     public ArrayList<TouchableBitmap> getButtons(){
         return fieldButtons;
     }
 
-    public void changeGroup(FieldGroup group, Resources res){
+    public void changeGroup(FieldGroup group, Resources res, GameView parentView){
         dispose();
-        init(group, res);
+        init(group, res, parentView);
     }
 }

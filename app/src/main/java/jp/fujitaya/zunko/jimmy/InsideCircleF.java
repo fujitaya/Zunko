@@ -2,7 +2,7 @@ package jp.fujitaya.zunko.jimmy;
 
 import android.graphics.PointF;
 
-public class InsideCircleF implements InsideStrategyF {
+public class InsideCircleF implements InsideStrategy {
     private PointF center;
     private float radius;
 

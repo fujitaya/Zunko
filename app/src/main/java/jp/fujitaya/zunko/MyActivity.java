@@ -16,7 +16,7 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         Sound.getInstance().setContext(getApplicationContext());
-        setContentView(new GameViewFront(this));
+        setContentView(new GameView(this));
     }
 
     @Override
