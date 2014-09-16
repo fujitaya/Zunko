@@ -1,13 +1,11 @@
 package jp.fujitaya.zunko.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Build;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -17,7 +15,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import jp.fujitaya.zunko.MyActivity;
-import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.hayashima.MessageWindowScene;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     //描画範囲指定
@@ -45,7 +43,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         wasOutside = false;
         scheduler = null;
         fpswatch = new FpsCounter();
-        scene = new SceneMenu(this);
+        scene = new MessageWindowScene(this);
         getHolder().addCallback(this);
     }
 
@@ -118,9 +116,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         //スケール
         setScale();
         //フルスクリーン
-        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.KITKAT)
-        setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY | SYSTEM_UI_FLAG_FULLSCREEN
-                | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.KITKAT)
+//        setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY | SYSTEM_UI_FLAG_FULLSCREEN
+//                | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {
@@ -157,7 +155,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         float scaleX = (float)getWidth() / (float)VIEW_WIDTH;
         float scaleY = ((float)getHeight()) /  (float)VIEW_HEIGHT;
         scale = scaleX > scaleY ? scaleY : scaleX;
-        //scale = scaleX;
+//        scale = scaleX;
 
         //拡縮して中央にセット
         scaler = new Matrix();

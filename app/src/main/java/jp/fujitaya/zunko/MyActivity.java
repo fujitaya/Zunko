@@ -6,6 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
+import jp.fujitaya.zunko.util.GameView;
+import jp.fujitaya.zunko.util.ImageLoader;
 import jp.fujitaya.zunko.util.Sound;
 
 
@@ -16,6 +18,7 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         Sound.getInstance().setContext(getApplicationContext());
+        ImageLoader.getInstance().setResource(getResources());
         setContentView(new GameView(this));
     }
 
