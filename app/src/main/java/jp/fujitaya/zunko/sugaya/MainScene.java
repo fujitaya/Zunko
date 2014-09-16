@@ -28,9 +28,9 @@ public class MainScene extends GameScene {
     private void init(){
         //res = parent.getContext().getResources();
         //create lists
-        ArrayList<Bitmap> tempf=new ArrayList<Bitmap>();
-        tempf.add(BitmapFactory.decodeResource(res, R.drawable.green_field));
-        field=new Field(tempf,res);
+        //ArrayList<Bitmap> tempf=new ArrayList<Bitmap>();
+        //tempf.add(BitmapFactory.decodeResource(res, R.drawable.green_field));
+        field=new Field(res);
 
     }
 
