@@ -34,6 +34,9 @@ public class Image {
         }
     }
 
+    public void show(boolean show){
+        this.show = show;
+    }
     public void changeImage(int resId){
         bitmap = ImageLoader.getInstance().load(resId);
     }
