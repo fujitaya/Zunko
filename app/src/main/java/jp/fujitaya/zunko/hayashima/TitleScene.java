@@ -30,7 +30,6 @@ public class TitleScene extends GameScene {
         btn3.set(210, 864, 484, 936);
     }
 
-
     @Override
     public void dispose(){
         bg.changeImage(null).recycle();
@@ -60,11 +59,6 @@ public class TitleScene extends GameScene {
 
     @Override
     public void draw(Canvas canvas){
-        int width = canvas.getWidth();
-        int height = canvas.getHeight();
-        int baseX = 0;
-        int baseY = height - height/5;
-
         bg.draw(canvas, 0, 0, 1, 1, 0);
     }
 }

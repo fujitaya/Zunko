@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
-import jp.fujitaya.zunko.util.GameView;
 import jp.fujitaya.zunko.util.Sound;
 
 
@@ -19,7 +18,6 @@ public class MyActivity extends Activity {
         Sound.getInstance().setContext(getApplicationContext());
         setContentView(new GameViewFront(this));
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

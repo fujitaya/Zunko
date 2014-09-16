@@ -20,13 +20,18 @@ public class MessageWindowScene extends GameScene{
         Z01, Z05, Z07, Z08, Z09, Z15, Z_V,
     };
     public static final int LINE_NUM = 5;
+
     private Paint msgPaint, framePaint;
     private ArrayList<String> msgs;
     private static final int FONT_SIZE = 25;
     private HashMap<ImageName, Bitmap> zunkoImage;
     private SpriteNodeImage img, wnd;
+    private boolean show;
+
     public MessageWindowScene(GameView parent){
         super(parent);
+
+        show = true;
         
         msgs = new ArrayList<String>();
         msgPaint = new Paint();
@@ -50,8 +55,7 @@ public class MessageWindowScene extends GameScene{
         img.changeImage(zunkoImage.get(ImageName.Z09));
         img.moveTo(-128, -60);
     }
-    Sound.SoundCard secard1, secard2;
-    int counter = 0;
+
     public void appendMessage(String msg){
         if(msgs.size() == LINE_NUM) msgs.remove(0);
         msgs.add(msg);
@@ -63,6 +67,10 @@ public class MessageWindowScene extends GameScene{
         Bitmap image = zunkoImage.get(name);
         if(image != null) img.changeImage(image);
     }
+    public void show(boolean show){
+        this.show = show;
+    }
+
     @Override
     public void dispose(){
         img.changeImage(null);
@@ -73,11 +81,6 @@ public class MessageWindowScene extends GameScene{
     }
     @Override
     public void update(){
-        if(++counter%(60*5) == 60*3){
-            Sound.getInstance().playSE(secard1);
-        }else if(counter%(60*5) == 0){
-            Sound.getInstance().playSE(secard2);
-        }
     }
     @Override
     public void interrupt(MotionEvent event){}
@@ -85,6 +88,8 @@ public class MessageWindowScene extends GameScene{
     Rect canvasRect = new Rect();
     @Override
     public void draw(Canvas canvas){
+        if(!show) return;
+
         canvas.getClipBounds(canvasRect);
 
         int width = canvasRect.right;
