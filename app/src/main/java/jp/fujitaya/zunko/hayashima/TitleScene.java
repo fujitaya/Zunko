@@ -22,6 +22,9 @@ public class TitleScene extends GameScene {
                 BitmapFactory.decodeResource(parent.getResources(),
                 R.drawable.title));
 
+        btn1 = new Rect();
+        btn2 = new Rect();
+        btn3 = new Rect();
         btn1.set(203, 590, 480, 670);
         btn2.set(207, 726, 484, 800);
         btn3.set(210, 864, 484, 936);

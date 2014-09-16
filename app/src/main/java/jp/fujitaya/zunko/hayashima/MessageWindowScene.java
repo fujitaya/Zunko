@@ -1,16 +1,14 @@
 package jp.fujitaya.zunko.hayashima;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
@@ -22,19 +20,19 @@ public class MessageWindowScene extends GameScene{
         Z01, Z05, Z07, Z08, Z09, Z15, Z_V,
     };
     public static final int LINE_NUM = 5;
-
     private Paint msgPaint, framePaint;
     private ArrayList<String> msgs;
     private static final int FONT_SIZE = 25;
-
     private HashMap<ImageName, Bitmap> zunkoImage;
     private SpriteNodeImage img, wnd;
     public MessageWindowScene(GameView parent){
         super(parent);
+        
         msgs = new ArrayList<String>();
         msgPaint = new Paint();
         msgPaint.setColor(Color.BLACK);
         msgPaint.setTextSize(FONT_SIZE);
+
         framePaint = new Paint();
 
         wnd = new SpriteNodeImage(BitmapFactory.decodeResource(parent.getResources(), R.drawable.window));
@@ -54,7 +52,6 @@ public class MessageWindowScene extends GameScene{
     }
     Sound.SoundCard secard1, secard2;
     int counter = 0;
-
     public void appendMessage(String msg){
         if(msgs.size() == LINE_NUM) msgs.remove(0);
         msgs.add(msg);
@@ -66,7 +63,6 @@ public class MessageWindowScene extends GameScene{
         Bitmap image = zunkoImage.get(name);
         if(image != null) img.changeImage(image);
     }
-
     @Override
     public void dispose(){
         img.changeImage(null);
@@ -75,7 +71,6 @@ public class MessageWindowScene extends GameScene{
             e.getValue().recycle();
         }
     }
-
     @Override
     public void update(){
         if(++counter%(60*5) == 60*3){
@@ -84,29 +79,28 @@ public class MessageWindowScene extends GameScene{
             Sound.getInstance().playSE(secard2);
         }
     }
-
     @Override
     public void interrupt(MotionEvent event){}
 
+    Rect canvasRect = new Rect();
     @Override
     public void draw(Canvas canvas){
-        int width = canvas.getWidth();
-        int height = canvas.getHeight();
+        canvas.getClipBounds(canvasRect);
 
-//        float scaleX = (float)width / (float)TARGET_WIDTH;
-//        float scaleY = (float)height /  (float)TARGET_HEIGHT;
-//        float scale = scaleX > scaleY ? scaleY : scaleX;
+        int width = canvasRect.right;
+        int height = canvasRect.bottom;
+// float scaleX = (float)width / (float)TARGET_WIDTH;
+// float scaleY = (float)height / (float)TARGET_HEIGHT;
+// float scale = scaleX > scaleY ? scaleY : scaleX;
 //
         int drawX = 0;
         int drawY = height - height/5;
-
-//        int baseX = (int)(0 + (float)drawX * scale);
-//        int baseY = (int)(0 + (float)drawY * scale);
+// int baseX = (int)(0 + (float)drawX * scale);
+// int baseY = (int)(0 + (float)drawY * scale);
         int baseX = drawX;
         int baseY = drawY;
 
         wnd.draw(canvas, baseX+(width-wnd.getWidth())/2, baseY, 1, 1, 0);
-
         img.draw(canvas, baseX, baseY, 1, 1, 0);
 
         int msgX = img.getWidth() + img.getX();
