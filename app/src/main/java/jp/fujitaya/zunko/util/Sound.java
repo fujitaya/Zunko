@@ -37,6 +37,11 @@ public class Sound {
     public void setContext(Context context){
         this.context = context;
     }
+    public void init(Context context){
+        this.context = context;
+        sp = new SoundPool(MAX_SE_SIMULTANEOUS_PLAY_NUM, AudioManager.STREAM_MUSIC, 0);
+        mp = null;
+    }
     public void release(){
         if(mp != null){
             mp.reset();
@@ -45,6 +50,7 @@ public class Sound {
         }
         sp.release();
         sp = null;
+        context = null;
     }
     public void unload(SoundCard card){
         if(card.tag==SoundCard.TAG_BGM){
@@ -116,8 +122,5 @@ public class Sound {
     private MediaPlayer mp;
 
     private static Sound instance = null;
-    private Sound(){
-        sp = new SoundPool(MAX_SE_SIMULTANEOUS_PLAY_NUM, AudioManager.STREAM_MUSIC, 0);
-        mp = null;
-    }
+    private Sound(){}
 }

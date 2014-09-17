@@ -11,8 +11,9 @@ public class ImageLoader {
         return instance;
     }
 
-    public void setResource(Resources res){
+    public void init(Resources res){
         this.res = res;
+        loader = new SparseArray< Bitmap>();
     }
     public Bitmap load(int resId){
         Bitmap b = loader.get(resId);
@@ -34,12 +35,12 @@ public class ImageLoader {
             loader.valueAt(i).recycle();
         }
         loader.clear();
+        loader = null;
+        res = null;
     }
 
     private static ImageLoader instance = null;
     private SparseArray<Bitmap> loader;
     private Resources res;
-    private ImageLoader(){
-        loader = new SparseArray< Bitmap>();
-    }
+    private ImageLoader(){}
 }
