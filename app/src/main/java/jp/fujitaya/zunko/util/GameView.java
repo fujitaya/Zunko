@@ -43,7 +43,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         wasOutside = false;
         scheduler = null;
-        scene = new MainScene(this);
+        scene = new MessageWindowScene(this);
         getHolder().addCallback(this);
     }
 

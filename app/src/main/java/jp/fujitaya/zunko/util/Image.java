@@ -40,6 +40,9 @@ public class Image {
     public void changeImage(int resId){
         bitmap = ImageLoader.getInstance().load(resId);
     }
+    public void setPosition(PointF pos){
+        this.pos = pos;
+    }
     public void moveTo(float x, float y) {
         pos.set(x, y);
         if(collision != null) collision.move(pos.x, pos.y);
@@ -90,6 +93,7 @@ public class Image {
 
     public void setCollision(InsideStrategy collision) {
         this.collision = collision;
+        this.collision.move(pos.x-center.x, pos.y-center.y);
     }
     public boolean isInside(PointF point){
         if(collision == null) return false;

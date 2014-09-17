@@ -2,15 +2,20 @@ package jp.fujitaya.zunko.hayashima;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.jimmy.InsideRectF;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
 import jp.fujitaya.zunko.util.Image;
+import jp.fujitaya.zunko.util.PointerInfo;
 import jp.fujitaya.zunko.util.Sound;
 
 public class MessageWindowScene extends GameScene{
@@ -54,15 +59,14 @@ public class MessageWindowScene extends GameScene{
 
         img = new Image(zunkoImage.get(ImageName.Z09));
         img.setCenter(128, 138);
-        img.setScale(2, 2);
-
-//        statusScene = new StatusWindow(parent);
+        img.setCollision(new InsideRectF(new RectF(
+                0, 0, img.getWidth(), img.getHeight())));
 
         bg = new Image(R.drawable.map_miyagi);
 
-        Sound sound = Sound.getInstance();
-        Sound.SoundCard sc = sound.loadBGM(R.raw.title_theme_02);
-        sound.playBGM(sc);
+//        Sound sound = Sound.getInstance();
+//        Sound.SoundCard sc = sound.loadBGM(R.raw.title_theme_02);
+//        sound.playBGM(sc);
     }
 
     public void appendMessage(String msg){
@@ -89,8 +93,23 @@ public class MessageWindowScene extends GameScene{
     @Override
     public void update(){
     }
+
+    PointerInfo pi = new PointerInfo();
     @Override
-    public void interrupt(MotionEvent event){}
+    public void interrupt(MotionEvent event){
+        pi.update(event);
+        switch(event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                if(statusWindow==null){// && img.isInside(new PointF(pi.x, pi.y))){
+                    statusWindow = new StatusWindow();
+                }else if(statusWindow != null){
+//                    statusWindow.interrupt(event);
+                    statusWindow = null;
+                }
+                break;
+            default: break;
+        }
+    }
 
     Rect canvasRect = new Rect();
     @Override
@@ -104,7 +123,7 @@ public class MessageWindowScene extends GameScene{
 // float scaleX = (float)width / (float)TARGET_WIDTH;
 // float scaleY = (float)height / (float)TARGET_HEIGHT;
 // float scale = scaleX > scaleY ? scaleY : scaleX;
-//
+
         int drawX = 0;
         int drawY = height - height/5;
 // int baseX = (int)(0 + (float)drawX * scale);
@@ -123,5 +142,7 @@ public class MessageWindowScene extends GameScene{
         for(int i=0; i < msgs.size(); ++i){
             canvas.drawText(msgs.get(i), msgX, msgY + i*diffY, msgPaint);
         }
+
+        if(statusWindow != null) statusWindow.draw(canvas, 0, 0);
     }
 }
