@@ -40,7 +40,7 @@ public class FieldMap{
                 background = BitmapFactory.decodeResource(res, R.drawable.map_miyagi);
                 fieldButtons.add(new TouchableBitmap(
                         BitmapFactory.decodeResource(res, R.drawable.mc_mig),
-                        new RectF(200f,500f,288f,611f),
+                        new RectF(200f,500f,300f,600f),
                         new InsideRectF(new RectF(200f,500f,288f,611f)),
                         new OnGestureListener() {
                             @Override

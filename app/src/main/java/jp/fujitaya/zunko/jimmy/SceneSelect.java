@@ -36,11 +36,13 @@ public class SceneSelect extends GameScene implements OnGestureListener{
     public void update() {
         map.update();
         fieldManager.update();
+        message.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
         map.draw(canvas);
+        message.draw(canvas);
     }
 
     @Override
@@ -54,6 +56,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
     @Override
     public void interrupt(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
+        message.interrupt(event);
     }
 
     @Override
