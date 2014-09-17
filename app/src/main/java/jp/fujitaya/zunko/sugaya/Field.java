@@ -31,20 +31,13 @@ public class Field{
     ArrayList<Creator> listCreator;
     ArrayList<MiniZunko> listMiniZunko;
 
-    //
-    //int nowfieldHitPoint=0;
     int maxFieldHitPoint=0;
-
-    //list of bitmap
-    //ArrayList<Bitmap> bitmapBuilding;
-    //ArrayList<Bitmap> bitmapCreator;
-    //ArrayList<Bitmap> bitmapMiniZunko;
 
     public Field(/*Resources r*/String name){
         //this.res=r;
         vect=new PointF(0,0);
         fieldName=name;
-        image=new Image(R.drawable.green_field);
+        image=new Image(R.drawable.fd_green);
         createBuild();
 
     }
