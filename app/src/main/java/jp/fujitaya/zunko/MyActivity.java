@@ -18,8 +18,6 @@ public class MyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        Sound.getInstance().setContext(getApplicationContext());
-        ImageLoader.getInstance().setResource(getResources());
         gameView = new GameView(this);
         setContentView(gameView);
     }
@@ -46,6 +44,8 @@ public class MyActivity extends Activity {
     @Override
     public void onResume(){
         super.onResume();
+        Sound.getInstance().init(getApplicationContext());
+        ImageLoader.getInstance().init(getResources());
     }
     @Override
     public void onPause(){
