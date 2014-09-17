@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 import jp.fujitaya.zunko.MyActivity;
 import jp.fujitaya.zunko.SceneMenu;
 import jp.fujitaya.zunko.hayashima.MessageWindowScene;
+import jp.fujitaya.zunko.jimmy.SceneSelect;
 import jp.fujitaya.zunko.sugaya.MainScene;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
@@ -45,7 +46,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         wasOutside = false;
         scheduler = null;
-        scene = new SceneMenu(this);
+        scene = new SceneSelect(this);
         getHolder().addCallback(this);
     }
 
@@ -87,7 +88,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         //タッチ座標用の逆変換も作成
         invScaler = new Matrix();
         invScaler.postTranslate(-(getWidth()-VIEW_WIDTH*scale)/2.0f, -(getHeight()-VIEW_HEIGHT*scale)/2.0f);
-        invScaler.postScale(1.0f/scale, 1.0f/scale);
+        invScaler.postScale(1.0f / scale, 1.0f / scale);
     }
 
     public void changeScene(GameScene next){
