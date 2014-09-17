@@ -33,7 +33,7 @@ public class Field{
     Field(Resources r){
         this.res=r;
         vect=new PointF(0,0);
-        image=BitmapFactory.decodeResource(res, R.drawable.green_field);
+        image=BitmapFactory.decodeResource(res, R.drawable.fd_green);
         init();
     }
 
@@ -45,12 +45,12 @@ public class Field{
         bitmapMiniZunko=new ArrayList<Bitmap>();
 
         //Set bitmap data
-        bitmapBuilding.add(BitmapFactory.decodeResource(res, R.drawable.mig));
+        bitmapBuilding.add(BitmapFactory.decodeResource(res, R.drawable.mc_mig));
         bitmapBuilding.add(BitmapFactory.decodeResource(res, R.drawable.ic_launcher));
 
-        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_aruku1));
+        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.cz_aruku01));
         bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_select));
-        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_aruku2));
+        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.cz_aruku02));
         bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_attack));
         bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_rest));
 

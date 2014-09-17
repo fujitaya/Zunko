@@ -39,7 +39,7 @@ public class FieldMap{
             case Miyagi:
                 background = BitmapFactory.decodeResource(res, R.drawable.map_miyagi);
                 fieldButtons.add(new TouchableBitmap(
-                        BitmapFactory.decodeResource(res, R.drawable.mig),
+                        BitmapFactory.decodeResource(res, R.drawable.mc_mig),
                         new RectF(200f,500f,288f,611f),
                         new InsideRectF(new RectF(200f,500f,288f,611f)),
                         new OnGestureListener() {

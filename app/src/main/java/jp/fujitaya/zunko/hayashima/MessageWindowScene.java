@@ -46,16 +46,16 @@ public class MessageWindowScene extends GameScene{
 
         framePaint = new Paint();
 
-        wnd = new Image(R.drawable.window);
+        wnd = new Image(R.drawable.wnd_message);
 
         zunkoImage = new HashMap<ImageName, Integer>();
-        zunkoImage.put(ImageName.Z01, R.drawable.zunko01);
-        zunkoImage.put(ImageName.Z05, R.drawable.zunko05);
-        zunkoImage.put(ImageName.Z07, R.drawable.zunko07);
-        zunkoImage.put(ImageName.Z08, R.drawable.zunko08);
-        zunkoImage.put(ImageName.Z09, R.drawable.zunko09);
-        zunkoImage.put(ImageName.Z15, R.drawable.zunko15);
-        zunkoImage.put(ImageName.Z_V, R.drawable.zunko_v);
+        zunkoImage.put(ImageName.Z01, R.drawable.tz_zunko01);
+        zunkoImage.put(ImageName.Z05, R.drawable.tz_zunko05);
+        zunkoImage.put(ImageName.Z07, R.drawable.tz_zunko07);
+        zunkoImage.put(ImageName.Z08, R.drawable.tz_zunko08);
+        zunkoImage.put(ImageName.Z09, R.drawable.tz_zunko09);
+        zunkoImage.put(ImageName.Z15, R.drawable.tz_zunko15);
+        zunkoImage.put(ImageName.Z_V, R.drawable.tz_zunko_v);
 
         img = new Image(zunkoImage.get(ImageName.Z09));
         img.setCenter(128, 138);

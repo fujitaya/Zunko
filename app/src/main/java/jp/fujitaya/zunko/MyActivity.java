@@ -12,6 +12,7 @@ import jp.fujitaya.zunko.util.Sound;
 
 
 public class MyActivity extends Activity {
+    GameView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +20,8 @@ public class MyActivity extends Activity {
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         Sound.getInstance().setContext(getApplicationContext());
         ImageLoader.getInstance().setResource(getResources());
-        setContentView(new GameView(this));
+        gameView = new GameView(this);
+        setContentView(gameView);
     }
 
     @Override
@@ -49,5 +51,9 @@ public class MyActivity extends Activity {
     public void onPause(){
         super.onPause();
         Sound.getInstance().release();
+    }
+    @Override
+    public void onDestroy(){
+        gameView.onDestroy();
     }
 }
