@@ -7,9 +7,14 @@ import android.graphics.Point;
 import android.graphics.PointF;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-enum miniZunkoState{wait,move,rest,attack;}
+import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.util.Image;
+
 public class MiniZunko extends BasicObject{
+    static enum ImageName{wait,move,rest,attack;}
+    HashMap<ImageName,Integer> mapImage;
     int createNumber=0;
     //state
     miniZunkoState nowState;
@@ -23,14 +28,24 @@ public class MiniZunko extends BasicObject{
 
     //attack
     int attackBuildingNumber=-1;
+    int movingAttackBuildNumber=-1;
     int attackPower;
 
-    MiniZunko(ArrayList<Bitmap> image,PointF v){
-        super(image,v);
+    MiniZunko(/*ArrayList<Bitmap> image,*/PointF v){
+        super(/*image,*/v);
+
+        mapImage = new HashMap<ImageName, Integer>();
+        mapImage.put(ImageName.wait, R.drawable.cz_miwatasu01);
+        mapImage.put(ImageName.move, R.drawable.cz_aruku01);
+        mapImage.put(ImageName.rest, R.drawable.cz_suru01);
+        mapImage.put(ImageName.attack, R.drawable.cz_mochi01);
+        image = new Image(mapImage.get(ImageName.wait));
+        image.setCenter();
+        image.setPosition(vect);
+
 
         createNumber++;
-        tatchSize=(int)Math.sqrt(image.get(0).getWidth()*image.get(0).getWidth()+image.get(0).getHeight()*image.get(0).getHeight())/2;
-
+        tatchSize=(int)Math.sqrt(image.getWidth()*image.getWidth()+image.getHeight()*image.getHeight());
         addVect=10;
         toVect=vect;
         //2min
@@ -48,11 +63,13 @@ public class MiniZunko extends BasicObject{
     public void update(){
         stateAction();
         move();
+        changeDrawImage();
     }
 
     void changeState(miniZunkoState state){
         nowState=state;
     }
+
     public miniZunkoState getNowState(){return nowState;}
     public boolean isSelect(){return selectFlag;}
     void setSelect(boolean flag){
@@ -97,26 +114,35 @@ public class MiniZunko extends BasicObject{
     public int getActionPoint(){return actionPoint;}
     public void setAttackBuildingNumber(int n){attackBuildingNumber=n;}
     public int getAttackBuildingNumber(){return attackBuildingNumber;}
+    public void setMovingAttackBuildingNumber(int n){movingAttackBuildNumber=n;}
+    public int getMovingAttackBuildingNumber(){return movingAttackBuildNumber;}
     public int getAttackPower(){return attackPower;}
 
-    @Override
-    public void draw(Canvas canvas){
+    void changeDrawImage(){
         //selected
         if(selectFlag==true &&nowState!=miniZunkoState.wait)  {
-            canvas.drawBitmap(listImage.get(2), vect.x - imageSize.x / 2, vect.y - imageSize.y / 2, null);
+            image.changeImage(mapImage.get(ImageName.wait));
         }
         if(nowState==miniZunkoState.wait){
-            canvas.drawBitmap(listImage.get(0), vect.x-imageSize.x/2, vect.y-imageSize.y/2, null);
+            image.changeImage(mapImage.get(ImageName.wait));
         }
         else if(nowState==miniZunkoState.move){
-            canvas.drawBitmap(listImage.get(1), vect.x-imageSize.x/2, vect.y-imageSize.y/2, null);
+            image.changeImage(mapImage.get(ImageName.move));
         }
         else if(nowState==miniZunkoState.attack){
-            canvas.drawBitmap(listImage.get(3), vect.x-imageSize.x/2, vect.y-imageSize.y/2, null);
+            image.changeImage(mapImage.get(ImageName.attack));
         }
         else if(nowState==miniZunkoState.rest){
-            canvas.drawBitmap(listImage.get(4), vect.x-imageSize.x/2, vect.y-imageSize.y/2, null);
+            image.changeImage(mapImage.get(ImageName.rest));
         }
-        canvas.drawBitmap(listImage.get(0), -100, -100, null);
+
+    }
+    @Override
+    public void draw(Canvas canvas){
+        image.draw(canvas);
+    }
+    @Override public void disposeImage(){
+        mapImage.clear();
+        image=null;
     }
 }

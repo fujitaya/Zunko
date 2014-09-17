@@ -11,32 +11,31 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.jimmy.FieldManager;
+import jp.fujitaya.zunko.jimmy.SceneSelect;
 import jp.fujitaya.zunko.util.*;
 
 public class MainScene extends GameScene {
-    Resources res;
-
     //object list
     Field field;
-
-    public MainScene(GameView parent){
+    String fieldName;
+    public MainScene(GameView parent,String name){
         super(parent);
-        res = parent.getContext().getResources();
+        fieldName=name;
         init();
-    }
+    };
+
 
     private void init(){
-        //res = parent.getContext().getResources();
-        //create lists
-        //ArrayList<Bitmap> tempf=new ArrayList<Bitmap>();
-        //tempf.add(BitmapFactory.decodeResource(res, R.drawable.green_field));
-        field=new Field(res);
-
+        field= FieldManager.getInstance().getField(fieldName);
     }
 
     @Override
     public void update(){
-        field.update();
+        FieldManager.getInstance().update();
+
+        //changeScene
     }
     @Override
     public void draw(Canvas canvas){
@@ -48,6 +47,14 @@ public class MainScene extends GameScene {
         field.interrupt(event);
     }
     @Override
-    public void dispose(){}
+    public void dispose(){
+        field.disposeImage();
+    }
+
+    void ChangeScene(){
+        parent.changeScene(new SceneSelect(parent));
+    }
+
+
 
 }

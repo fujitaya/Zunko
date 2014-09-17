@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.os.Build;
 import android.os.Parcelable;
 import android.view.MotionEvent;
 
@@ -15,73 +16,71 @@ import java.util.Iterator;
 import java.util.Random;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.util.Image;
 
 public class Field{
     PointF vect;
-    Resources res;
-    Bitmap image;
+    //Resources res;
+    //Bitmap image;
+    Image image;
     boolean selectFlag=false;
+    String fieldName;
 
     //list of obj
     ArrayList<Building> listBuilding;
+    ArrayList<Creator> listCreator;
     ArrayList<MiniZunko> listMiniZunko;
 
-    //list of bitmap
-    ArrayList<Bitmap> bitmapBuilding;
-    ArrayList<Bitmap> bitmapMiniZunko;
+    //
+    //int nowfieldHitPoint=0;
+    int maxFieldHitPoint=0;
 
-    Field(Resources r){
-        this.res=r;
+    //list of bitmap
+    //ArrayList<Bitmap> bitmapBuilding;
+    //ArrayList<Bitmap> bitmapCreator;
+    //ArrayList<Bitmap> bitmapMiniZunko;
+
+    public Field(/*Resources r*/String name){
+        //this.res=r;
         vect=new PointF(0,0);
-        image=BitmapFactory.decodeResource(res, R.drawable.fd_green);
-        init();
+        fieldName=name;
+        image=new Image(R.drawable.green_field);
+        createBuild();
+
     }
 
-    public void init(){
+    public void createBuild(){
         listBuilding=new ArrayList<Building>();
+        listCreator=new ArrayList<Creator>();
         listMiniZunko=new ArrayList<MiniZunko>();
 
-        bitmapBuilding=new ArrayList<Bitmap>();
-        bitmapMiniZunko=new ArrayList<Bitmap>();
+        listCreator.add(new Creator(new PointF(100 ,100)));
+        listBuilding.add(new Building(new PointF(500,500)));
+        listBuilding.add(new Building(new PointF(200,800)));
 
-        //Set bitmap data
-        bitmapBuilding.add(BitmapFactory.decodeResource(res, R.drawable.mc_mig));
-        bitmapBuilding.add(BitmapFactory.decodeResource(res, R.drawable.ic_launcher));
-
-        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.cz_aruku01));
-        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_select));
-        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.cz_aruku02));
-        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_attack));
-        bitmapMiniZunko.add(BitmapFactory.decodeResource(res, R.drawable.zunko_rest));
-
-        listBuilding.add(new Building(bitmapBuilding,new PointF(100 ,100)));
-        listBuilding.get(0).setZunkoCreatorFlag(true);
-        listBuilding.add(new Building(bitmapBuilding,new PointF(500,500)));
-        listBuilding.add(new Building(bitmapBuilding,new PointF(200,800)));
-
+        for(Building build:listBuilding) {
+            maxFieldHitPoint +=build.getHitPoint();
+        }
     }
     public void update(){
 
         setMiniZunkoAttack();
         attackMiniZunko();
+        deleteBuildingAndCreatCreator();
         deleteZunko();
-        createZunkoCreator();
+        createMiniZunko();
 
-        for(int i=0;i<listBuilding.size();i++){
-            listBuilding.get(i).update();
-        }
-        for(int i=0;i<listMiniZunko.size();i++){
-            listMiniZunko.get(i).update();
-        }
+        for(Building b:listBuilding){b.update();}
+        for(Creator b:listCreator){b.update();}
+        for(MiniZunko b:listMiniZunko){b.update();}
+
     }
     public void draw(Canvas canvas){
-        canvas.drawBitmap(image,vect.x,vect.y,null);
-        for(int i=0;i<listBuilding.size();i++){
-            listBuilding.get(i).draw(canvas);
-        }
-        for(int i=0;i<listMiniZunko.size();i++){
-            listMiniZunko.get(i).draw(canvas);
-        }
+        //canvas.drawBitmap(image,vect.x,vect.y,null);
+        image.draw(canvas);
+        for(Building b:listBuilding){b.draw(canvas);}
+        for(Creator b:listCreator){b.draw(canvas);}
+        for(MiniZunko b:listMiniZunko){b.draw(canvas);}
     }
 
     public void interrupt(MotionEvent event){
@@ -98,13 +97,14 @@ public class Field{
                 }
             }
             else{
-                for(int i=0;i<listBuilding.size();i++){
-                    if (listBuilding.get(i).isZunkoCreator()==false && listBuilding.get(i).isHit(new PointF((float) event.getX(), (float) event.getY()))) {
-                        for(int j=0;j<listMiniZunko.size();j++) {
+                for(Building build:listBuilding){
+                    if (build.isHit(new PointF((float) event.getX(), (float) event.getY()))) {
+                        for(MiniZunko zun:listMiniZunko) {
                             //cant moving
-                            if(listMiniZunko.get(j).isSelect()) {
-                                listMiniZunko.get(j).tatchToMove(new PointF(listBuilding.get(i).getVect().x,listBuilding.get(i).getVect().y));
-                                listMiniZunko.get(j).setSelect(false);
+                            if(zun.isSelect()) {
+                                zun.tatchToMove(new PointF(build.getVect().x, build.getVect().y));
+                                zun.setMovingAttackBuildingNumber(build.getCreateNumber());
+                                zun.setSelect(false);
                                 selectFlag=false;
                                 break;
                             }
@@ -115,62 +115,91 @@ public class Field{
         }
     }
 
-    void createZunkoCreator(){
-        for(int i=0;i<listBuilding.size();i++){
-            if(listBuilding.get(i).isNowZunkoCreate()){
-
-                PointF p=new PointF((float)(Math.random()*bitmapBuilding.get(0).getWidth())-bitmapBuilding.get(0).getWidth()/2
-                        ,(float)(Math.random()*bitmapBuilding.get(0).getHeight())-bitmapBuilding.get(0).getHeight()/2);
-                p.x=listBuilding.get(i).getVect().x+p.x;
-                p.y=listBuilding.get(i).getVect().y+p.y;
-                listMiniZunko.add(new MiniZunko(bitmapMiniZunko,new PointF(p.x,p.y)));
+    void createMiniZunko(){
+        for(Creator cre:listCreator){
+            if(cre.getCreateCount()==0){
+                PointF p=new PointF((float)(Math.random()*200)-100
+                        ,(float)(Math.random()*200)-100);
+                p.x=cre.getVect().x+p.x;
+                p.y=cre.getVect().y+p.y;
+                listMiniZunko.add(new MiniZunko(/*bitmapMiniZunko,*/new PointF(p.x,p.y)));
             }
         }
     }
-    void setMiniZunkoAttack(){
-        for(int i=0;i<listMiniZunko.size();i++){
-            for(int j=0;j<listBuilding.size();j++){
-                if(listBuilding.get(j).isZunkoCreator()==false) {
-                    if (listMiniZunko.get(i).isHit(listBuilding.get(j).getVect())) {
-                        listMiniZunko.get(i).changeState(miniZunkoState.attack);
-                        listMiniZunko.get(i).setAttackBuildingNumber(listBuilding.get(j).getCreateNumber());
-                        listMiniZunko.get(i).resetDv();
-
+    void deleteBuildingAndCreatCreator(){
+        Iterator<Building> build = listBuilding.iterator();
+        while(build.hasNext()){
+                Building temp = build.next();
+                if(temp.getHitPoint()<0){
+                    listCreator.add(new Creator(/*bitmapCreator,*/ new PointF(temp.getVect().x, temp.getVect().y)));
+                    for(MiniZunko zun:listMiniZunko){
+                        if(zun.getAttackBuildingNumber()==temp.getCreateNumber()||zun.getMovingAttackBuildingNumber()==temp.getCreateNumber()){
+                            zun.changeState(miniZunkoState.wait);
+                            zun.setAttackBuildingNumber(-1);
+                            zun.setMovingAttackBuildingNumber(-1);
+                            zun.resetDv();
+                        }
                     }
+                    build.remove();
                 }
             }
+    }
+    void setMiniZunkoAttack(){
+        for(MiniZunko zun:listMiniZunko){
+            for(Building build:listBuilding){
+                    if (zun.isHit(build.getVect())) {
+                        zun.changeState(miniZunkoState.attack);
+                        zun.setAttackBuildingNumber(build.getCreateNumber());
+                        zun.resetDv();
+                    }
+                }
         }
     }
     void attackMiniZunko(){
-        for(int i=0;i<listMiniZunko.size();i++) {
-            for (int j = 0; j < listBuilding.size(); j++) {
-                if (listMiniZunko.get(i).getNowState() == miniZunkoState.attack
-                        &&listBuilding.get(j).isZunkoCreator()==false
-                        &&listMiniZunko.get(i).getAttackBuildingNumber()==listBuilding.get(j).getCreateNumber()) {
-                    listBuilding.get(j).DecHitPoint(listMiniZunko.get(i).getAttackPower());
-                    if(listBuilding.get(j).getHitPoint()<=0){
-                        for(int k=0;k<listMiniZunko.size();k++){
-                            if(listMiniZunko.get(k).getAttackBuildingNumber()==listBuilding.get(j).getCreateNumber()){
-                                listMiniZunko.get(k).changeState(miniZunkoState.wait);
-                                listMiniZunko.get(k).resetDv();
+        for(MiniZunko zun:listMiniZunko){
+            for(Building build:listBuilding){
+                if (zun.getNowState() == miniZunkoState.attack
+                        &&zun.getAttackBuildingNumber()==build.getCreateNumber()) {
+                    build.DecHitPoint(zun.getAttackPower());
+                    /*if(build.getHitPoint()<=0){
+                        for(MiniZunko zun2:listMiniZunko){
+                            if(zun2.getAttackBuildingNumber()==build.getCreateNumber()){
+                                zun2.changeState(miniZunkoState.wait);
+                                zun2.resetDv();
                             }
                         }
-                        listBuilding.get(j).setZunkoCreatorFlag(true);
-                    }
+                    }*/
                 }
             }
         }
     }
     public void deleteZunko(){
         Iterator<MiniZunko> i = listMiniZunko.iterator();
-        while(i.hasNext()){
                 while(i.hasNext()){
                     MiniZunko temp = i.next();
-                    //接頭辞が「堀北」以外は除外
                     if(temp.getActionPoint()==0){
                         i.remove();
                     }
                 }
-            }
         }
+
+    public void disposeImage(){
+        image=null;
+        for(Building b:listBuilding){b.disposeImage();}
+        for(Creator b:listCreator){b.disposeImage();}
+        for(MiniZunko b:listMiniZunko){b.disposeImage();}
+
+
+    }
+    public int getMiniZunkoNumber(){return listMiniZunko.size();}
+    public int getBuildingNumber(){return listBuilding.size();}
+    public int getCreatorNumber(){return listCreator.size();}
+    public float getFieldHitPoint(){
+        int p=0;
+        for(Building build:listBuilding){
+            p+=build.getHitPoint();
+        }
+        return (float)(p/maxFieldHitPoint);
+    }
+
 }
