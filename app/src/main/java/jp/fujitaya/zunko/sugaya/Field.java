@@ -84,7 +84,8 @@ public class Field{
     }
 
     public void interrupt(MotionEvent event){
-        if(event.getAction()==MotionEvent.ACTION_DOWN){
+
+        if(event.getAction()==MotionEvent.ACTION_UP){
             if(selectFlag==false){
                 for(int i=0;i<listMiniZunko.size();i++) {
                     if (listMiniZunko.get(i).isHit(new PointF((float) event.getX(), (float) event.getY()))) {
