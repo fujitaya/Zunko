@@ -51,7 +51,7 @@ public class FieldMap{
                             public void onShowPress(MotionEvent motionEvent) { }
                             @Override
                             public boolean onSingleTapUp(MotionEvent motionEvent) {
-                                parentView.changeScene(new MainScene(parentView));
+                                parentView.changeScene(new MainScene(parentView, ""));
                                 return false;
                             }
                             @Override

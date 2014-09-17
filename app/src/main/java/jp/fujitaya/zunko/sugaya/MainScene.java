@@ -24,7 +24,7 @@ public class MainScene extends GameScene {
         super(parent);
         fieldName=name;
         init();
-    };
+    }
 
 
     private void init(){

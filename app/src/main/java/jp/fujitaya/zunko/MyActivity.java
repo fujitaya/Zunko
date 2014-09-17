@@ -18,6 +18,8 @@ public class MyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        Sound.getInstance().init(getApplicationContext());
+        ImageLoader.getInstance().init(getResources());
         gameView = new GameView(this);
         setContentView(gameView);
     }
