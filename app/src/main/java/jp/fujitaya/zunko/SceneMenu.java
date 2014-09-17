@@ -37,11 +37,11 @@ public class SceneMenu extends GameScene implements OnGestureListener{
         buttons = new ArrayList<TouchableBitmap>();
 
         //背景画像
-        background = BitmapFactory.decodeResource(res, R.drawable.title);
+        background = BitmapFactory.decodeResource(res, R.drawable.bg_title);
         //タイトル画像
         menuTitle = BitmapFactory.decodeResource(res,R.drawable.menutitle);
         //スタートボタン
-        buttons.add(new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.startbutton),
+        buttons.add(new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.btn_startbutton),
                 new RectF(200f,800f,520f,900f),
                 new OnGestureListener() {
                     @Override
@@ -68,7 +68,7 @@ public class SceneMenu extends GameScene implements OnGestureListener{
                     }
                 }));
         //図鑑ボタン
-        buttons.add((new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.extrabutton),
+        buttons.add((new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.btn_extrabutton),
                 new RectF(200f,1000f,520f,1100f),
                 new InsideRectF(new RectF(250f,1000f,550f,1100f)),
                 new OnGestureListener() {

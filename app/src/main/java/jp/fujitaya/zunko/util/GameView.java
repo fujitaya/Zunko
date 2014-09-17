@@ -15,6 +15,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import jp.fujitaya.zunko.MyActivity;
+import jp.fujitaya.zunko.SceneMenu;
 import jp.fujitaya.zunko.hayashima.MessageWindowScene;
 import jp.fujitaya.zunko.sugaya.MainScene;
 
@@ -38,12 +39,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     protected Matrix scaler;
     protected Matrix invScaler;
     protected boolean wasOutside;
+    protected boolean drawFlag;
 
     public GameView(Context context){
         super(context);
         wasOutside = false;
         scheduler = null;
-        scene = new MessageWindowScene(this);
+        scene = new SceneMenu(this);
         getHolder().addCallback(this);
     }
 
@@ -69,6 +71,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         canvas.drawColor(Color.WHITE);
 
         scene.draw(canvas);
+    }
+
+    public void setScale(){
+        //拡大率を取得，小さいほうに合わせる
+        float scaleX = (float)getWidth() / (float)VIEW_WIDTH;
+        float scaleY = ((float)getHeight()) /  (float)VIEW_HEIGHT;
+        scale = scaleX > scaleY ? scaleY : scaleX;
+//        scale = scaleX;
+
+        //拡縮して中央にセット
+        scaler = new Matrix();
+        scaler.postScale(scale,scale);
+        scaler.postTranslate((getWidth()-VIEW_WIDTH*scale)/2.0f, (getHeight()-VIEW_HEIGHT*scale)/2.0f);
+        //タッチ座標用の逆変換も作成
+        invScaler = new Matrix();
+        invScaler.postTranslate(-(getWidth()-VIEW_WIDTH*scale)/2.0f, -(getHeight()-VIEW_HEIGHT*scale)/2.0f);
+        invScaler.postScale(1.0f/scale, 1.0f/scale);
     }
 
     public void changeScene(GameScene next){
@@ -121,15 +140,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 //                | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         fpswatch = new FpsCounter();
+        drawFlag = true;
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
                 update();
 
-                Canvas canvas = holder.lockCanvas();
-                doDraw(canvas);
-                holder.unlockCanvasAndPost(canvas);
+                if (drawFlag == true) {
+                    Canvas canvas = holder.lockCanvas();
+                    doDraw(canvas);
+                    holder.unlockCanvasAndPost(canvas);
+                }
             }
         },100,INTERVAL,TimeUnit.NANOSECONDS);
     }
@@ -142,24 +164,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        scheduler.shutdown();
         fpswatch = null;
+        drawFlag = false;
     }
 
-    public void setScale(){
-        //拡大率を取得，小さいほうに合わせる
-        float scaleX = (float)getWidth() / (float)VIEW_WIDTH;
-        float scaleY = ((float)getHeight()) /  (float)VIEW_HEIGHT;
-        scale = scaleX > scaleY ? scaleY : scaleX;
-//        scale = scaleX;
-
-        //拡縮して中央にセット
-        scaler = new Matrix();
-        scaler.postScale(scale,scale);
-        scaler.postTranslate((getWidth()-VIEW_WIDTH*scale)/2.0f, (getHeight()-VIEW_HEIGHT*scale)/2.0f);
-        //タッチ座標用の逆変換も作成
-        invScaler = new Matrix();
-        invScaler.postTranslate(-(getWidth()-VIEW_WIDTH*scale)/2.0f, -(getHeight()-VIEW_HEIGHT*scale)/2.0f);
-        invScaler.postScale(1.0f/scale, 1.0f/scale);
+    public void onDestroy(){
+        scene.dispose();
+        scheduler.shutdown();
+        scene = null;
     }
 }

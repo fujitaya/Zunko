@@ -3,7 +3,6 @@ package jp.fujitaya.zunko;
 import android.content.Context;
 
 import jp.fujitaya.zunko.hayashima.MessageWindowScene;
-import jp.fujitaya.zunko.hayashima.TitleScene;
 import jp.fujitaya.zunko.sugaya.MainScene;
 import jp.fujitaya.zunko.util.GameView;
 
