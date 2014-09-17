@@ -1,6 +1,6 @@
 package jp.fujitaya.zunko.jimmy;
 
-public enum FieldGroup {
+public enum StageGroup {
     Miyagi,
     Tohoku,
     Japan,
