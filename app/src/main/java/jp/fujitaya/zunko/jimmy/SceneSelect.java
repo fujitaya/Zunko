@@ -64,10 +64,10 @@ public class SceneSelect extends GameScene implements OnGestureListener{
         for (TouchableBitmap button : map.getButtons()){
             if (button.isInside(new PointF(x,y))){
                 button.getGestureListener().onDown(e);
-                return false;
+                return true;
             }
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -99,7 +99,8 @@ public class SceneSelect extends GameScene implements OnGestureListener{
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
+        if (map != null) map.onScroll(e1,e2,distanceX,distanceY);
+        return true;
     }
 
     @Override

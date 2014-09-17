@@ -12,7 +12,7 @@ public class InsideRectF implements InsideStrategy {
 
     @Override
     public void move(float x, float y) {
-        rect.set(rect.left+x, rect.right+x, rect.top+y, rect.bottom+y);
+        rect.set(rect.left+x, rect.top+y, rect.right+x, rect.bottom+y);
     }
 
     @Override

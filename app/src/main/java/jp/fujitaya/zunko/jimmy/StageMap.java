@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
@@ -21,6 +23,9 @@ public class StageMap {
     protected StageGroup group;
     //本当はコールバックに変えたい
     protected GameView parentView;
+    protected Rect backGroundSrc;
+    protected RectF backGroundDst;
+    protected PointF backGroundOffset;
 
     public StageMap(StageGroup group, Resources res, GameView parentView){
         init(group,res,parentView);
@@ -33,10 +38,16 @@ public class StageMap {
 
         switch (group){
             case Miyagi:
-                background = BitmapFactory.decodeResource(res, R.drawable.map_miyagi);
+                background = BitmapFactory.decodeResource(res, R.drawable.bg_tohoku);
+                backGroundSrc = new Rect(1100,1600,2000,3300);
+                backGroundOffset = new PointF(-50,-100);
+                backGroundDst = new RectF(backGroundOffset.x,
+                        backGroundOffset.y,
+                        backGroundOffset.x+backGroundSrc.width(),
+                        backGroundOffset.y+backGroundSrc.height());
                 fieldButtons.add(new TouchableBitmap(
                         BitmapFactory.decodeResource(res, R.drawable.mc_mig),
-                        new RectF(200f,500f,300f,600f),
+                        new RectF(400f,600f,500f,700f),
                         new InsideRectF(new RectF(200f,500f,288f,611f)),
                         new OnGestureListener() {
                             @Override
@@ -77,8 +88,7 @@ public class StageMap {
 
     }
     public void draw(Canvas canvas){
-        canvas.drawBitmap(background,null,
-                new RectF(0f,0f,720f,1024f),null);
+        canvas.drawBitmap(background,backGroundSrc,backGroundDst,null);
 
         for (TouchableBitmap button : fieldButtons){
             button.draw(canvas);
@@ -103,5 +113,32 @@ public class StageMap {
     public void changeGroup(StageGroup group, Resources res, GameView parentView){
         dispose();
         init(group, res, parentView);
+    }
+
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY){
+        move(distanceX,distanceY);
+        return true;
+    }
+
+    private void move(float distanceX, float distanceY){
+        float moveX=0f,moveY=0f;
+        if (backGroundOffset.x - distanceX + backGroundSrc.width() > GameView.VIEW_WIDTH &&
+                backGroundOffset.x - distanceX < 0)
+            moveX = distanceX;
+        if (backGroundOffset.y - distanceY + backGroundSrc.height() > GameView.VIEW_HEIGHT &&
+                backGroundOffset.y - distanceY < 0)
+            moveY = distanceY;
+
+        if (moveX != 0f || moveY != 0f){
+            backGroundOffset.x -= moveX;
+            backGroundOffset.y -= moveY;
+            for (TouchableBitmap button : fieldButtons)
+                button.move(-moveX,-moveY);
+
+            backGroundDst = new RectF(backGroundOffset.x,
+                    backGroundOffset.y,
+                    backGroundOffset.x+backGroundSrc.width(),
+                    backGroundOffset.y+backGroundSrc.height());
+        }
     }
 }
