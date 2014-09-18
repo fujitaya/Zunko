@@ -9,9 +9,12 @@ import android.graphics.RectF;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+import java.text.NumberFormat;
+
 import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.field.FieldManager;
+import jp.fujitaya.zunko.field.zunko.StatusAll;
 import jp.fujitaya.zunko.util.InsideRectF;
 import jp.fujitaya.zunko.util.TouchableBitmap;
 import jp.fujitaya.zunko.util.TouchableBitmapWithText;
@@ -69,7 +72,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
                 }
         );
 
-        statusWindow = new NoticeWindow(new RectF(160f,340f,560f,940f),
+        statusWindow = new NoticeWindow(new RectF(50f,340f,670f,940f),
                 "",
                 Color.GRAY,250,Color.BLACK);
         zukanButton = new TouchableBitmap(
@@ -116,6 +119,15 @@ public class SceneSelect extends GameScene implements OnGestureListener{
         map.update();
         fieldManager.update();
         message.update();
+        if (isStatusWindowOpen){
+            StatusAll status = fieldManager.getStatusAll();
+
+            statusWindow.setText("総合進捗\n" +
+                            "\nちびずん子の数          " + Long.toString(status.zunkoAll) +
+                            "\nクリアしたステージ  " + Integer.toString(status.cleared) +
+                            "\n総進行度\t                      " + NumberFormat.getPercentInstance().format(status.progress)
+            );
+        }
     }
 
     @Override
