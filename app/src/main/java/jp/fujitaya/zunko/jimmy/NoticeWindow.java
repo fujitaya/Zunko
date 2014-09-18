@@ -12,20 +12,22 @@ public class NoticeWindow {
     private int rectAlpha;
     private String text;
     private int textColor;
+    private int textSize;
     private int textOffsetX, textOffsetY;
     private float lineInterval;
     private InsideStrategy inside;
 
     public NoticeWindow(RectF drawRect, String text,
-                        float lineInterval, int rectColor, int rectAlpha, int textColor){
+                        int rectColor, int rectAlpha, int textColor){
         this.drawRect = drawRect;
         this.text = text;
         this.rectColor = rectColor;
         this.rectAlpha = rectAlpha;
         this.textColor = textColor;
-        this.lineInterval = lineInterval;
-        this.textOffsetX = 10;
-        this.textOffsetY = 10;
+        this.textSize = 40;
+        this.lineInterval = 40;
+        this.textOffsetX = 30;
+        this.textOffsetY = 40;
         this.inside = new InsideRectF(new RectF(drawRect.left,drawRect.
                 top,drawRect.right,drawRect.bottom));
     }
@@ -34,14 +36,16 @@ public class NoticeWindow {
         Paint paint = new Paint();
         float textX, textY;
 
-        paint.setAlpha(rectAlpha);
         paint.setColor(rectColor);
+        paint.setAlpha(rectAlpha);
         canvas.drawRect(drawRect,paint);
 
         paint = new Paint();
         paint.setColor(textColor);
+        paint.setTextSize(textSize);
         textX = drawRect.left + textOffsetX;
         textY = drawRect.top + textOffsetY;
+
         for (String line : text.split("\n")){
             canvas.drawText(line,textX,textY,paint);
             textY += lineInterval;
@@ -55,6 +59,10 @@ public class NoticeWindow {
     public void move(float x, float y){
         this.drawRect.offset(x,y);
         this.inside.move(x,y);
+    }
+
+    public RectF getRect(){
+        return drawRect;
     }
 
     public boolean isInside(PointF point){

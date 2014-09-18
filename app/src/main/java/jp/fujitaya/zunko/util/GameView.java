@@ -29,7 +29,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     //FPSの指定
     //やっぱり本来はResourcesに書きたい
-    public static final int FPS = 60;
+    public static final int FPS = 30;
     public static final long INTERVAL = (long)(Math.floor(
             (double)TimeUnit.SECONDS.toNanos(1L) / (double)FPS));
 
@@ -46,7 +46,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         wasOutside = false;
         scheduler = null;
-        scene = new MainScene(this,"Sendai");
+        scene = new SceneMenu(this);
         getHolder().addCallback(this);
     }
 

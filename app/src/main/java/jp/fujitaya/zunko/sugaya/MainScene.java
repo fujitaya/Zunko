@@ -57,7 +57,7 @@ public class MainScene extends GameScene {
         if(m== MenuState.On){
             //get Zunko attackPoint
             if(FieldManager.getInstance().getField(fieldName).getClass() == (Class<?>)EndField.class){
-                ((EndField)(FieldManager.getInstance().getField(fieldName))).interruptOnMenu(event);
+                //((EndField)(FieldManager.getInstance().getField(fieldName))).interruptOnMenu(event);
             }
 
         }
