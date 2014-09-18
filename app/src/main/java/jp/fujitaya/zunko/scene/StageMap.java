@@ -3,6 +3,7 @@ package jp.fujitaya.zunko.scene;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
@@ -11,6 +12,8 @@ import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.text.NumberFormat;
@@ -27,9 +30,10 @@ import jp.fujitaya.zunko.util.TouchableBitmapWithText;
 import static android.view.GestureDetector.OnGestureListener;
 
 public class StageMap implements OnGestureListener{
-    protected final RectF drawRectSendai = new RectF(600f,800f,850f,1050f);
-    protected final RectF stageDetailSize = new RectF(0f,0f,400f,400f);
-    protected final RectF changeSceneButtonDef = new RectF(50f,280f,350f,380f);
+    public final RectF drawRectSendai = new RectF(600f,800f,850f,1050f);
+    public final RectF stageDetailSize = new RectF(0f,0f,400f,400f);
+    public final RectF changeSceneButtonDef = new RectF(50f,280f,350f,380f);
+    public final Rect cutMiyagi = new Rect(1200,1900,2000,2800);
 
     protected Bitmap backGround;
     protected Map<String, TouchableBitmap> fieldButtons;
@@ -45,6 +49,7 @@ public class StageMap implements OnGestureListener{
     protected String focus;
     protected TouchableBitmap changeSceneButton;
     protected Bitmap changeSceneImage;
+    public  final float scale = 2.0f;
 
     public StageMap(StageGroup group, Resources res, GameView parentView){
         init(group,res,parentView);
@@ -59,17 +64,17 @@ public class StageMap implements OnGestureListener{
 
         switch (group){
             case Miyagi:
-                Bitmap tmp1,tmp2;
-                tmp1 = BitmapFactory.decodeResource(res, R.drawable.bg_tohoku);
-                tmp2 = Bitmap.createBitmap(tmp1,1200,1900,800,900);
-                tmp1.recycle();
-                backGround = Bitmap.createScaledBitmap(tmp2,1600,1800,true);
-                tmp2.recycle();
+                //Bitmap tmp1;
+                //tmp1 = BitmapFactory.decodeResource(res, R.drawable.bg_tohoku);
+                //backGround = Bitmap.createBitmap(tmp1,1200,1900,800,900);
+                //tmp1.recycle();
+                //tmp1 = null;
+                backGround = getClippedImage(res,R.drawable.bg_tohoku,cutMiyagi);
                 offset = new PointF(-400,-200);
                 backGroundDst = new RectF(offset.x,
                         offset.y,
-                        offset.x+backGround.getWidth(),
-                        offset.y+backGround.getHeight());
+                        offset.x+backGround.getWidth()*scale,
+                        offset.y+backGround.getHeight()*scale);
 
                 addFieldButton(
                         "Sendai",new TouchableBitmapWithText(
@@ -195,6 +200,17 @@ public class StageMap implements OnGestureListener{
         changeSceneButton = null;
     }
 
+    private Bitmap getClippedImage(Resources res, int id, Rect region){
+        try {
+            InputStream stream = res.openRawResource(id);
+            BitmapRegionDecoder decoder = BitmapRegionDecoder.newInstance(stream, true);
+            return decoder.decodeRegion(region,null);
+        }catch (IOException e){
+
+        }
+        return null;
+    }
+
     public void setFocus(String fieldName){
         this.focus = fieldName;
     }
@@ -218,10 +234,10 @@ public class StageMap implements OnGestureListener{
 
     private void move(float distanceX, float distanceY){
         float moveX=0f,moveY=0f;
-        if (offset.x - distanceX + backGround.getWidth() > GameView.VIEW_WIDTH &&
+        if (offset.x - distanceX + backGround.getWidth()*scale > GameView.VIEW_WIDTH &&
                 offset.x - distanceX < 0)
             moveX = distanceX;
-        if (offset.y - distanceY + backGround.getHeight() > GameView.VIEW_HEIGHT &&
+        if (offset.y - distanceY + backGround.getHeight()*scale > GameView.VIEW_HEIGHT &&
                 offset.y - distanceY < 0)
             moveY = distanceY;
 
@@ -233,8 +249,8 @@ public class StageMap implements OnGestureListener{
 
             backGroundDst = new RectF(offset.x,
                     offset.y,
-                    offset.x+backGround.getWidth(),
-                    offset.y+backGround.getHeight());
+                    offset.x+backGround.getWidth()*scale,
+                    offset.y+backGround.getHeight()*scale);
             if (stageDetail != null){
                 stageDetail.move(-moveX,-moveY);
                 changeSceneButton.move(-moveX,-moveY);
