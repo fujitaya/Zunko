@@ -50,7 +50,9 @@ public class SceneSelect extends GameScene implements OnGestureListener{
 
     @Override
     public void interrupt(MotionEvent event) {
-        gestureDetector.onTouchEvent(event);
+        //synchronized (map) {
+            gestureDetector.onTouchEvent(event);
+        //}
         message.interrupt(event);
     }
 
@@ -73,7 +75,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        if (map != null) map.onScroll(e1,e2,distanceX,distanceY);
+        if (map != null) map.onScroll(e1, e2, distanceX, distanceY);
         return true;
     }
 

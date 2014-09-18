@@ -32,8 +32,16 @@ public class TouchableBitmap{
     }
 
     public void move(float x, float y){
-        drawRect.set(drawRect.left+x, drawRect.top+y, drawRect.right+x, drawRect.bottom+y);
+        //drawRect.set(drawRect.left+x, drawRect.top+y, drawRect.right+x, drawRect.bottom+y);
+        drawRect.offset(x,y);
         strategy.move(x,y);
+    }
+
+    public void moveTo(float left, float top){
+        float moveX = left - drawRect.left;
+        float moveY = top - drawRect.top;
+
+        move(left, top);
     }
 
     public Bitmap getBitmap(){

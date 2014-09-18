@@ -11,7 +11,7 @@ public class FieldManager {
         fieldStore = new HashMap<String, Field>();
     }
 
-    public static FieldManager getInstance(){
+    public static synchronized FieldManager getInstance(){
         if (instance == null) instance = new FieldManager();
         return instance;
     }
