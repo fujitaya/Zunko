@@ -126,7 +126,7 @@ public class MessageWindowScene extends GameScene{
         img.moveOffset2(baseX, baseY);
         img.draw(canvas);
 
-        int msgX = (int)img.getWidth() + (int)img.getX();
+        int msgX = (int)img.getWidth() + (int)img.getX()-180;
         int msgY = baseY + FONT_SIZE*2;
         int diffY = FONT_SIZE * 3 / 2;
         for(int i=0; i < msgs.size(); ++i){

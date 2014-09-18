@@ -16,14 +16,26 @@ public class CaptureScene extends GameScene {
     private Field field;
     private int clearCount=0;
     private boolean[] messageflag;
+    int randomMessageCount=1;
+    int messageSpan=30*5;
+    String[] randomMessage={"ずんだ餅にしちゃいます",
+            "17歳の高校2年生です",
+            "VOCALOID発売中です",
+            "姉のイタコと妹のきりたんもいます",
+            "私を使ってください！無料です",
+            "ずんだアロー！！！！（ずんだテロ）",
+            "夢は秋葉原にずんだカフェを作ること",
+            "矢を射て、お餅にずんだをのせる",
+            "(」・ω・)」ずん!(/・ω・)/だー",
+            "＼（○ず・ω・だ○）／"
+    };
 
     public CaptureScene(GameView parent, String fieldName){
         super(parent);
         fm = FieldManager.getInstance();
         message = new CaptureMessageWindowScene(parent);
-        messageflag=new boolean[5];
+        messageflag=new boolean[3];
         for(boolean f:messageflag)f=false;
-
 
         ImageLoader ld = ImageLoader.getInstance();
         ld.load(R.drawable.cz_tatsu);
@@ -70,6 +82,9 @@ public class CaptureScene extends GameScene {
     public void draw(Canvas canvas){
         field.draw(canvas);
         message.draw(canvas);
+        if(clearCount>0){
+
+        }
     }
 
     @Override
@@ -92,7 +107,9 @@ public class CaptureScene extends GameScene {
     }
     @Override
     public void dispose(){
+
         field.dispose();
+        message.dispose();
     }
     void stageClear(){
         if(field.getNowHP()<=0){
@@ -104,7 +121,7 @@ public class CaptureScene extends GameScene {
     void setMessage(){
         //clear message
         if(field.getNowHP()<=0&&clearCount==0){
-            message.appendMessage("ずんだ,広まりましたっ！！");
+            message.appendMessage("ずんだ, 広まりましたっ！！");
         }
         else if(field.getNowHP()*3<=field.getInitialHP()*2 &&messageflag[0]==false){
             message.appendMessage("ずんだが注目されています");
@@ -115,9 +132,17 @@ public class CaptureScene extends GameScene {
             messageflag[1]=true;
         }
         else if(field.getNowHP()*4<=field.getInitialHP() &&messageflag[2]==false){
-            message.appendMessage("");
+            message.appendMessage("あと少しですよ！");
             messageflag[2]=true;
         }
+        setRandomMessage();
+    }
+    void setRandomMessage(){
+        if(randomMessageCount%messageSpan==0){
+            int rand=(int)(Math.random()*randomMessage.length);
+            message.appendMessage(randomMessage[rand]);
+        }
+        randomMessageCount++;
     }
 
 
