@@ -110,14 +110,14 @@ public class SceneSelect extends GameScene implements OnGestureListener{
     }
 
     @Override
-    public synchronized void update() {
+    public void update() {
         map.update();
         fieldManager.update();
         message.update();
     }
 
     @Override
-    public synchronized void draw(Canvas canvas) {
+    public void draw(Canvas canvas) {
         map.draw(canvas);
         message.draw(canvas);
         //zunkobutton.draw(canvas);
@@ -128,7 +128,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
     }
 
     @Override
-    public synchronized void dispose() {
+    public void dispose() {
         map.dispose();
         gestureDetector = null;
         parent = null;
@@ -136,7 +136,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
     }
 
     @Override
-    public synchronized void interrupt(MotionEvent event) {
+    public void interrupt(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
         message.interrupt(event);
     }

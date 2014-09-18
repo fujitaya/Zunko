@@ -28,7 +28,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     //FPSの指定
     //やっぱり本来はResourcesに書きたい
-    public static final int FPS = 60;
+    public static final int FPS = 30;
     public static final long INTERVAL = (long)(Math.floor(
             (double)TimeUnit.SECONDS.toNanos(1L) / (double)FPS));
 
@@ -50,9 +50,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     private void update(){
-        if(scene == null){
-            ((MyActivity)getContext()).finish();
-            return;
+        synchronized (scene) {
+            if (scene == null) {
+                ((MyActivity) getContext()).finish();
+                return;
+            }
         }
         fpswatch.update();
         scene.update();
@@ -70,7 +72,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         //drawColorだと左側余白も描画される模様
         canvas.drawColor(Color.WHITE);
 
-        scene.draw(canvas);
+        synchronized (scene) {
+            if(scene != null) {
+                scene.draw(canvas);
+            };
+        }
     }
 
     public void setScale(){
@@ -91,11 +97,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void changeScene(GameScene next){
-        if(scene != null){
-            scene.dispose();
-            scene.setParent(null);
+        synchronized (scene) {
+            if (scene != null) {
+                scene.dispose();
+                scene.setParent(null);
+            }
+            scene = next;
         }
-        scene = next;
     }
 
     @Override
@@ -126,7 +134,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             }
         }
 
-        scene.interrupt(event);
+        synchronized (scene) {
+            scene.interrupt(event);
+        }
         return true;
     }
 
