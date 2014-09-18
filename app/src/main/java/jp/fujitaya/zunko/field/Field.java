@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.util;
+package jp.fujitaya.zunko.field;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;

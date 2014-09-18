@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.util.Field;
+import jp.fujitaya.zunko.hayashima.ChibiZunko;
 import jp.fujitaya.zunko.util.GameView;
 import jp.fujitaya.zunko.util.ImageLoader;
 import jp.fujitaya.zunko.util.PointerInfo;

@@ -5,9 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
+import jp.fujitaya.zunko.field.FieldBaseObject;
 import jp.fujitaya.zunko.util.ImageLoader;
 
-public class ChibiZunko extends FieldBaseObject{
+public class ChibiZunko extends FieldBaseObject {
 //    public enum ImageName{
 //        WAIT,
 //        LOOK1, LOOK2,

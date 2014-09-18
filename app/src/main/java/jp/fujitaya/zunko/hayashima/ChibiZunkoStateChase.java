@@ -3,6 +3,7 @@ package jp.fujitaya.zunko.hayashima;
 import android.graphics.Bitmap;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.field.FieldBaseObject;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 class ChibiZunkoStateChase extends ChibiZunkoState{

@@ -1,16 +1,9 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 
-import java.util.HashMap;
-
-import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.hayashima.FieldBaseObject;
-import jp.fujitaya.zunko.util.Image;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 public class Building extends FieldBaseObject {
@@ -21,9 +14,10 @@ public class Building extends FieldBaseObject {
         super();
 
         image = ImageLoader.getInstance().load(data.imageId);
+        scale = data.scale;
         setHP(data.hp);
         moveTo(data.fieldX, data.fieldY);
-        setCollision(new RectF(0, 0, image.getWidth(), image.getHeight()));
+        setCollision(new RectF(0, 0, image.getWidth()*scale, image.getHeight()*scale));
     }
 
     @Override

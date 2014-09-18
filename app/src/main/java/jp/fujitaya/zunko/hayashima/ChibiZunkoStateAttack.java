@@ -19,6 +19,7 @@ public class ChibiZunkoStateAttack extends ChibiZunkoState{
     ChibiZunkoState execute() {
         ++counter;
 
+        updateImage();
         zunko.getChaseTarget().damage(1);
 
         return null;

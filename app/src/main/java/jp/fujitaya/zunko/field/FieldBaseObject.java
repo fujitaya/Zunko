@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
@@ -11,7 +11,7 @@ public abstract class FieldBaseObject {
     protected int initHP;
     protected RectF col;
 
-    FieldBaseObject(){
+    public FieldBaseObject(){
         pos.set(0, 0);
         hp = 1;
         col = null;

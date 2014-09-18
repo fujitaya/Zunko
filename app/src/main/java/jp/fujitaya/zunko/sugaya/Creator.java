@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 
 import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.hayashima.FieldBaseObject;
+import jp.fujitaya.zunko.field.FieldBaseObject;
 import jp.fujitaya.zunko.util.Image;
 
 public class Creator extends FieldBaseObject {

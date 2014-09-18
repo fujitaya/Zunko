@@ -6,7 +6,7 @@ import android.view.MotionEvent;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.jimmy.FieldManager;
 import jp.fujitaya.zunko.jimmy.SceneSelect;
-import jp.fujitaya.zunko.util.Field;
+import jp.fujitaya.zunko.field.Field;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
 import jp.fujitaya.zunko.util.ImageLoader;
