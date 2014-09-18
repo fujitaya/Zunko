@@ -10,6 +10,7 @@ public class Creator extends FieldBaseObject {
     private Bitmap image;
     private float scale;
     private int spawnTime, spawnCounter;
+    private float spawnRange;
 
     public Creator(FieldData.CreatorData data) {
         super();
@@ -19,6 +20,7 @@ public class Creator extends FieldBaseObject {
         moveTo(data.fieldX, data.fieldY);
         spawnTime = data.spawnTime;
         spawnCounter = 0;
+        spawnRange = data.spawnRange;
     }
 
     public boolean isCreatable(){
@@ -26,6 +28,9 @@ public class Creator extends FieldBaseObject {
     }
     public void reset(){
         spawnCounter = 0;
+    }
+    public float getSpawnRange(){
+        return spawnRange;
     }
 
     @Override public void update() {

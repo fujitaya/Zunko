@@ -52,9 +52,9 @@ public class MenuWindow extends StatusWindow{
         y += diffy*2;
         canvas.drawText("ステージ選択へ", x, y, fp);
         y += diffy*2;
-        if(FieldManager.getInstance().getField(fieldName).getClass() == (Class<?>)EndField.class) {
-            canvas.drawText("集める", x, y, fp);
-            y += diffy * 2;
-        }
+//        if(FieldManager.getInstance().getField(fieldName).getClass() == (Class<?>)EndField.class) {
+//            canvas.drawText("集める", x, y, fp);
+//            y += diffy * 2;
+//        }
     }
 }

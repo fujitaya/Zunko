@@ -12,7 +12,6 @@ import java.util.Comparator;
 
 import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.field.Field;
 import jp.fujitaya.zunko.field.zunko.ChibiZunko;
 import jp.fujitaya.zunko.util.ImageLoader;
 import jp.fujitaya.zunko.util.PointerInfo;
@@ -22,18 +21,26 @@ public class BasicField extends Field {
     protected Bitmap bg;  // Create TileImage class instead?
     protected int width, height;
 
-    FieldData fd;
-
     ArrayList<ChibiZunko> listZunko;
     ArrayList<Building> listBuilding;
     ArrayList<Creator> listCreator;
-    ArrayList<FieldData.ObjectData> listImageObject;
 
     ImageLoader loader;
 
-    BasicField(String name){
-        super(name);
+    BasicField(FieldData fd){
+        super(fd.name);
+
+        pos = new PointF();
+        listZunko = new ArrayList<ChibiZunko>();
+        listBuilding = new ArrayList<Building>();
+        listCreator = new ArrayList<Creator>();
+
+        loader = ImageLoader.getInstance();
+        bg = loader.load(fd.fieldImageId);
+
+        init(fd);
     }
+
     @Override public int getNowHP(){
         int hp = 0;
         for(FieldBaseObject e: listBuilding){
@@ -53,65 +60,37 @@ public class BasicField extends Field {
         ret += listZunko.size();
         return ret;
     }
-
     @Override public void clearZunko(){
         listZunko.clear();
     }
-    private void setFD(FieldData fd, String name){
-        fd.name = name;
-        fd.fieldImageId = R.drawable.fd_green;
-        fd.fieldWidth = 720*2;
-        fd.fieldHeight = (int)(1280*1.5);
 
-        fd.maxZunkoExistNum = 200;
-        fd.initialZunkoPower = 1;
-        fd.initialZunkoNum = 10;
-
-        fd.creator.imageId = R.drawable.ic_launcher;
-        fd.creator.scale = 1;
-        fd.creator.fieldX = 100;
-        fd.creator.fieldY = 100;
-
-        FieldData.BuildingData bd = fd.createBuildingData();
-        bd.imageId = R.drawable.mc_mig;
-        bd.hp = 180;
-        bd.scale = 4;
-        bd.fieldX = 500;
-        bd.fieldY = 500;
-
-        bd = fd.createBuildingData();
-        bd.imageId = R.drawable.mc_mig;
-        bd.hp = 180;
-        bd.scale = 4;
-        bd.fieldX = 200;
-        bd.fieldY = 800;
-    }
-
-    public void init(){
+    public void init(FieldData fd){
         pos.set(0, 0);
-        setFD(fd, name);
 
         width = fd.fieldWidth;
         height = fd.fieldHeight;
 
-        listImageObject.add(fd.creator);
+        for(FieldData.CreatorData e: fd.creators){
+            listCreator.add(new Creator(e));
+        }
         for(FieldData.BuildingData e: fd.buildings){
             listBuilding.add(new Building(e));
         }
 
-        listImageObject.add(fd.creator);
-
-        for(int i=0; i < fd.initialZunkoNum; ++i) addZunko();
+        if(listCreator.size() > 0) {
+            for (int i = 0; i < fd.initialZunkoNum; ++i)
+                addZunko(listCreator.get(0));
+        }
     }
 
     public void dispose(){
     }
 
-    int touchedCounter = 0;
-    ChibiZunko touchedZunko = null;
-    ArrayList<ChibiZunko> selectedQueue = new ArrayList<ChibiZunko>();
-    ArrayList<ChibiZunko> selectWaitingQueue = new ArrayList<ChibiZunko>();
-    ArrayList<ChibiZunko> searchBuffer = new ArrayList<ChibiZunko>();
+    private int touchedCounter = 0;
+    private ChibiZunko touchedZunko = null;
+    private ArrayList<ChibiZunko> selectedQueue = new ArrayList<ChibiZunko>();
+    private ArrayList<ChibiZunko> selectWaitingQueue = new ArrayList<ChibiZunko>();
+    private ArrayList<ChibiZunko> searchBuffer = new ArrayList<ChibiZunko>();
     public void update(){
         // select chain
         if(touchedZunko != null && selectedQueue.size()==0) {
@@ -132,6 +111,11 @@ public class BasicField extends Field {
             }
         }
 
+        // check to create ChibiZunko
+        for(Creator e: listCreator){
+            if(e.isCreatable()) addZunko(e);
+        }
+
         // zunko update
         for(ChibiZunko e: listZunko) e.update();
     }
@@ -139,7 +123,7 @@ public class BasicField extends Field {
         touchedCounter = 0;
         selectedQueue.add(touchedZunko);
     }
-    int selectWaitCounter = 0;
+    private int selectWaitCounter = 0;
     private static final int CHAINBOX_SIZE = 300;
     private void updateSelectChain(){
         if(++selectWaitCounter == 3){
@@ -199,11 +183,9 @@ public class BasicField extends Field {
         touchedCounter = 0;
     }
 
-
-
     private PointerInfo pi = new PointerInfo();
     private PointerInfo oldPi = new PointerInfo();
-    boolean fieldTouched = false;
+    private boolean fieldTouched = false;
     public void interrupt(MotionEvent event){
         pi.update(event);
         float fx = pi.x - pos.x;
@@ -255,18 +237,18 @@ public class BasicField extends Field {
         moveTo(pos.x+x, pos.y+y);
     }
 
-    private static final float SPAWN_RANGE = 300;
-    public void addZunko(){
-        float x = (float) (Math.random() * SPAWN_RANGE) - SPAWN_RANGE/2 + fd.creator.fieldX;
-        float y = (float) (Math.random() * SPAWN_RANGE) - SPAWN_RANGE/2 + fd.creator.fieldY;
+    public void addZunko(Creator creator){
+        float r = creator.getSpawnRange();
+        float x = (float) (Math.random() * r) - r/2 + creator.getX();
+        float y = (float) (Math.random() * r) - r/2 + creator.getY();
 
         ChibiZunko zunko = new ChibiZunko();
         zunko.moveTo(x, y);
 
         listZunko.add(zunko);
+        creator.reset();
     }
 
-    RectF rect = new RectF();
     public void draw(Canvas canvas){
         // backgrond
         int w = bg.getWidth();
@@ -281,16 +263,7 @@ public class BasicField extends Field {
 
         // objects
         for(Building e: listBuilding) e.draw(canvas, pos.x, pos.y);
-
-        for(FieldData.ObjectData e: listImageObject){
-            Bitmap b = loader.load(e.imageId);
-            rect.left = pos.x + e.fieldX;
-            rect.top = pos.y + e.fieldY;
-            rect.right = pos.x + e.fieldX + b.getWidth()*e.scale;
-            rect.bottom = pos.y + e.fieldY + b.getHeight()*e.scale;
-            // Is rect inside screen window? No -> continue;
-            canvas.drawBitmap(b, null, rect, null);
-        }
+        for(Creator e: listCreator) e.draw(canvas, pos.x, pos.y);
 
         // zunko
         for(ChibiZunko e: listZunko){e.draw(canvas, pos.x, pos.y);}

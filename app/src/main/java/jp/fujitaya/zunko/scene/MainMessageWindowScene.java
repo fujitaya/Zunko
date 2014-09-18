@@ -17,12 +17,12 @@ public class MainMessageWindowScene extends MessageWindowScene {
     }
     public boolean isInterruptStatus(MotionEvent event,String mode){
         if(statusWindow==null)return false;
-        if(mode=="Gather") {
-            return ((MenuWindow) (statusWindow)).isOnSumAttackMode(new PointF(event.getX(), event.getY()));
-        }
-        else if(mode=="BackToMenu"){
-            return ((MenuWindow) (statusWindow)).isOnBackToSelect(new PointF(event.getX(), event.getY()));
-        }
+//        if(mode=="Gather") {
+//            return ((MenuWindow) (statusWindow)).isOnSumAttackMode(new PointF(event.getX(), event.getY()));
+//        }
+//        else if(mode=="BackToMenu"){
+//            return ((MenuWindow) (statusWindow)).isOnBackToSelect(new PointF(event.getX(), event.getY()));
+//        }
         return false;
     }
     public MenuState getMenuInterrupt(MotionEvent event){

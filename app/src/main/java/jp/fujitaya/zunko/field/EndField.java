@@ -18,8 +18,8 @@ public class EndField extends BasicField {
     int maxFieldHitPoint=0;
     //static int sumAttackPower=0;
     */
-    public EndField(String name){
-        super(name);
+    public EndField(FieldData fd){
+        super(fd);
     }
     /*void addOneAttackPower() {
         listMiniZunko.get((int) (Math.random() * listMiniZunko.size())).addAttackPower(1);
