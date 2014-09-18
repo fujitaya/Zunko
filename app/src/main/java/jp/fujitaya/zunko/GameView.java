@@ -14,7 +14,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import jp.fujitaya.zunko.MyActivity;
 import jp.fujitaya.zunko.scene.GameScene;
 import jp.fujitaya.zunko.scene.MainScene;
 import jp.fujitaya.zunko.util.FpsCounter;

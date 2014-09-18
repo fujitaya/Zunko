@@ -14,6 +14,7 @@ public class FieldData {
 
     public ObjectData creator;
     public ArrayList<BuildingData> buildings;
+    public ArrayList<CreatorData> creators;
 
     public class ObjectData{
         public int imageId;
@@ -22,6 +23,9 @@ public class FieldData {
     }
     public class BuildingData extends ObjectData{
         public int hp;
+    }
+    public class CreatorData extends ObjectData{
+        public int spawnTime;
     }
 
     public FieldData(){
@@ -32,5 +36,10 @@ public class FieldData {
         BuildingData bd = new BuildingData();
         buildings.add(bd);
         return bd;
+    }
+    public CreatorData createCreatorData(){
+        CreatorData cd = new CreatorData();
+        creators.add(cd);
+        return cd;
     }
 }

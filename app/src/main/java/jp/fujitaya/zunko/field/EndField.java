@@ -22,7 +22,7 @@ public class EndField extends Field {
 
     ArrayList<ChibiZunko> listZunko;
     ArrayList<Building> listBuilding;
-    //    ArrayList<Creator> listCreator;
+    ArrayList<Creator> listCreator;
     ArrayList<FieldData.ObjectData> listImageObject;
 
     /*int MAX_CREAT_NUM=100;

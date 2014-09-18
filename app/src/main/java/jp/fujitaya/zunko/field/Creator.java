@@ -1,63 +1,44 @@
 package jp.fujitaya.zunko.field;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.PointF;
+import android.graphics.RectF;
 
-import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.util.Image;
+import jp.fujitaya.zunko.util.ImageLoader;
 
 public class Creator extends FieldBaseObject {
-    Image image;
-    static int staticCreateNumber = 0;
-    int createNumber = 0;
-    String buildingName;
-    int createCount;
-    int START_CREATE_COUNT = 60 * 5;
+    private Bitmap image;
+    private float scale;
+    private int spawnTime, spawnCounter;
 
-    Creator(/*ArrayList<Bitmap> image, */PointF v) {
-        super(/*image,*/ v);
-        image=new Image(R.drawable.ic_launcher);
-        image.setCenter();
-        image.setPosition(vect);
+    public Creator(FieldData.CreatorData data) {
+        super();
 
-        buildingName = "None";
-        tatchSize=(int)Math.sqrt(image.getWidth()*image.getWidth()+image.getHeight()*image.getHeight());
-        createCount = START_CREATE_COUNT;//temp create time 5s
-        createNumber = staticCreateNumber;
-        staticCreateNumber++;
-
+        image = ImageLoader.getInstance().load(data.imageId);
+        scale = data.scale;
+        moveTo(data.fieldX, data.fieldY);
+        spawnTime = data.spawnTime;
+        spawnCounter = 0;
     }
 
-    void setCreateCount() {
-        createCount--;
-        if (createCount < 0) {
-            createCount = START_CREATE_COUNT;
-        }
+    public boolean isCreatable(){
+        return spawnCounter >= spawnTime;
+    }
+    public void reset(){
+        spawnCounter = 0;
     }
 
-    public int getCreateCount() {
-        return createCount;
+    @Override public void update() {
+        ++spawnCounter;
     }
 
-    public int getCreateNumber() {
-        return createNumber;
-    }
-
-    public void resetCreateNumber() {
-        createNumber = 0;
-    }
-
+    RectF drawRect = new RectF();
     @Override
-    public void update() {
-
-        setCreateCount();
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        image.draw(canvas);
-    }
-    @Override public void disposeImage(){
-        image=null;
+    public void draw(Canvas canvas, float baseX, float baseY){
+        drawRect.left = baseX + pos.x;
+        drawRect.top = baseY + pos.y;
+        drawRect.right = baseX + pos.x + image.getWidth()*scale;
+        drawRect.bottom = baseY + pos.y + image.getHeight()*scale;
+        canvas.drawBitmap(image, null, drawRect, null);
     }
 }

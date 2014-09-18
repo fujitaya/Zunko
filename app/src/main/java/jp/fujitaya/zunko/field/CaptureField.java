@@ -25,7 +25,7 @@ public class CaptureField extends Field{
 
     ArrayList<ChibiZunko> listZunko;
     ArrayList<Building> listBuilding;
-//    ArrayList<Creator> listCreator;
+    ArrayList<Creator> listCreator;
     ArrayList<FieldData.ObjectData> listImageObject;
 
     ImageLoader loader;
@@ -80,10 +80,11 @@ public class CaptureField extends Field{
         fd.initialZunkoPower = 1;
         fd.initialZunkoNum = 10;
 
-        fd.creator.imageId = R.drawable.ic_launcher;
-        fd.creator.scale = 1;
-        fd.creator.fieldX = 100;
-        fd.creator.fieldY = 100;
+        FieldData.CreatorData cd = fd.createCreatorData();
+        cd.imageId = R.drawable.ic_launcher;
+        cd.scale = 1;
+        cd.fieldX = 100;
+        cd.fieldY = 100;
 
         FieldData.BuildingData bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
@@ -107,12 +108,12 @@ public class CaptureField extends Field{
         width = fd.fieldWidth;
         height = fd.fieldHeight;
 
-        listImageObject.add(fd.creator);
+        for(FieldData.CreatorData e: fd.creators){
+            listCreator.add(new Creator(e));
+        }
         for(FieldData.BuildingData e: fd.buildings){
             listBuilding.add(new Building(e));
         }
-
-        listImageObject.add(fd.creator);
 
         for(int i=0; i < fd.initialZunkoNum; ++i) addZunko();
     }

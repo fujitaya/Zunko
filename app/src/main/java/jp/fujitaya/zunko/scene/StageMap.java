@@ -15,10 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.text.NumberFormat;
 
+import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.field.Field;
 import jp.fujitaya.zunko.field.FieldManager;
-import jp.fujitaya.zunko.util.GameView;
 import jp.fujitaya.zunko.util.InsideRectF;
 import jp.fujitaya.zunko.util.InsideStrategy;
 import jp.fujitaya.zunko.util.TouchableBitmap;
