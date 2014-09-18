@@ -1,19 +1,24 @@
 package jp.fujitaya.zunko.scene;
 
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
 import jp.fujitaya.zunko.GameView;
+import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.util.Image;
 
 /**
  * Created by tetsu on 2014/09/18.
  */
 public class CaptureMessageWindowScene extends MessageWindowScene {
 
+    protected Image clearImg;
     MenuState menuState=MenuState.None;
     public CaptureMessageWindowScene(GameView parent){
         super(parent);
         img.moveCollision(0,1024);
+        clearImg=new Image(R.drawable.wnd_message);
     }
     public void interrupt(MotionEvent event){
         pi.update(event);
@@ -41,4 +46,12 @@ public class CaptureMessageWindowScene extends MessageWindowScene {
         menuState=MenuState.None;
     }
     public MenuState getMenuState(){return menuState;}
+    public void drawClearMessage(Canvas canvas){
+        super.draw(canvas);
+        clearImg.draw(canvas);
+    }
+    @Override public void dispose(){
+        super.dispose();
+        clearImg=null;
+    }
 }

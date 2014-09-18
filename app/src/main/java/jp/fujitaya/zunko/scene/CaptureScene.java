@@ -17,15 +17,15 @@ public class CaptureScene extends GameScene {
     private int clearCount=0;
     private boolean[] messageflag;
     int randomMessageCount=1;
-    int messageSpan=30*5;
+    int messageSpan=30*10;
     String[] randomMessage={"ずんだ餅にしちゃいます",
             "17歳の高校2年生です",
-            "VOCALOID発売中です",
+            "６月５日ボカロ発売！",
             "姉のイタコと妹のきりたんもいます",
             "私を使ってください！無料です",
             "ずんだアロー！！！！（ずんだテロ）",
             "夢は秋葉原にずんだカフェを作ること",
-            "矢を射て、お餅にずんだをのせる",
+            "東北ずん子です。応援してください",
             "(」・ω・)」ずん!(/・ω・)/だー",
             "＼（○ず・ω・だ○）／"
     };
@@ -76,14 +76,13 @@ public class CaptureScene extends GameScene {
         message.update();
         stageClear();
         setMessage();
-        if(field.getNowHP()<=0)clearCount++;
     }
     @Override
     public void draw(Canvas canvas){
         field.draw(canvas);
         message.draw(canvas);
         if(clearCount>0){
-
+            message.drawClearMessage(canvas);
         }
     }
 
@@ -116,12 +115,18 @@ public class CaptureScene extends GameScene {
             if(clearCount==60) {
                     changeScene();
                 }
+            clearCount++;
         }
     }
     void setMessage(){
+        if(randomMessageCount==1){
+            message.appendMessage("ずんだを広めていきましょう");
+            message.appendMessage("ずん子を助けてくださいね");
+        }
         //clear message
         if(field.getNowHP()<=0&&clearCount==0){
             message.appendMessage("ずんだ, 広まりましたっ！！");
+            message.appendMessage("他の場所にも広めましょう！");
         }
         else if(field.getNowHP()*3<=field.getInitialHP()*2 &&messageflag[0]==false){
             message.appendMessage("ずんだが注目されています");

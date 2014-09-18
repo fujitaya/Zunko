@@ -20,7 +20,7 @@ public class EndScene extends GameScene{
 
     private boolean[] messageflag;
     int randomMessageCount=1;
-    int messageSpan=30*10;
+    int messageSpan=30*20;
     String[] randomMessage={
             "明らかに飛行できない形なのに","合体ロボのパーツは飛ぶ。飛ばねば",
             "「やったか？」はやってないし","「力が欲しいか」の力はろくでもない",
@@ -97,8 +97,9 @@ public class EndScene extends GameScene{
 
     void setMessage(){
         if(randomMessageCount==1){
-            message.appendMessage("ずんだが広まっています");
-            message.appendMessage("メニューからずん子を集めましょう");
+            message.appendMessage("ここはずんだが十分に広まっています");
+            message.appendMessage("メニューからずん子を集め");
+            message.appendMessage("他の場所にもずんだを広めましょう！");
         }
         setRandomMessage();
     }
