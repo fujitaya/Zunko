@@ -1,21 +1,27 @@
 package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.field.Field;
 import jp.fujitaya.zunko.field.FieldManager;
-import jp.fujitaya.zunko.util.*;
+import jp.fujitaya.zunko.util.ImageLoader;
 
-public class MainScene extends GameScene {
+/**
+ * Created by tetsu on 2014/09/18.
+ */
+public class EndScene extends GameScene{
     private FieldManager fm;
-    private MessageWindowScene message;
+    private EndMessageWindowScene message;
     private Field field;
 
-    public MainScene(GameView parent, String fieldName){
+    public EndScene(GameView parent, String fieldName){
         super(parent);
+        fm = FieldManager.getInstance();
+        message = new EndMessageWindowScene(parent);
 
         ImageLoader ld = ImageLoader.getInstance();
         ld.load(R.drawable.cz_tatsu);
@@ -36,20 +42,13 @@ public class MainScene extends GameScene {
         ld.load(R.drawable.cz_mochi04);
         ld.load(R.drawable.cz_mochi05);
 
-        fm = FieldManager.getInstance();
         field = fm.getField(fieldName);
-        message = new MainMessageWindowScene(parent);
     }
-
-
 
     @Override
     public void update(){
-        FieldManager.getInstance().update();
+        fm.update();
         message.update();
-
-        //changeScene
-
     }
     @Override
     public void draw(Canvas canvas){
@@ -60,6 +59,23 @@ public class MainScene extends GameScene {
     @Override
     public void interrupt(MotionEvent event) {
         message.interrupt(event);
+        if(message.getMenuState()==MenuState.On){
+
+            float dx = (720 - 500) / 2;
+            float dy = (1280 - 600) / 2;
+            float diffy = 35;
+            float x = dx + 30;
+            float y = dy + diffy*4;
+            if(new RectF(x,y,x+dx*30,y+diffy).contains(event.getX(),event.getY())){
+                changeScene();
+                return;
+            }
+            y+=diffy*2;
+            if(new RectF(x,y,x+dx*30,y+diffy).contains(event.getX(),event.getY())){
+            return;
+            }
+        }
+
         field.interrupt(event);
     }
     @Override
@@ -67,8 +83,7 @@ public class MainScene extends GameScene {
         field.dispose();
     }
 
-    void ChangeScene(){
+    void changeScene(){
         parent.changeScene(new SceneSelect(parent));
     }
-
 }

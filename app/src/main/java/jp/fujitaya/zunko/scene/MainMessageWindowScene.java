@@ -1,5 +1,6 @@
 package jp.fujitaya.zunko.scene;
 
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.view.MotionEvent;
 
@@ -8,22 +9,10 @@ import android.view.MotionEvent;
 public class MainMessageWindowScene extends MessageWindowScene {
 
     static MenuState nowMenuState=MenuState.None;
-    String fieldName;
-    public MainMessageWindowScene(GameView parent,String name){
+    public MainMessageWindowScene(GameView parent){
         super(parent);
         img.moveCollision(0,1024);
         nowMenuState=MenuState.None;
-        fieldName=name;
-    }
-    public boolean isInterruptStatus(MotionEvent event,String mode){
-        if(statusWindow==null)return false;
-//        if(mode=="Gather") {
-//            return ((MenuWindow) (statusWindow)).isOnSumAttackMode(new PointF(event.getX(), event.getY()));
-//        }
-//        else if(mode=="BackToMenu"){
-//            return ((MenuWindow) (statusWindow)).isOnBackToSelect(new PointF(event.getX(), event.getY()));
-//        }
-        return false;
     }
     public MenuState getMenuInterrupt(MotionEvent event){
         pi.update(event);
@@ -32,7 +21,7 @@ public class MainMessageWindowScene extends MessageWindowScene {
                 //for Selecting Menu,need to check hit in menubar
                 if(img.isInside(new PointF(pi.x, pi.y)) ){
                 if (statusWindow == null) {// && img.isInside(new PointF(pi.x, pi.y))){
-                    statusWindow = new MenuWindow(fieldName);
+                    statusWindow = new MenuWindow();
                     nowMenuState=MenuState.On;
                     return MenuState.On;
                 } else if (statusWindow != null) {
@@ -48,7 +37,6 @@ public class MainMessageWindowScene extends MessageWindowScene {
         if(nowMenuState==MenuState.On){
             return MenuState.On;
         }
-
         return MenuState.None;
     }
 }

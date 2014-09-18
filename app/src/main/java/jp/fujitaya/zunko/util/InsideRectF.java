@@ -14,6 +14,9 @@ public class InsideRectF implements InsideStrategy {
     public void move(float x, float y) {
         rect.set(rect.left+x, rect.top+y, rect.right+x, rect.bottom+y);
     }
+    public void moveOffSet(float x, float y){
+        rect.offsetTo(x,y);
+    }
 
     @Override
     public boolean isInside(PointF point) {

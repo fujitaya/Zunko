@@ -54,8 +54,8 @@ public class MessageWindowScene extends GameScene{
 
         img = new Image(zunkoImage.get(ImageName.Z09));
         img.setCenter(128, 138);
-        img.setCollision(new InsideRectF(new RectF(
-                0, 0, img.getWidth(), img.getHeight())));
+        img.setCollision(new InsideRectF(
+                new RectF(0, 0, img.getWidth(), img.getHeight())));
     }
 
     public void appendMessage(String msg){
@@ -123,7 +123,7 @@ public class MessageWindowScene extends GameScene{
         int baseY = drawY;
 
 //        wnd.draw(canvas, baseX+(width-wnd.getWidth())/2, baseY);
-        img.moveTo(baseX, baseY);
+        img.moveOffset2(baseX, baseY);
         img.draw(canvas);
 
         int msgX = (int)img.getWidth() + (int)img.getX();
