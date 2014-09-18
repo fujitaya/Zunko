@@ -58,43 +58,19 @@ public class SceneSelect extends GameScene implements OnGestureListener{
 
     @Override
     public boolean onDown(MotionEvent e) {
-        float x = e.getX();
-        float y = e.getY();
-
-        for (TouchableBitmap button : map.getButtons()){
-            if (button.isInside(new PointF(x,y))){
-                button.getGestureListener().onDown(e);
-                return true;
-            }
-        }
+        map.onDown(e);
         return true;
     }
 
     @Override
     public void onShowPress(MotionEvent e) {
-        float x = e.getX();
-        float y = e.getY();
-
-        for (TouchableBitmap button : map.getButtons()){
-            if (button.isInside(new PointF(x,y))){
-                button.getGestureListener().onShowPress(e);
-                return;
-            }
-        }
+        map.onShowPress(e);
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        float x = e.getX();
-        float y = e.getY();
-
-        for (TouchableBitmap button : map.getButtons()){
-            if (button.isInside(new PointF(x,y))){
-                button.getGestureListener().onSingleTapUp(e);
-                return false;
-            }
-        }
-        return false;
+        map.onSingleTapUp(e);
+        return true;
     }
 
     @Override
@@ -105,19 +81,12 @@ public class SceneSelect extends GameScene implements OnGestureListener{
 
     @Override
     public void onLongPress(MotionEvent e) {
-        float x = e.getX();
-        float y = e.getY();
-
-        for (TouchableBitmap button : map.getButtons()){
-            if (button.isInside(new PointF(x,y))){
-                button.getGestureListener().onLongPress(e);
-                return;
-            }
-        }
+        map.onLongPress(e);
     }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        map.onFling(e1, e2, velocityX, velocityY);
         return false;
     }
 }

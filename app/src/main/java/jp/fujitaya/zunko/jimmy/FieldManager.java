@@ -25,6 +25,10 @@ public class FieldManager {
         return fieldStore.get(fieldName);
     }
 
+    public boolean isWorking(String fieldName){
+        return fieldStore.containsKey(fieldName);
+    }
+
     public void setEndField(String fieldName){
         Field f=fieldStore.get(fieldName);
         fieldStore.remove(fieldName);
