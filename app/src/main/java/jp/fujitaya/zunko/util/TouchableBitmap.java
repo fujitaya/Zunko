@@ -12,10 +12,10 @@ import static android.view.GestureDetector.OnGestureListener;
 
 public class TouchableBitmap{
     //BitmapとdrawRectをArrayListで管理したいが，後回し
-    private Bitmap bitmap;
-    private InsideStrategy strategy;
-    private RectF drawRect;
-    private OnGestureListener gestureListener;
+    protected Bitmap bitmap;
+    protected InsideStrategy strategy;
+    protected RectF drawRect;
+    protected OnGestureListener gestureListener;
 
     public TouchableBitmap(Bitmap bitmap, RectF drawRect,
                            InsideStrategy strategy, OnGestureListener gestureListener){

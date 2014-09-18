@@ -22,20 +22,20 @@ import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.util.InsideRectF;
 import jp.fujitaya.zunko.util.InsideStrategy;
 import jp.fujitaya.zunko.util.TouchableBitmap;
+import jp.fujitaya.zunko.util.TouchableBitmapWithText;
 
 import static android.view.GestureDetector.OnGestureListener;
 
 public class StageMap implements OnGestureListener{
-    protected final RectF drawRectSendai = new RectF(400f,600f,500f,700f);
-    protected final RectF stageDetailSize = new RectF(0f,0f,400f,500f);
-    protected final RectF changeSceneButtonDef = new RectF(50f,350f,350f,450f);
+    protected final RectF drawRectSendai = new RectF(600f,800f,850f,1050f);
+    protected final RectF stageDetailSize = new RectF(0f,0f,400f,400f);
+    protected final RectF changeSceneButtonDef = new RectF(50f,280f,350f,380f);
 
     protected Bitmap backGround;
     protected Map<String, TouchableBitmap> fieldButtons;
     protected StageGroup group;
     //本当はコールバックに変えたい
     protected GameView parentView;
-    protected Rect backGroundSrc;
     protected RectF backGroundDst;
     protected PointF offset;
     protected FieldManager fieldManager;
@@ -60,42 +60,50 @@ public class StageMap implements OnGestureListener{
         switch (group){
             case Miyagi:
                 backGround = BitmapFactory.decodeResource(res, R.drawable.bg_tohoku);
-                backGroundSrc = new Rect(1100,1600,2000,3300);
-                offset = new PointF(-50,-100);
+                backGround = Bitmap.createBitmap(backGround,1200,1900,800,900);
+                backGround = Bitmap.createScaledBitmap(backGround,1600,1800,true);
+                offset = new PointF(-400,-200);
                 backGroundDst = new RectF(offset.x,
                         offset.y,
-                        offset.x+backGroundSrc.width(),
-                        offset.y+backGroundSrc.height());
+                        offset.x+backGround.getWidth(),
+                        offset.y+backGround.getHeight());
 
                 addFieldButton(
-                        "SendaiButton",
-                        BitmapFactory.decodeResource(res, R.drawable.mc_mig),
-                        new RectF(drawRectSendai),
-                        new InsideRectF(new RectF(400f,600f,500f,700f)),
-                        new OnGestureListener() {
-                            @Override
-                            public boolean onDown(MotionEvent motionEvent) {
+                        "Sendai",new TouchableBitmapWithText(
+                            BitmapFactory.decodeResource(res, R.drawable.mc_mig),
+                            new RectF(drawRectSendai),
+                            new InsideRectF(new RectF(drawRectSendai)),
+                            res.getString(R.string.sendai),
+                            60,
+                            70f,
+                            200f,
+                            Color.WHITE,
+                            Color.BLACK,
+                            200,
+                            new OnGestureListener() {
+                                @Override
+                                public boolean onDown(MotionEvent motionEvent) {
                                 return false;
                             }
-                            @Override
-                            public void onShowPress(MotionEvent motionEvent) { }
-                            @Override
-                            public boolean onSingleTapUp(MotionEvent motionEvent) {
-                                openStageDetail("Sendai");
-                                return false;
+                                @Override
+                                public void onShowPress(MotionEvent motionEvent) { }
+                                @Override
+                                public boolean onSingleTapUp(MotionEvent motionEvent) {
+                                    openStageDetail("Sendai");
+                                    return false;
+                                }
+                                @Override
+                                public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                                    return false;
+                                }
+                                @Override
+                                public void onLongPress(MotionEvent motionEvent) { }
+                                @Override
+                                public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                                    return false;
+                                }
                             }
-                            @Override
-                            public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
-                                return false;
-                            }
-                            @Override
-                            public void onLongPress(MotionEvent motionEvent) { }
-                            @Override
-                            public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
-                                return false;
-                            }
-                        }
-                );
+                ));
                 break;
             case Tohoku:
                 backGround = BitmapFactory.decodeResource(res, R.drawable.map_miyagi);
@@ -115,7 +123,7 @@ public class StageMap implements OnGestureListener{
                 String message = "進行中" +
                         "\n総パワー : " + Integer.toString(focusField.getTotalZunkoNum()) +
                         "\n攻略度 :" + NumberFormat.getPercentInstance().format(
-                        (double)focusField.getNowHP()/focusField.getInitialHP());
+                        1.0-(double)(focusField.getNowHP()/focusField.getInitialHP()));
                 stageDetail.setText(message);
             }
             else {
@@ -132,7 +140,7 @@ public class StageMap implements OnGestureListener{
             RectF windowRect = new RectF(stageDetailSize);
             windowRect.offset(offset.x, offset.y);
             windowRect.offset(drawRectSendai.left,drawRectSendai.top);
-            stageDetail = new NoticeWindow(windowRect,"", Color.BLUE,100,Color.WHITE);
+            stageDetail = new NoticeWindow(windowRect,"", Color.BLUE,150,Color.WHITE);
 
             RectF buttonRect = new RectF(changeSceneButtonDef);
             buttonRect.offset(stageDetail.getRect().left,stageDetail.getRect().top);
@@ -182,15 +190,13 @@ public class StageMap implements OnGestureListener{
         this.focus = fieldName;
     }
 
-    public void addFieldButton(String id, Bitmap bitmap, RectF drawRect,
-                               InsideStrategy strategy, OnGestureListener onGestureListener){
-        TouchableBitmap button = new TouchableBitmap(bitmap,drawRect,strategy,onGestureListener);
+    public void addFieldButton(String id, TouchableBitmap button){
         button.move(offset.x, offset.y);
         fieldButtons.put(id,button);
     }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(backGround,backGroundSrc,backGroundDst,null);
+        canvas.drawBitmap(backGround,null,backGroundDst,null);
 
         for (Map.Entry<String,TouchableBitmap> entry : fieldButtons.entrySet()){
             entry.getValue().draw(canvas);
@@ -203,10 +209,10 @@ public class StageMap implements OnGestureListener{
 
     private void move(float distanceX, float distanceY){
         float moveX=0f,moveY=0f;
-        if (offset.x - distanceX + backGroundSrc.width() > GameView.VIEW_WIDTH &&
+        if (offset.x - distanceX + backGround.getWidth() > GameView.VIEW_WIDTH &&
                 offset.x - distanceX < 0)
             moveX = distanceX;
-        if (offset.y - distanceY + backGroundSrc.height() > GameView.VIEW_HEIGHT &&
+        if (offset.y - distanceY + backGround.getHeight() > GameView.VIEW_HEIGHT &&
                 offset.y - distanceY < 0)
             moveY = distanceY;
 
@@ -218,8 +224,8 @@ public class StageMap implements OnGestureListener{
 
             backGroundDst = new RectF(offset.x,
                     offset.y,
-                    offset.x+backGroundSrc.width(),
-                    offset.y+backGroundSrc.height());
+                    offset.x+backGround.getWidth(),
+                    offset.y+backGround.getHeight());
             if (stageDetail != null){
                 stageDetail.move(-moveX,-moveY);
                 changeSceneButton.move(-moveX,-moveY);
