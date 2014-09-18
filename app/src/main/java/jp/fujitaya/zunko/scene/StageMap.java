@@ -158,7 +158,13 @@ public class StageMap implements OnGestureListener{
                         @Override
                         public boolean onSingleTapUp(MotionEvent motionEvent) {
                             //parentView.changeScene(new MainScene(parentView,"Sendai"));
-                            parentView.changeScene(new CaptureScene(parentView,"Sendai"));
+                            if(FieldManager.getInstance().getField("Sendai").getNowHP()!=0){
+                                parentView.changeScene(new CaptureScene(parentView,"Sendai"));
+                            }
+                            else{
+                                parentView.changeScene(new EndScene(parentView,"Sendai"));
+                            }
+                            //parentView.changeScene(new CaptureScene(parentView,"Sendai"));
                             return false;
                         }
                         @Override

@@ -57,7 +57,7 @@ public class FieldManager {
         }
         //change Field to EndField
         for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()){
-            if(fieldEntry.getValue().getNowHP() == 0){
+            if(fieldEntry.getValue().getNowHP() <= 0){
                 setEndField(fieldEntry.getValue().getFieldName());
             }
         }
