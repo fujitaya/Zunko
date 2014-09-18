@@ -8,6 +8,7 @@ import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.field.Field;
 import jp.fujitaya.zunko.field.FieldManager;
+import jp.fujitaya.zunko.util.Image;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 /**
@@ -33,6 +34,7 @@ public class EndScene extends GameScene{
         super(parent);
         fm = FieldManager.getInstance();
         message = new EndMessageWindowScene(parent);
+
 
         ImageLoader ld = ImageLoader.getInstance();
         ld.load(R.drawable.cz_tatsu);

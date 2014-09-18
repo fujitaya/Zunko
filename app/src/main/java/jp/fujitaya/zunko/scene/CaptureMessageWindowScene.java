@@ -18,7 +18,7 @@ public class CaptureMessageWindowScene extends MessageWindowScene {
     public CaptureMessageWindowScene(GameView parent){
         super(parent);
         img.moveCollision(0,1024);
-        clearImg=new Image(R.drawable.wnd_message);
+        clearImg=new Image(R.drawable.fd_end);
     }
     public void interrupt(MotionEvent event){
         pi.update(event);
