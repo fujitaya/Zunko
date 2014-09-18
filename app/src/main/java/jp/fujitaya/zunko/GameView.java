@@ -52,14 +52,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     private void update(){
+        fpswatch.update();
         synchronized (scene) {
             if (scene == null) {
                 ((MyActivity) getContext()).finish();
                 return;
             }
+            scene.update();
         }
-        fpswatch.update();
-        scene.update();
     }
     private void doDraw(Canvas canvas){
         RectF mappedArea;

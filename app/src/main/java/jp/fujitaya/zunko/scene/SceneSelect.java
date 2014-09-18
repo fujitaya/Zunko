@@ -108,10 +108,10 @@ public class SceneSelect extends GameScene implements OnGestureListener{
         message.show(true);
     }
 
-    public void openStatusWindow(){
+    public synchronized void openStatusWindow(){
         isStatusWindowOpen = true;
     }
-    public void closeStatusWindow(){
+    public synchronized void closeStatusWindow(){
         isStatusWindowOpen = false;
     }
 
