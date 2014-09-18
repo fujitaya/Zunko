@@ -122,6 +122,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
     @Override
     public void update() {
         map.update();
+        fieldManager.updateToEndField();
         fieldManager.update();
         message.update();
         if (isStatusWindowOpen){

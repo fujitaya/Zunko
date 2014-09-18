@@ -19,10 +19,17 @@ public class FieldManager {
         }
         return fieldStore.get(fieldName);
     }
-    public void setEndField(String fieldName){
+    void setEndField(String fieldName){
         Field f = fieldStore.get(fieldName);
         fieldStore.remove(fieldName);
         fieldStore.put(fieldName, new EndField(f.getFieldData()));
+    }
+    public void updateToEndField(){
+        for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()){
+            if(fieldEntry.getValue().getNowHP() <= 0){
+                setEndField(fieldEntry.getValue().getFieldName());
+            }
+        }
     }
 
     public boolean isWorking(String fieldName){
@@ -56,11 +63,11 @@ public class FieldManager {
             fieldEntry.getValue().update();
         }
         //change Field to EndField
-        for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()){
+        /*for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()){
             if(fieldEntry.getValue().getNowHP() <= 0){
                 setEndField(fieldEntry.getValue().getFieldName());
             }
-        }
+        }*/
     }
 
     public void save(){

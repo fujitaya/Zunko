@@ -60,6 +60,8 @@ public class EndScene extends GameScene{
     public void update(){
         fm.update();
         message.update();
+        setMessage();
+
     }
     @Override
     public void draw(Canvas canvas){

@@ -2,6 +2,7 @@ package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import jp.fujitaya.zunko.GameView;
@@ -74,7 +75,7 @@ public class CaptureScene extends GameScene {
     public void update(){
         fm.update();
         message.update();
-        stageClear();
+        //stageClear();
         setMessage();
     }
     @Override
@@ -101,7 +102,6 @@ public class CaptureScene extends GameScene {
                 return;
             }
         }
-
         field.interrupt(event);
     }
     @Override
@@ -141,6 +141,7 @@ public class CaptureScene extends GameScene {
             messageflag[2]=true;
         }
         setRandomMessage();
+        if(field.getNowHP()<=0){clearCount++;}
     }
     void setRandomMessage(){
         if(randomMessageCount%messageSpan==0){
@@ -149,7 +150,6 @@ public class CaptureScene extends GameScene {
         }
         randomMessageCount++;
     }
-
 
     void changeScene(){
         parent.changeScene(new SceneSelect(parent));
