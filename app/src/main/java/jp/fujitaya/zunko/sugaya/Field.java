@@ -192,7 +192,6 @@ public class Field{
         }
     public void dispose(){
         disposeImage();
-        setMenuState(menuState.None);
     }
     public void disposeImage(){
         image=null;

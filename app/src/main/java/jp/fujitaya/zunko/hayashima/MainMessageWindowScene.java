@@ -17,6 +17,10 @@ public class MainMessageWindowScene extends MessageWindowScene {
         nowMenuState=MenuState.None;
         fieldName=name;
     }
+    public boolean getOnSumAttackMode(MotionEvent event){
+        if(statusWindow==null)return false;
+        return ((MenuWindow)(statusWindow)).isOnSumAttackMode(new PointF(event.getX(),event.getY()));
+    }
     public MenuState getMenuInterrupt(MotionEvent event){
         pi.update(event);
         switch(event.getAction()){
