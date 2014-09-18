@@ -8,8 +8,8 @@ import jp.fujitaya.zunko.util.ImageLoader;
 
 class ChibiZunkoStateChase extends ChibiZunkoState {
     float vx, vy;
-    static final float VEL = 2;
-    static final int FLIP_INTERVAL = 30;
+    static final float VEL = 4;
+    static final int FLIP_INTERVAL = 15;
 
     ChibiZunkoStateChase(ChibiZunko zunko){
         super(zunko);

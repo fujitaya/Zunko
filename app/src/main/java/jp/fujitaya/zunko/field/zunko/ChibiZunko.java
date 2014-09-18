@@ -101,8 +101,14 @@ public class ChibiZunko extends FieldBaseObject {
         return !alive;
     }
 
+    private static RectF dr = new RectF();
     public void draw(Canvas canvas, float baseX, float baseY){
         Bitmap image = state.getImage(ld);
-        canvas.drawBitmap(image, baseX+pos.x, baseY+pos.y, null);
+
+        dr.left = baseX + pos.x;
+        dr.top = baseY + pos.y;
+        dr.right = dr.left + image.getWidth() * power;
+        dr.bottom = dr.top + image.getHeight() * power;
+        canvas.drawBitmap(image, null, dr, null);
     }
 }
