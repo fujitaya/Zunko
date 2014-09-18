@@ -60,7 +60,7 @@ public abstract class BasicField extends Field {
 
         fd.maxZunkoExistNum = maxZunkoExistNum;
         fd.initialZunkoPower = initialZunkoPower;
-        fd.initialZunkoNum = initialZunkoNum;
+        fd.initialZunkoNum = getTotalZunkoNum();
 
         for(Creator c: listCreator){
             FieldData.CreatorData cd = fd.createCreatorData();
