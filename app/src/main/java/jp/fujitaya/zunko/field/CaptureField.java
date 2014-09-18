@@ -115,9 +115,12 @@ public class CaptureField extends Field{
             listBuilding.add(new Building(e));
         }
 
-        for(int i=0; i < fd.initialZunkoNum; ++i) addZunko();
+        if(listCreator.size() > 0) {
+            for (int i = 0; i < fd.initialZunkoNum; ++i)
+                addZunko(listCreator.get(0));
+        }
     }
-    public void dispose(){
+    @Override public void dispose(){
 
     }
 
@@ -126,7 +129,7 @@ public class CaptureField extends Field{
     ArrayList<ChibiZunko> selectedQueue = new ArrayList<ChibiZunko>();
     ArrayList<ChibiZunko> selectWaitingQueue = new ArrayList<ChibiZunko>();
     ArrayList<ChibiZunko> searchBuffer = new ArrayList<ChibiZunko>();
-    public void update(){
+    @Override public void update(){
         // select chain
         if(touchedZunko != null && selectedQueue.size()==0) {
             startSelectChain(touchedZunko);
@@ -144,6 +147,10 @@ public class CaptureField extends Field{
                     zunko.activateAttackState(build);
                 }
             }
+        }
+
+        for(Creator e: listCreator){
+            if(e.isCreatable()) addZunko(e);
         }
 
         // zunko update
@@ -216,7 +223,7 @@ public class CaptureField extends Field{
     private PointerInfo pi = new PointerInfo();
     private PointerInfo oldPi = new PointerInfo();
     boolean fieldTouched = false;
-    public void interrupt(MotionEvent event){
+    @Override public void interrupt(MotionEvent event){
         pi.update(event);
         float fx = pi.x - pos.x;
         float fy = pi.y - pos.y;
@@ -268,18 +275,19 @@ public class CaptureField extends Field{
     }
 
     private static final float SPAWN_RANGE = 300;
-    public void addZunko(){
-        float x = (float) (Math.random() * SPAWN_RANGE) - SPAWN_RANGE/2 + fd.creator.fieldX;
-        float y = (float) (Math.random() * SPAWN_RANGE) - SPAWN_RANGE/2 + fd.creator.fieldY;
+    public void addZunko(Creator creator){
+        float x = (float) (Math.random() * SPAWN_RANGE) - SPAWN_RANGE/2 + creator.getX();
+        float y = (float) (Math.random() * SPAWN_RANGE) - SPAWN_RANGE/2 + creator.getY();
 
         ChibiZunko zunko = new ChibiZunko();
         zunko.moveTo(x, y);
 
         listZunko.add(zunko);
+        creator.reset();
     }
 
     RectF rect = new RectF();
-    public void draw(Canvas canvas){
+    @Override public void draw(Canvas canvas){
         // backgrond
         int w = bg.getWidth();
         int h = bg.getHeight();

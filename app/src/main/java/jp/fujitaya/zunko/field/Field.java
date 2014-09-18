@@ -12,6 +12,7 @@ public abstract class Field {
     public String getFieldName(){
         return name;
     }
+
     public abstract int getNowHP();
     public abstract int getInitialHP();
     public abstract int getTotalZunkoNum();
