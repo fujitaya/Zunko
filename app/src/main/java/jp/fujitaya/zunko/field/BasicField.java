@@ -10,18 +10,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.field.zunko.ChibiZunko;
 import jp.fujitaya.zunko.GameView;
+import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.field.Field;
+import jp.fujitaya.zunko.field.zunko.ChibiZunko;
 import jp.fujitaya.zunko.util.ImageLoader;
 import jp.fujitaya.zunko.util.PointerInfo;
 
-public class CaptureField extends BasicField{
-    public CaptureField(String name){
+public class BasicField extends Field {
+    protected PointF pos;
+    protected Bitmap bg;  // Create TileImage class instead?
+    protected int width, height;
+
+    FieldData fd;
+
+    ArrayList<ChibiZunko> listZunko;
+    ArrayList<Building> listBuilding;
+    ArrayList<Creator> listCreator;
+    ArrayList<FieldData.ObjectData> listImageObject;
+
+    ImageLoader loader;
+
+    BasicField(String name){
         super(name);
     }
-
-/*    @Override public int getNowHP(){
+    @Override public int getNowHP(){
         int hp = 0;
         for(FieldBaseObject e: listBuilding){
             hp += e.getHP();
@@ -40,10 +53,10 @@ public class CaptureField extends BasicField{
         ret += listZunko.size();
         return ret;
     }
+
     @Override public void clearZunko(){
         listZunko.clear();
     }
-
     private void setFD(FieldData fd, String name){
         fd.name = name;
         fd.fieldImageId = R.drawable.fd_green;
@@ -90,8 +103,8 @@ public class CaptureField extends BasicField{
 
         for(int i=0; i < fd.initialZunkoNum; ++i) addZunko();
     }
-        public void dispose(){
 
+    public void dispose(){
     }
 
     int touchedCounter = 0;
@@ -163,15 +176,15 @@ public class CaptureField extends BasicField{
 
         for(ChibiZunko zunko: searchBuffer) selectWaitingQueue.add(zunko);
         searchBuffer.clear();
-        Collections.sort(selectWaitingQueue, new Comparator<ChibiZunko>(){
-            public int compare(ChibiZunko a, ChibiZunko b){
-                float ax = a.getX()-touchedZunko.getX();
-                float ay = a.getY()-touchedZunko.getY();
-                float bx = b.getX()-touchedZunko.getX();
-                float by = b.getY()-touchedZunko.getY();
-                float res = ax*ax+ay*ay - bx*bx+by*by;
-                if(res < 0) return -1;
-                else if(res > 0) return 1;
+        Collections.sort(selectWaitingQueue, new Comparator<ChibiZunko>() {
+            public int compare(ChibiZunko a, ChibiZunko b) {
+                float ax = a.getX() - touchedZunko.getX();
+                float ay = a.getY() - touchedZunko.getY();
+                float bx = b.getX() - touchedZunko.getX();
+                float by = b.getY() - touchedZunko.getY();
+                float res = ax * ax + ay * ay - bx * bx + by * by;
+                if (res < 0) return -1;
+                else if (res > 0) return 1;
                 return 0;
             }
         });
@@ -185,6 +198,8 @@ public class CaptureField extends BasicField{
         selectWaitingQueue.clear();
         touchedCounter = 0;
     }
+
+
 
     private PointerInfo pi = new PointerInfo();
     private PointerInfo oldPi = new PointerInfo();
@@ -280,5 +295,4 @@ public class CaptureField extends BasicField{
         // zunko
         for(ChibiZunko e: listZunko){e.draw(canvas, pos.x, pos.y);}
     }
-    */
 }
