@@ -66,7 +66,7 @@ public class SceneMenu extends GameScene implements OnGestureListener{
                     }
                 }));
         //図鑑ボタン
-        buttons.add((new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.btn_extrabutton),
+        buttons.add((new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.btn_config),
                 new RectF(200f,1000f,520f,1100f),
                 new InsideRectF(new RectF(250f,1000f,550f,1100f)),
                 new OnGestureListener() {
@@ -78,7 +78,7 @@ public class SceneMenu extends GameScene implements OnGestureListener{
                     public void onShowPress(MotionEvent motionEvent) { }
                     @Override
                     public boolean onSingleTapUp(MotionEvent motionEvent) {
-                        //TODO:図鑑画面への遷移
+                        //TODO:設定画面への遷移
                         return false;
                     }
                     @Override
