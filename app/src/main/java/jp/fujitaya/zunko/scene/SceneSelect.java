@@ -147,6 +147,10 @@ public class SceneSelect extends GameScene implements OnGestureListener{
         gestureDetector = null;
         parent = null;
         fieldManager = null;
+        statusWindow.dispose();
+        statusWindow = null;
+        zunkobutton.dispose();
+        zunkobutton = null;
     }
 
     @Override
