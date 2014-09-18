@@ -1,15 +1,13 @@
 package jp.fujitaya.zunko.sugaya;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 
-import java.util.ArrayList;
-
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.field.FieldBaseObject;
 import jp.fujitaya.zunko.util.Image;
 
-public class Creator extends BasicObject {
+public class Creator extends FieldBaseObject {
     Image image;
     static int staticCreateNumber = 0;
     int createNumber = 0;

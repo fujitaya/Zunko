@@ -45,7 +45,7 @@ public class MessageWindowScene extends GameScene{
 
         framePaint = new Paint();
 
-        wnd = new Image(R.drawable.wnd_message);
+//        wnd = new Image(R.drawable.wnd_message);
 
         zunkoImage = new HashMap<ImageName, Integer>();
         zunkoImage.put(ImageName.Z01, R.drawable.tz_zunko01);
@@ -60,10 +60,6 @@ public class MessageWindowScene extends GameScene{
         img.setCenter(128, 138);
         img.setCollision(new InsideRectF(new RectF(
                 0, 0, img.getWidth(), img.getHeight())));
-
-//        Sound sound = Sound.getInstance();
-//        Sound.SoundCard sc = sound.loadBGM(R.raw.title_theme_02);
-//        sound.playBGM(sc);
     }
 
     public void appendMessage(String msg){
@@ -130,8 +126,9 @@ public class MessageWindowScene extends GameScene{
         int baseX = drawX;
         int baseY = drawY;
 
-        wnd.draw(canvas, baseX+(width-wnd.getWidth())/2, baseY);
-        img.draw(canvas, baseX, baseY);
+//        wnd.draw(canvas, baseX+(width-wnd.getWidth())/2, baseY);
+        img.moveTo(baseX, baseY);
+        img.draw(canvas);
 
         int msgX = (int)img.getWidth() + (int)img.getX();
         int msgY = baseY + FONT_SIZE*2;

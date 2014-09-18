@@ -3,8 +3,9 @@ package jp.fujitaya.zunko.jimmy;
 import java.util.HashMap;
 import java.util.Map;
 
-import jp.fujitaya.zunko.sugaya.EndField;
-import jp.fujitaya.zunko.sugaya.Field;
+import jp.fujitaya.zunko.field.CaptureField;
+import jp.fujitaya.zunko.field.EndField;
+import jp.fujitaya.zunko.field.Field;
 
 public class FieldManager {
     private static FieldManager instance;
@@ -21,12 +22,8 @@ public class FieldManager {
 
     public Field getField(String fieldName){
         if (!fieldStore.containsKey(fieldName))
-            fieldStore.put(fieldName,new Field(fieldName));
+            fieldStore.put(fieldName,new CaptureField(fieldName));
         return fieldStore.get(fieldName);
-    }
-
-    public boolean isWorking(String fieldName){
-        return fieldStore.containsKey(fieldName);
     }
 
     public void setEndField(String fieldName){
@@ -42,7 +39,7 @@ public class FieldManager {
         }
         //change Field to EndField
         for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()){
-            if(fieldEntry.getValue().isToEndField()==true){
+            if(fieldEntry.getValue().getNowHP() == 0){
                 setEndField(fieldEntry.getValue().getFieldName());
             }
         }

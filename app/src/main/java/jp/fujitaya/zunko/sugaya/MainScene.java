@@ -1,21 +1,11 @@
 package jp.fujitaya.zunko.sugaya;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.view.Menu;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
-
-import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.field.EndField;
 import jp.fujitaya.zunko.hayashima.MainMessageWindowScene;
 import jp.fujitaya.zunko.hayashima.MenuState;
-import jp.fujitaya.zunko.hayashima.MessageWindowScene;
 import jp.fujitaya.zunko.jimmy.FieldManager;
 import jp.fujitaya.zunko.jimmy.SceneSelect;
 import jp.fujitaya.zunko.util.*;
@@ -40,9 +30,7 @@ public class MainScene extends GameScene {
     public void update(){
         FieldManager.getInstance().update();
         message.update();
-
         //changeScene
-
     }
     @Override
     public void draw(Canvas canvas){
@@ -57,7 +45,12 @@ public class MainScene extends GameScene {
         if(m== MenuState.On){
             //get Zunko attackPoint
             if(FieldManager.getInstance().getField(fieldName).getClass() == (Class<?>)EndField.class){
-                //((EndField)(FieldManager.getInstance().getField(fieldName))).interruptOnMenu(event);
+                if(message.isInterruptStatus(event,"Gather")) {
+                    ((EndField)(FieldManager.getInstance().getField(fieldName))).setSumAttakcPower();
+                }
+            }
+            if(message.isInterruptStatus(event,"BackToMenu")){
+                ChangeScene();
             }
 
         }

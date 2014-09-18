@@ -3,9 +3,11 @@ package jp.fujitaya.zunko.hayashima;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.graphics.RectF;
 
 import jp.fujitaya.zunko.jimmy.FieldManager;
-import jp.fujitaya.zunko.sugaya.EndField;
+import jp.fujitaya.zunko.field.EndField;
+import jp.fujitaya.zunko.util.GameView;
 
 
 public class MenuWindow extends StatusWindow{
@@ -13,8 +15,27 @@ public class MenuWindow extends StatusWindow{
     public MenuWindow(String name){
        fieldName=name;
     }
-    public void interrupt(PointF f){
-
+    public boolean isOnSumAttackMode(PointF f){
+        float dx = (GameView.VIEW_WIDTH - sx) / 2;
+        float dy = (GameView.VIEW_HEIGHT - sy) / 2;
+        float diffy = 35;
+        float x = dx + 30;
+        float y = dy + diffy*6;
+        if(new RectF(dx,y,x,y+diffy*2).contains(f.x,f.y) ){
+            return true;
+        }
+        return false;
+    }
+    public boolean isOnBackToSelect(PointF f){
+        float dx = (GameView.VIEW_WIDTH - sx) / 2;
+        float dy = (GameView.VIEW_HEIGHT - sy) / 2;
+        float diffy = 35;
+        float x = dx + 30;
+        float y = dy + diffy*4;
+        if(new RectF(dx,y,x,y+diffy*2).contains(f.x,f.y) ){
+            return true;
+        }
+        return false;
     }
     @Override
     public void draw(Canvas canvas, float baseX, float baseY){
