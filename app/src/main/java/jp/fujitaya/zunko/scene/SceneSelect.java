@@ -105,6 +105,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
                 }
         );
         isStatusWindowOpen = false;
+        message.show(true);
     }
 
     public void openStatusWindow(){
@@ -151,12 +152,15 @@ public class SceneSelect extends GameScene implements OnGestureListener{
         statusWindow = null;
         zunkobutton.dispose();
         zunkobutton = null;
+        zukanButton.dispose();
+        zukanButton = null;
+        message = null;
     }
 
     @Override
     public void interrupt(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
-        message.interrupt(event);
+        if (message != null) message.interrupt(event);
     }
 
     @Override

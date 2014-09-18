@@ -59,9 +59,12 @@ public class StageMap implements OnGestureListener{
 
         switch (group){
             case Miyagi:
-                backGround = BitmapFactory.decodeResource(res, R.drawable.bg_tohoku);
-                backGround = Bitmap.createBitmap(backGround,1200,1900,800,900);
-                backGround = Bitmap.createScaledBitmap(backGround,1600,1800,true);
+                Bitmap tmp1,tmp2;
+                tmp1 = BitmapFactory.decodeResource(res, R.drawable.bg_tohoku);
+                tmp2 = Bitmap.createBitmap(tmp1,1200,1900,800,900);
+                tmp1.recycle();
+                backGround = Bitmap.createScaledBitmap(tmp2,1600,1800,true);
+                tmp2.recycle();
                 offset = new PointF(-400,-200);
                 backGroundDst = new RectF(offset.x,
                         offset.y,
@@ -123,7 +126,7 @@ public class StageMap implements OnGestureListener{
                 String message = "進行中" +
                         "\n総パワー : " + Integer.toString(focusField.getTotalZunkoNum()) +
                         "\n攻略度 :" + NumberFormat.getPercentInstance().format(
-                        1.0-(double)(focusField.getNowHP()/focusField.getInitialHP()));
+                        1.0-((double)focusField.getNowHP()/focusField.getInitialHP()));
                 stageDetail.setText(message);
             }
             else {
@@ -247,6 +250,7 @@ public class StageMap implements OnGestureListener{
             entry.getValue().dispose();
         }
         fieldButtons.clear();
+        changeSceneImage.recycle();
         parentView = null;
     }
 
