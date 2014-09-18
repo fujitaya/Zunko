@@ -24,7 +24,7 @@ public abstract class BasicField extends Field {
     protected int width, height, initX, initY;
 
     protected int maxZunkoExistNum;
-    protected float initialZunkoPower;
+    protected int initialZunkoPower;
     protected int initialZunkoNum;
 
     ArrayList<ChibiZunko> listZunko;
@@ -126,7 +126,7 @@ public abstract class BasicField extends Field {
 
         if(listCreator.size() > 0) {
             for (int i = 0; i < fd.initialZunkoNum; ++i)
-                addZunko(listCreator.get(0));
+                addZunko(listCreator.get(0), fd.initialZunkoPower);
         }
 
         maxZunkoExistNum = fd.maxZunkoExistNum;
@@ -168,14 +168,17 @@ public abstract class BasicField extends Field {
             }
         }
 
-        // field objects update
-        for(Building build: listBuilding) build.update();
-        for(Creator creator: listCreator) creator.update();
+        //
 
         // check to create ChibiZunko
         for(Creator e: listCreator){
-            if(e.isCreatable()) addZunko(e);
+            if(e.isCreatable() && getTotalZunkoNum()<maxZunkoExistNum)
+                addZunko(e, 1);
         }
+
+        // field objects update
+        for(Building build: listBuilding) build.update();
+        for(Creator creator: listCreator) creator.update();
 
         // zunko update and remove check
         Iterator<ChibiZunko> iter = listZunko.iterator();
@@ -189,7 +192,7 @@ public abstract class BasicField extends Field {
         }
 
         // Z sort
-        if(++sortCounter == 120){
+        if(++sortCounter >= SORT_INTERVAL){
             sortCounter = 0;
             Collections.sort(listZunko, new Comparator<ChibiZunko>(){
                 public int compare(ChibiZunko a, ChibiZunko b){
@@ -320,12 +323,13 @@ public abstract class BasicField extends Field {
         moveTo(pos.x+x, pos.y+y);
     }
 
-    public void addZunko(Creator creator){
+    public void addZunko(Creator creator, int powerOffset){
         float r = creator.getSpawnRange();
         float x = (float) (Math.random() * r) - r/2 + creator.getX();
         float y = (float) (Math.random() * r) - r/2 + creator.getY();
 
         ChibiZunko zunko = new ChibiZunko();
+        zunko.setPower(powerOffset);
         zunko.moveTo(x, y);
 
         listZunko.add(zunko);

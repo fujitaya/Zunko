@@ -94,8 +94,8 @@ public class FieldManager {
         fd.initialZunkoNum = 5;
 
         FieldData.CreatorData cd = fd.createCreatorData();
-        cd.imageId = R.drawable.ic_launcher;
-        cd.scale = 1;
+        cd.imageId = R.drawable.cz_zunda;
+        cd.scale = 3;
         cd.fieldX = 150;
         cd.fieldY = 150;
         cd.spawnTime = 60*5;

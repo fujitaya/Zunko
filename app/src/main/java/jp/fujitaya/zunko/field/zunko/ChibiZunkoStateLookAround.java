@@ -3,7 +3,7 @@ package jp.fujitaya.zunko.field.zunko;
 import jp.fujitaya.zunko.R;
 
 class ChibiZunkoStateLookAround extends ChibiZunkoState {
-    private static final int LOOK_INTERVAL = 20;
+    private static final int LOOK_INTERVAL = 30;
     private int lookCount, lookInterval;
 
     ChibiZunkoStateLookAround(ChibiZunko zunko){

@@ -29,7 +29,7 @@ public class ChibiZunko extends FieldBaseObject {
         alive = true;
         target = null;
 
-        setHP(2);
+        setHP(10);
         setCollision(new RectF(0, 0, COL_WID, COL_HEI));
 
         state = new ChibiZunkoStateSpawn(this);
@@ -38,6 +38,8 @@ public class ChibiZunko extends FieldBaseObject {
 
     public void setPower(int val){
         power = val;
+        col.right *= power;
+        col.bottom *= power;
     }
     public int getPower(){
         return power;

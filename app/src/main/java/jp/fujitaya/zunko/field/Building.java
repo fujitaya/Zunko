@@ -35,7 +35,7 @@ public class Building extends FieldBaseObject {
         return hp>0;
     }
 
-    RectF drawRect = new RectF();
+    private static RectF drawRect = new RectF();
     @Override
     public void draw(Canvas canvas, float baseX, float baseY){
         drawRect.left = baseX + pos.x;

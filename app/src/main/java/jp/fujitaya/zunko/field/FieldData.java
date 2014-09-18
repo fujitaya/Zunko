@@ -11,7 +11,7 @@ public class FieldData {
     public int initY;
 
     public int maxZunkoExistNum;
-    public float initialZunkoPower;
+    public int initialZunkoPower;
     public int initialZunkoNum;
 
     public ArrayList<BuildingData> buildings;
