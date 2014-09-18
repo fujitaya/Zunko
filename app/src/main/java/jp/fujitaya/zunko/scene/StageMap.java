@@ -18,7 +18,7 @@ import java.text.NumberFormat;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.field.Field;
 import jp.fujitaya.zunko.field.FieldManager;
-import jp.fujitaya.zunko.util.GameView;
+import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.util.InsideRectF;
 import jp.fujitaya.zunko.util.InsideStrategy;
 import jp.fujitaya.zunko.util.TouchableBitmap;
@@ -113,8 +113,9 @@ public class StageMap implements OnGestureListener{
                 Field focusField = fieldManager.getField(focus);
 
                 String message = "進行中" +
-                        "\n総パワー : " + Integer.toString(focusField.getSumAttackPower()) +
-                        "\n攻略度 :" + NumberFormat.getPercentInstance().format(focusField.getFieldHitPoint());
+                        "\n総パワー : " + Integer.toString(focusField.getTotalZunkoNum()) +
+                        "\n攻略度 :" + NumberFormat.getPercentInstance().format(
+                        (double)focusField.getNowHP()/focusField.getInitialHP());
                 stageDetail.setText(message);
             }
             else {

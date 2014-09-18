@@ -28,6 +28,10 @@ public class FieldManager {
         fieldStore.put(fieldName, new EndField(fieldName));
     }
 
+    public boolean isWorking(String fieldName){
+        return fieldStore.containsKey(fieldName);
+    }
+
     public void update(){
 
         for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()){
