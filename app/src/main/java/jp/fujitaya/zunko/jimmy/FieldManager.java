@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jp.fujitaya.zunko.field.CaptureField;
-import jp.fujitaya.zunko.sugaya.EndField;
+import jp.fujitaya.zunko.field.EndField;
 import jp.fujitaya.zunko.field.Field;
 
 public class FieldManager {
