@@ -10,11 +10,11 @@ import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.Image;
 
 public class StatusWindow {
-    private float x, y;
-    private float sx, sy;
-    private Paint p, fp;
-    private boolean show;
-    private Image btn;
+    protected float x, y;
+    protected float sx, sy;
+    protected Paint p, fp;
+    protected boolean show;
+    protected Image btn;
 
     public StatusWindow(){
         p = new Paint();

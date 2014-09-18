@@ -199,6 +199,14 @@ public class Field{
     public int getMiniZunkoNumber(){return listMiniZunko.size();}
     public int getBuildingNumber(){return listBuilding.size();}
     public int getCreatorNumber(){return listCreator.size();}
+
+    public int getSumAttackPower(){
+        int sum=0;
+        for(MiniZunko zun:listMiniZunko){
+            sum+=zun.getAttackPower();
+        }
+        return sum;
+    }
     public float getFieldHitPoint(){
         int p=0;
         for(Building build:listBuilding){

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.hayashima.MainMessageWindowScene;
 import jp.fujitaya.zunko.hayashima.MessageWindowScene;
 import jp.fujitaya.zunko.jimmy.FieldManager;
 import jp.fujitaya.zunko.jimmy.SceneSelect;
@@ -20,11 +21,11 @@ import jp.fujitaya.zunko.util.*;
 public class MainScene extends GameScene {
     //object list
     String fieldName;
-    MessageWindowScene message;
+    MainMessageWindowScene message;
     public MainScene(GameView parent,String name){
         super(parent);
         fieldName=name;
-        message=new MessageWindowScene(parent);
+        message=new MainMessageWindowScene(parent);
         init();
     };
 

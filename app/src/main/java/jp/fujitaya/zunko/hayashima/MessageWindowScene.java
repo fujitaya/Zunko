@@ -31,7 +31,7 @@ public class MessageWindowScene extends GameScene{
     private Image img, wnd;
     private boolean show;
 
-    private StatusWindow statusWindow;
+    protected StatusWindow statusWindow;
 
     public MessageWindowScene(GameView parent){
         super(parent);
