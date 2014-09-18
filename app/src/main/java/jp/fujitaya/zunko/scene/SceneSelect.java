@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.view.GestureDetector;
@@ -22,6 +23,9 @@ import jp.fujitaya.zunko.util.TouchableBitmapWithText;
 import static android.view.GestureDetector.OnGestureListener;
 
 public class SceneSelect extends GameScene implements OnGestureListener{
+    public final RectF statusBar = new RectF(0f,0f,GameView.VIEW_WIDTH,100f);
+    public final int statusBarColor = Color.BLACK;
+    public final int statusBarAlpha = 180;
     private StageMap map;
     private GestureDetector gestureDetector;
     private FieldManager fieldManager;
@@ -136,6 +140,17 @@ public class SceneSelect extends GameScene implements OnGestureListener{
         map.draw(canvas);
         message.draw(canvas);
         //zunkobutton.draw(canvas);
+        Paint paint = new Paint();
+        paint.setColor(statusBarColor);
+        paint.setAlpha(statusBarAlpha);
+        canvas.drawRect(statusBar,paint);
+
+        paint = new Paint();
+        paint.setTextSize(50);
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        canvas.drawText("宮城周辺",30,80,paint);
+
         if (isStatusWindowOpen){
             statusWindow.draw(canvas);
             zukanButton.draw(canvas);
