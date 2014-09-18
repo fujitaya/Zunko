@@ -14,9 +14,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import jp.fujitaya.zunko.scene.CaptureScene;
 import jp.fujitaya.zunko.scene.GameScene;
 import jp.fujitaya.zunko.scene.MainScene;
+import jp.fujitaya.zunko.scene.SceneMenu;
 import jp.fujitaya.zunko.util.FpsCounter;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
@@ -45,7 +45,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         wasOutside = false;
         scheduler = null;
-        scene = new CaptureScene(this, "Sendai");
+        scene = new SceneMenu(this);
         getHolder().addCallback(this);
     }
 

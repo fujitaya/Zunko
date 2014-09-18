@@ -39,7 +39,7 @@ public class SceneMenu extends GameScene implements OnGestureListener{
         //タイトル画像
         menuTitle = BitmapFactory.decodeResource(res,R.drawable.menutitle);
         //スタートボタン
-        buttons.add(new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.btn_startbutton),
+        buttons.add(new TouchableBitmap(BitmapFactory.decodeResource(res,R.drawable.btn_start),
                 new RectF(200f,800f,520f,900f),
                 new OnGestureListener() {
                     @Override
