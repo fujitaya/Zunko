@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import jp.fujitaya.zunko.MyActivity;
 import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.hayashima.CaptureScene;
 import jp.fujitaya.zunko.hayashima.MessageWindowScene;
 import jp.fujitaya.zunko.jimmy.SceneSelect;
 import jp.fujitaya.zunko.sugaya.MainScene;
@@ -46,7 +47,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         wasOutside = false;
         scheduler = null;
-        scene = new SceneMenu(this);
+        scene = new CaptureScene(this, "Sendai");
         getHolder().addCallback(this);
     }
 

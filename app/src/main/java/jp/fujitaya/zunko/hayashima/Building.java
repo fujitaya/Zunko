@@ -1,18 +1,15 @@
-package jp.fujitaya.zunko.sugaya;
+package jp.fujitaya.zunko.hayashima;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.hayashima.FieldBaseObject;
 import jp.fujitaya.zunko.util.Image;
 
-public class Building extends BasicObject {
+public class Building extends FieldBaseObject {
     static enum ImageName{
         base
     };

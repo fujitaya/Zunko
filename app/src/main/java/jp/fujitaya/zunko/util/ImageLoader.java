@@ -3,6 +3,7 @@ package jp.fujitaya.zunko.util;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.util.SparseArray;
 
 import java.util.HashMap;
@@ -44,6 +45,16 @@ public class ImageLoader {
         loader.clear();
         loader = null;
         res = null;
+    }
+    public Bitmap createHrevImage(int srcId, int newId){
+        Bitmap src = loader.get(srcId);
+        if(src == null) return null;
+
+        Matrix matrix = new Matrix();
+        matrix.preScale(-1, 1);
+        Bitmap dst = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, false);
+        loader.put(newId, dst);
+        return dst;
     }
 
     private static ImageLoader instance = null;

@@ -12,49 +12,54 @@ import java.util.ArrayList;
 
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.SceneMenu;
+import jp.fujitaya.zunko.hayashima.MessageWindowScene;
 import jp.fujitaya.zunko.jimmy.FieldManager;
 import jp.fujitaya.zunko.jimmy.SceneSelect;
 import jp.fujitaya.zunko.util.*;
 
 public class MainScene extends GameScene {
     //object list
-    Field field;
     String fieldName;
+    MessageWindowScene message;
     public MainScene(GameView parent,String name){
         super(parent);
         fieldName=name;
+        message=new MessageWindowScene(parent);
         init();
     }
 
 
     private void init(){
-        field= FieldManager.getInstance().getField(fieldName);
+        FieldManager.getInstance().getField(fieldName).init();
     }
 
     @Override
     public void update(){
         FieldManager.getInstance().update();
+        message.update();
 
         //changeScene
+
     }
     @Override
     public void draw(Canvas canvas){
-        field.draw(canvas);
+
+        FieldManager.getInstance().getField(fieldName).draw(canvas);
+        message.draw(canvas);
     }
 
     @Override
     public void interrupt(MotionEvent event) {
-        field.interrupt(event);
+        message.interrupt(event);
+        FieldManager.getInstance().getField(fieldName).interrupt(event);
     }
     @Override
     public void dispose(){
-        field.disposeImage();
+        FieldManager.getInstance().getField(fieldName).dispose();
     }
 
     void ChangeScene(){
         parent.changeScene(new SceneSelect(parent));
     }
-
-
 
 }

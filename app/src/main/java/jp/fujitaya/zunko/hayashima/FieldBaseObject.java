@@ -1,28 +1,20 @@
-package jp.fujitaya.zunko.sugaya;
+package jp.fujitaya.zunko.hayashima;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.PointF;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.hayashima.MessageWindowScene;
 import jp.fujitaya.zunko.util.Image;
 
-public abstract class BasicObject{
+public abstract class FieldBaseObject {
     PointF vect=new PointF(0,0);
     Image image;
     int tatchSize=0;
     //draw
     PointF imageSize=new PointF(0,0);
-    BasicObject(/*ArrayList<Bitmap> image*/){
+    FieldBaseObject(/*ArrayList<Bitmap> image*/){
         //this.listImage=image;
     }
-    BasicObject(/*ArrayList<Bitmap> image,*/PointF v){
+    FieldBaseObject(/*ArrayList<Bitmap> image,*/PointF v){
         this(/*image*/);
         vect=v;
     }

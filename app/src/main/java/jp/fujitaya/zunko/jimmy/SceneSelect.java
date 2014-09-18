@@ -1,21 +1,18 @@
 package jp.fujitaya.zunko.jimmy;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import jp.fujitaya.zunko.hayashima.MessageWindowScene;
-import jp.fujitaya.zunko.sugaya.Field;
 import jp.fujitaya.zunko.util.GameScene;
 import jp.fujitaya.zunko.util.GameView;
 
 import static android.view.GestureDetector.OnGestureListener;
 
 public class SceneSelect extends GameScene implements OnGestureListener{
-    FieldMap map;
+    StageMap map;
     GestureDetector gestureDetector;
     FieldManager fieldManager;
     MessageWindowScene message;
@@ -28,7 +25,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
     }
 
     public void init(){
-        map = new FieldMap(FieldGroup.Miyagi, parent.getResources(), parent);
+        map = new StageMap(StageGroup.Miyagi, parent.getResources(), parent);
         gestureDetector = new GestureDetector(parent.getContext(), this);
     }
 

@@ -112,6 +112,7 @@ public class MiniZunko extends BasicObject{
     public int getAttackBuildingNumber(){return attackBuildingNumber;}
     public void setMovingAttackBuildingNumber(int n){movingAttackBuildNumber=n;}
     public int getMovingAttackBuildingNumber(){return movingAttackBuildNumber;}
+    public void addAttackPower(int p){attackPower+=p;}
     public int getAttackPower(){return attackPower;}
 
     void changeDrawImage(){

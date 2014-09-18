@@ -29,14 +29,28 @@ public class Field{
     ArrayList<Creator> listCreator;
     ArrayList<MiniZunko> listMiniZunko;
 
+    int MAX_CREAT_NUM=100;
+    int MAX_POWER_UP_NUM=100;
+    int powerUpCount=0;
     int maxFieldHitPoint=0;
+    static int sumAttackPower=0;
 
     public Field(String name){
         vect=new PointF(0,0);
         fieldName=name;
-        image=new Image(R.drawable.fd_green);
         createBuild();
+        init();
+    }
+    public Field(){
+    }
 
+
+    public void init(){
+        setFieldImage();
+        addSumAttackPower();
+    }
+    void setFieldImage(){
+        image=new Image(R.drawable.fd_green);
     }
 
     public void createBuild(){
@@ -52,6 +66,7 @@ public class Field{
             maxFieldHitPoint +=build.getHitPoint();
         }
     }
+
     public void update(){
 
         setMiniZunkoAttack();
@@ -74,7 +89,6 @@ public class Field{
     }
 
     public void interrupt(MotionEvent event){
-
         if(event.getAction()==MotionEvent.ACTION_UP){
             if(selectFlag==false){
                 for(int i=0;i<listMiniZunko.size();i++) {
@@ -109,11 +123,16 @@ public class Field{
     void createMiniZunko(){
         for(Creator cre:listCreator){
             if(cre.getCreateCount()==0){
-                PointF p=new PointF((float)(Math.random()*200)-100
-                        ,(float)(Math.random()*200)-100);
-                p.x=cre.getVect().x+p.x;
-                p.y=cre.getVect().y+p.y;
-                listMiniZunko.add(new MiniZunko(/*bitmapMiniZunko,*/new PointF(p.x,p.y)));
+                if(listMiniZunko.size()<MAX_CREAT_NUM) {
+                    PointF p = new PointF((float) (Math.random() * 200) - 100, (float) (Math.random() * 200) - 100);
+                    p.x = cre.getVect().x + p.x;
+                    p.y = cre.getVect().y + p.y;
+                    listMiniZunko.add(new MiniZunko(/*bitmapMiniZunko,*/new PointF(p.x, p.y)));
+                }
+                else if(powerUpCount<MAX_POWER_UP_NUM){
+                    addOneAttackPower();
+                    powerUpCount++;
+                }
             }
         }
     }
@@ -152,14 +171,6 @@ public class Field{
                 if (zun.getNowState() == miniZunkoState.attack
                         &&zun.getAttackBuildingNumber()==build.getCreateNumber()) {
                     build.DecHitPoint(zun.getAttackPower());
-                    /*if(build.getHitPoint()<=0){
-                        for(MiniZunko zun2:listMiniZunko){
-                            if(zun2.getAttackBuildingNumber()==build.getCreateNumber()){
-                                zun2.changeState(miniZunkoState.wait);
-                                zun2.resetDv();
-                            }
-                        }
-                    }*/
                 }
             }
         }
@@ -170,17 +181,18 @@ public class Field{
                     MiniZunko temp = i.next();
                     if(temp.getActionPoint()==0){
                         i.remove();
+                        powerUpCount--;
                     }
                 }
         }
-
+    public void dispose(){
+        disposeImage();
+    }
     public void disposeImage(){
         image=null;
         for(Building b:listBuilding){b.disposeImage();}
         for(Creator b:listCreator){b.disposeImage();}
         for(MiniZunko b:listMiniZunko){b.disposeImage();}
-
-
     }
     public int getMiniZunkoNumber(){return listMiniZunko.size();}
     public int getBuildingNumber(){return listBuilding.size();}
@@ -191,6 +203,22 @@ public class Field{
             p+=build.getHitPoint();
         }
         return (float)(p/maxFieldHitPoint);
+    }
+    public String getFieldName(){return  fieldName;}
+    public boolean isToEndField(){
+        if(listBuilding.size()==0){
+            return true;
+        }
+        return false;
+    }
+    void addSumAttackPower(){
+        if(listMiniZunko.size()!=0) {
+            listMiniZunko.get((int) (Math.random() * listMiniZunko.size())).addAttackPower(sumAttackPower);
+            sumAttackPower=0;
+        }
+    }
+    void addOneAttackPower() {
+            listMiniZunko.get((int) (Math.random() * listMiniZunko.size())).addAttackPower(1);
     }
 
 }
