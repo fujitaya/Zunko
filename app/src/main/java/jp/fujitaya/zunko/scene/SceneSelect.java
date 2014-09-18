@@ -12,7 +12,9 @@ import android.view.MotionEvent;
 import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.field.FieldManager;
+import jp.fujitaya.zunko.util.InsideRectF;
 import jp.fujitaya.zunko.util.TouchableBitmap;
+import jp.fujitaya.zunko.util.TouchableBitmapWithText;
 
 import static android.view.GestureDetector.OnGestureListener;
 
@@ -67,9 +69,9 @@ public class SceneSelect extends GameScene implements OnGestureListener{
                 }
         );
 
-        statusWindow = new NoticeWindow(new RectF(200f,340f,600f,940f),
+        statusWindow = new NoticeWindow(new RectF(160f,340f,560f,940f),
                 "",
-                Color.BLUE,100,Color.WHITE);
+                Color.GRAY,250,Color.BLACK);
         zukanButton = new TouchableBitmap(
                 BitmapFactory.decodeResource(parent.getResources(), R.drawable.btn_zukan),
                 new RectF(295f,827f,505f,900f),

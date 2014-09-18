@@ -26,10 +26,10 @@ public class NoticeWindow {
         this.rectColor = rectColor;
         this.rectAlpha = rectAlpha;
         this.textColor = textColor;
-        this.textSize = 40;
-        this.lineInterval = 40;
+        this.textSize = 50;
+        this.lineInterval = 52;
         this.textOffsetX = 30;
-        this.textOffsetY = 40;
+        this.textOffsetY = 60;
         this.inside = new InsideRectF(new RectF(drawRect.left,drawRect.
                 top,drawRect.right,drawRect.bottom));
     }
@@ -45,6 +45,7 @@ public class NoticeWindow {
         paint = new Paint();
         paint.setColor(textColor);
         paint.setTextSize(textSize);
+        paint.setAntiAlias(true);
         textX = drawRect.left + textOffsetX;
         textY = drawRect.top + textOffsetY;
 
