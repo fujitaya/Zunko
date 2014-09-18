@@ -41,7 +41,7 @@ public class MessageWindowScene extends GameScene{
 
         framePaint = new Paint();
 
-//        wnd = new Image(R.drawable.wnd_message);
+        wnd = new Image(R.drawable.wnd_message);
 
         zunkoImage = new HashMap<ImageName, Integer>();
         zunkoImage.put(ImageName.Z01, R.drawable.tz_zunko01);
@@ -122,7 +122,7 @@ public class MessageWindowScene extends GameScene{
         int baseX = drawX;
         int baseY = drawY;
 
-//        wnd.draw(canvas, baseX+(width-wnd.getWidth())/2, baseY);
+        wnd.draw(canvas, baseX+(width-wnd.getWidth())/2, baseY);
         img.moveOffset2(baseX, baseY);
         img.draw(canvas);
 
