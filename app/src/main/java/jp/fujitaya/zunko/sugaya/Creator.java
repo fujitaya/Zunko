@@ -4,9 +4,10 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.hayashima.FieldBaseObject;
 import jp.fujitaya.zunko.util.Image;
 
-public class Creator extends BasicObject {
+public class Creator extends FieldBaseObject {
     Image image;
     static int staticCreateNumber = 0;
     int createNumber = 0;

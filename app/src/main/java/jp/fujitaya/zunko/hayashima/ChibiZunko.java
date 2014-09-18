@@ -3,57 +3,86 @@ package jp.fujitaya.zunko.hayashima;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.graphics.RectF;
 
 import jp.fujitaya.zunko.util.ImageLoader;
 
-public class ChibiZunko {
-    public enum ImageName{
-        WAIT,
-        LOOK1, LOOK2,
-        MOVE1, MOVE2,
-        ATTACK1, ATTACK2,
-        REST1, REST2,
-    }
+public class ChibiZunko extends FieldBaseObject{
+//    public enum ImageName{
+//        WAIT,
+//        LOOK1, LOOK2,
+//        MOVE1, MOVE2,
+//        ATTACK1, ATTACK2,
+//        REST1, REST2,
+//    }
     public static final int COL_WID = 100;
     public static final int COL_HEI = 100;
 
     private PointF pos;
     private float power;
     private boolean selected;
+    private boolean leftFace;
+    private FieldBaseObject target;
 
     private ChibiZunkoState state;
     private ImageLoader ld;
 
     public ChibiZunko(){
-        pos = new PointF();
-        pos.set(0, 0);
+        super();
         power = 0;
         selected = false;
+        leftFace = true;
+        target = null;
+
+        setHP(100);
+        setCollision(new RectF(0, 0, COL_WID, COL_HEI));
 
         state = new ChibiZunkoStateWait(this);
         ld = ImageLoader.getInstance();
     }
+
     public void update(){
         ChibiZunkoState newState = state.execute();
         if(newState != null){
             state = newState;
         }
     }
+    public void chase(FieldBaseObject target){
+        if(state.getStateName() == ChibiZunkoState.StateName.CHASE_TARGET) return;
 
-    public void moveTo(float x, float y){
-        pos.set(x, y);
+        this.target = target;
+        state = new ChibiZunkoStateChase(this);
     }
-    public void moveOffset(float x, float y){
-        pos.offset(x, y);
+    public FieldBaseObject getChaseTarget(){
+        return target;
+    }
+    public void tryUnsetChasing(){
+        if(target != null) {
+            target = null;
+            state = new ChibiZunkoStateWait(this);
+        }
     }
 
-    public boolean isInside(float x, float y){
-        return pos.x<=x && pos.x+COL_WID>=x && pos.y<=y && pos.y+COL_HEI>=y;
+    public void activateAttackState(FieldBaseObject target){
+        if(state.getStateName() == ChibiZunkoState.StateName.ATTACK) return;
+
+        this.target = target;
+        state = new ChibiZunkoStateAttack(this);
     }
-    public boolean isOverwrapped(ChibiZunko rhs){
-        return pos.x<rhs.pos.x+COL_WID && rhs.pos.x<pos.x+COL_WID &&
-                rhs.pos.y<pos.y+COL_HEI && pos.y<rhs.pos.y+COL_HEI;
+    public void tryEndAttackState(){
+        if(target != null) {
+            target = null;
+            state = new ChibiZunkoStateWait(this);
+        }
     }
+
+    public boolean isLeftFace(){
+        return leftFace;
+    }
+    public void setDirection(boolean left){
+        leftFace = left;
+    }
+
     public void select(boolean flag){
         selected = flag;
     }

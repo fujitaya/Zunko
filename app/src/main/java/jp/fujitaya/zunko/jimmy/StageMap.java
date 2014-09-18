@@ -10,7 +10,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.sugaya.MainScene;
+import jp.fujitaya.zunko.hayashima.CaptureScene;
 import jp.fujitaya.zunko.util.GameView;
 
 import static android.view.GestureDetector.OnGestureListener;
@@ -47,7 +47,7 @@ public class StageMap {
                             public void onShowPress(MotionEvent motionEvent) { }
                             @Override
                             public boolean onSingleTapUp(MotionEvent motionEvent) {
-                                parentView.changeScene(new MainScene(parentView,"Sendai"));
+                                parentView.changeScene(new CaptureScene(parentView,"Sendai"));
                                 return false;
                             }
                             @Override

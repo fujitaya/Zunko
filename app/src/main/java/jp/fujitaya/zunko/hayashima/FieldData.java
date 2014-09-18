@@ -2,8 +2,6 @@ package jp.fujitaya.zunko.hayashima;
 
 import java.util.ArrayList;
 
-import jp.fujitaya.zunko.sugaya.Building;
-
 public class FieldData {
     public String name;
     public int fieldImageId;

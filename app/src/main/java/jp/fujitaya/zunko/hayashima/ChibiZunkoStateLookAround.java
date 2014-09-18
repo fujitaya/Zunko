@@ -11,7 +11,7 @@ class ChibiZunkoStateLookAround extends ChibiZunkoState{
 
     ChibiZunkoStateLookAround(ChibiZunko zunko){
         super(zunko);
-        lookCount = (int)(Math.random()*3);
+        lookCount = (int)Math.random()*3+1;
     }
 
     @Override
@@ -21,26 +21,22 @@ class ChibiZunkoStateLookAround extends ChibiZunkoState{
     ChibiZunkoState execute(){
         ++counter;
 
-        if(counter%LOOK_INTERVAL == LOOK_INTERVAL-1){
+        if(counter%LOOK_INTERVAL == 0){
             --lookCount;
-            if(lookCount <= 0) return new ChibiZunkoStateRandomWalk(zunko);
+            if(lookCount <= 0)
+                return new ChibiZunkoStateRandomWalk(zunko);
+//                return StateName.RANDOM_WALK;//return new ChibiZunkoStateRandomWalk(zunko);
         }
 
         return null;
-    }
-
-    @Override
-    boolean interrupt(CaptureScene.PlayerOperation op){
-        switch(op){
-            case SELECT:
-                return true;
-            default: break;
-        }
-        return false;
+//        return StateName.STAY;
     }
 
     @Override
     Bitmap getImage(ImageLoader loader){
-        return loader.load(lookCount%2==0 ? R.drawable.cz_miwatasu01 : R.drawable.cz_miwatasu02);
+        int id = lookCount%2==0 ? R.drawable.cz_miwatasu01 : R.drawable.cz_miwatasu02;
+        if(id == R.drawable.cz_miwatasu01) zunko.setDirection(false);
+        else zunko.setDirection(true);
+        return loader.load(id);
     }
 }

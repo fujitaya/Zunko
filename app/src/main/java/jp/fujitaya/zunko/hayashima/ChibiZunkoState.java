@@ -6,7 +6,7 @@ import jp.fujitaya.zunko.util.ImageLoader;
 
 abstract class ChibiZunkoState {
     public enum StateName{
-        STAY, WAIT, RANDOM_WALK, LOOK_AROUND, APPROACH_TARGET,
+        STAY, WAIT, RANDOM_WALK, LOOK_AROUND, CHASE_TARGET,
         ATTACK, REST,
     };
     protected ChibiZunko zunko;
@@ -18,6 +18,5 @@ abstract class ChibiZunkoState {
     }
     abstract StateName getStateName();
     abstract ChibiZunkoState execute();
-    abstract boolean interrupt(CaptureScene.PlayerOperation op);
     abstract Bitmap getImage(ImageLoader loader);
 }

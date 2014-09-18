@@ -1,59 +1,45 @@
 package jp.fujitaya.zunko.hayashima;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.RectF;
 
 import java.util.HashMap;
 
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.hayashima.FieldBaseObject;
 import jp.fujitaya.zunko.util.Image;
+import jp.fujitaya.zunko.util.ImageLoader;
 
 public class Building extends FieldBaseObject {
-    static enum ImageName{
-        base
-    };
-    HashMap<ImageName,Integer> mapImage;
-    static int staticCreateNumber=0;
-    int createNumber=0;
-    String buildingName;
-    int hitPoint;
-    static int START_HIT_POINT=60*3;
-    Building(/*ArrayList<Bitmap> image,*/PointF v){
-        super(/*image,*/v);
-        //image
-        mapImage = new HashMap<ImageName, Integer>();
-        mapImage.put(ImageName.base, R.drawable.mc_mig);
-        image = new Image(mapImage.get(ImageName.base));
-        image.setCenter();
-        image.setPosition(vect);
+    private float scale;
+    private Bitmap image;
 
-        buildingName="None";
-        tatchSize=(int)Math.sqrt(image.getWidth()*image.getWidth()+image.getHeight()*image.getHeight());
-        hitPoint=START_HIT_POINT;
-        createNumber=staticCreateNumber;
-        staticCreateNumber++;
+    Building(FieldData.BuildingData data){
+        super();
 
-    }
-    public int getHitPoint(){return hitPoint;}
-    public void setHitPoint(int h){hitPoint=h;}
-    public void DecHitPoint(int power){hitPoint-=power;}
-
-    public int getCreateNumber(){return createNumber;}
-    public void resetCreateNumber(){createNumber=0;}
-    @Override public void init(){
-    }
-    public void loadImage(){
-
-    }
-    @Override public void update(){
-    }
-    @Override public void draw(Canvas canvas){
-        image.draw(canvas);
+        image = ImageLoader.getInstance().load(data.imageId);
+        setHP(data.hp);
+        moveTo(data.fieldX, data.fieldY);
+        setCollision(new RectF(0, 0, image.getWidth(), image.getHeight()));
     }
 
-    @Override public void disposeImage(){
-        mapImage.clear();
-        image=null;
+    @Override
+    public void update(){
+        if(hp <= 0){
+
+        }
+    }
+
+    RectF drawRect = new RectF();
+    @Override
+    public void draw(Canvas canvas, float baseX, float baseY){
+        drawRect.left = baseX + pos.x;
+        drawRect.top = baseY + pos.y;
+        drawRect.right = baseX + pos.x + image.getWidth()*scale;
+        drawRect.bottom = baseY + pos.y + image.getHeight()*scale;
+        canvas.drawBitmap(image, null, drawRect, null);
     }
 }

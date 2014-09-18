@@ -22,18 +22,10 @@ class ChibiZunkoStateWait extends ChibiZunkoState{
         ++counter;
         if(counter >= (int)(Math.random()*MAX_WAIT_TIME))
             return new ChibiZunkoStateRandomWalk(zunko);
+//            return StateName.RANDOM_WALK;// new ChibiZunkoStateRandomWalk(zunko);
 
         return null;
-    }
-
-    @Override
-    boolean interrupt(CaptureScene.PlayerOperation op){
-        switch(op){
-            case SELECT:
-                return true;
-            default: break;
-        }
-        return false;
+//        return StateName.STAY;
     }
 
     @Override
