@@ -18,6 +18,17 @@ public class EndScene extends GameScene{
     private EndMessageWindowScene message;
     private Field field;
 
+    private boolean[] messageflag;
+    int randomMessageCount=1;
+    int messageSpan=30*10;
+    String[] randomMessage={
+            "明らかに飛行できない形なのに","合体ロボのパーツは飛ぶ。飛ばねば",
+            "「やったか？」はやってないし","「力が欲しいか」の力はろくでもない",
+            "いいか！タイムトラベルしたら","その時代の人間とは接触するなよ！？",
+            "全裸でも堂々としていれば","割と邪な気持ちにならない（通報はする)",
+            "全国都道府県女子高生","スカート膝上ランキング、東北一位は宮城県"
+    };
+
     public EndScene(GameView parent, String fieldName){
         super(parent);
         fm = FieldManager.getInstance();
@@ -81,9 +92,26 @@ public class EndScene extends GameScene{
     @Override
     public void dispose(){
         field.dispose();
+        message.dispose();
     }
 
+    void setMessage(){
+        if(randomMessageCount==1){
+            message.appendMessage("ずんだが広まっています");
+            message.appendMessage("メニューからずん子を集めましょう");
+        }
+        setRandomMessage();
+    }
+    void setRandomMessage(){
+        if(randomMessageCount%messageSpan==0){
+            int rand=(int)(Math.random()*randomMessage.length/2);
+            message.appendMessage(randomMessage[rand]);
+            message.appendMessage(randomMessage[rand+1]);
+        }
+        randomMessageCount++;
+    }
     void changeScene(){
         parent.changeScene(new SceneSelect(parent));
     }
+
 }
