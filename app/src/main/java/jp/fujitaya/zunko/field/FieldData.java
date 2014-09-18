@@ -12,7 +12,6 @@ public class FieldData {
     public float initialZunkoPower;
     public int initialZunkoNum;
 
-    public ObjectData creator;
     public ArrayList<BuildingData> buildings;
     public ArrayList<CreatorData> creators;
 
@@ -26,11 +25,12 @@ public class FieldData {
     }
     public class CreatorData extends ObjectData{
         public int spawnTime;
+        public float spawnRange;
     }
 
     public FieldData(){
-        creator = new ObjectData();
         buildings = new ArrayList<BuildingData>();
+        creators = new ArrayList<CreatorData>();
     }
     public BuildingData createBuildingData(){
         BuildingData bd = new BuildingData();
