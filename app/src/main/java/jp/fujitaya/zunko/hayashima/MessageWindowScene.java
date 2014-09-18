@@ -24,14 +24,14 @@ public class MessageWindowScene extends GameScene{
     };
     public static final int LINE_NUM = 5;
 
-    private Paint msgPaint, framePaint;
-    private ArrayList<String> msgs;
-    private static final int FONT_SIZE = 25;
-    private HashMap<ImageName, Integer> zunkoImage;
-    private Image img, wnd;
-    private boolean show;
+    protected Paint msgPaint, framePaint;
+    protected ArrayList<String> msgs;
+    protected static final int FONT_SIZE = 25;
+    protected HashMap<ImageName, Integer> zunkoImage;
+    protected Image img, wnd;
+    protected boolean show;
 
-    private StatusWindow statusWindow;
+    protected StatusWindow statusWindow;
 
     public MessageWindowScene(GameView parent){
         super(parent);

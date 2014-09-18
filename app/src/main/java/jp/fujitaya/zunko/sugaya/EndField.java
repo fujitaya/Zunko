@@ -1,6 +1,8 @@
 package jp.fujitaya.zunko.sugaya;
 
 import android.graphics.PointF;
+import android.graphics.RectF;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
@@ -52,6 +54,7 @@ public class EndField extends Field {
         setMiniZunkoAttack();
         super.dispose();
     }
+
     public void setSumAttakcPower(){
         for(MiniZunko zun:listMiniZunko){
             sumAttackPower+=zun.getActionPoint();

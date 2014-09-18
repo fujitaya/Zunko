@@ -3,6 +3,7 @@ package jp.fujitaya.zunko.util;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 import jp.fujitaya.zunko.jimmy.InsideStrategy;
@@ -94,6 +95,9 @@ public class Image {
     public void setCollision(InsideStrategy collision) {
         this.collision = collision;
         this.collision.move(pos.x-center.x, pos.y-center.y);
+    }
+    public void moveCollision(float x,float y){
+        this.collision.move(x,y);
     }
     public boolean isInside(PointF point){
         if(collision == null) return false;
