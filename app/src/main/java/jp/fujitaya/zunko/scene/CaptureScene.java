@@ -1,6 +1,7 @@
 package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import jp.fujitaya.zunko.GameView;
@@ -11,13 +12,13 @@ import jp.fujitaya.zunko.util.ImageLoader;
 
 public class CaptureScene extends GameScene {
     private FieldManager fm;
-    private MessageWindowScene message;
+    private CaptureMessageWindowScene message;
     private Field field;
 
     public CaptureScene(GameView parent, String fieldName){
         super(parent);
         fm = FieldManager.getInstance();
-        message = new MessageWindowScene(parent);
+        message = new CaptureMessageWindowScene(parent);
 
         ImageLoader ld = ImageLoader.getInstance();
         ld.load(R.drawable.cz_tatsu);
@@ -55,6 +56,19 @@ public class CaptureScene extends GameScene {
     @Override
     public void interrupt(MotionEvent event) {
         message.interrupt(event);
+        if(message.getMenuState()==MenuState.On){
+
+            float dx = (720 - 500) / 2;
+            float dy = (1280 - 600) / 2;
+            float diffy = 35;
+            float x = dx + 30;
+            float y = dy + diffy*4;
+            if(new RectF(x,y,x+dx*30,y+diffy).contains(event.getX(),event.getY())){
+                changeScene();
+                return;
+            }
+        }
+
         field.interrupt(event);
     }
     @Override
@@ -62,7 +76,7 @@ public class CaptureScene extends GameScene {
         field.dispose();
     }
 
-    void ChangeScene(){
+    void changeScene(){
         parent.changeScene(new SceneSelect(parent));
     }
 }

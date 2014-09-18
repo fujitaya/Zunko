@@ -2,15 +2,12 @@ package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PointF;
-import android.graphics.RectF;
 
-import jp.fujitaya.zunko.GameView;
-import jp.fujitaya.zunko.field.FieldManager;
-
-
-public class MenuWindow extends StatusWindow{
-    public MenuWindow(){
+/**
+ * Created by tetsu on 2014/09/18.
+ */
+public class EndMenuWindow extends StatusWindow {
+    public EndMenuWindow(){
     }
     @Override
     public void draw(Canvas canvas, float baseX, float baseY){
@@ -42,4 +39,5 @@ public class MenuWindow extends StatusWindow{
         canvas.drawText("集める", x, y, fp);
         y += diffy * 2;
     }
+
 }
