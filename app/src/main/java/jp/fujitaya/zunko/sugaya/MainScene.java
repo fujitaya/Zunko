@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.Menu;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.SceneMenu;
 import jp.fujitaya.zunko.hayashima.MainMessageWindowScene;
+import jp.fujitaya.zunko.hayashima.MenuState;
 import jp.fujitaya.zunko.hayashima.MessageWindowScene;
 import jp.fujitaya.zunko.jimmy.FieldManager;
 import jp.fujitaya.zunko.jimmy.SceneSelect;
@@ -25,7 +27,7 @@ public class MainScene extends GameScene {
     public MainScene(GameView parent,String name){
         super(parent);
         fieldName=name;
-        message=new MainMessageWindowScene(parent);
+        message=new MainMessageWindowScene(parent,fieldName);
         init();
     };
 
@@ -51,8 +53,17 @@ public class MainScene extends GameScene {
 
     @Override
     public void interrupt(MotionEvent event) {
-        message.interrupt(event);
-        FieldManager.getInstance().getField(fieldName).interrupt(event);
+        MenuState m=message.getMenuInterrupt(event);
+        if(m== MenuState.On){
+            //get Zunko attackPoint
+            if(FieldManager.getInstance().getField(fieldName).getClass() == (Class<?>)EndField.class){
+                ((EndField)(FieldManager.getInstance().getField(fieldName))).interruptOnMenu(event);
+            }
+
+        }
+        if(m==MenuState.None) {
+            FieldManager.getInstance().getField(fieldName).interrupt(event);
+        }
     }
     @Override
     public void dispose(){
@@ -62,5 +73,4 @@ public class MainScene extends GameScene {
     void ChangeScene(){
         parent.changeScene(new SceneSelect(parent));
     }
-
 }

@@ -16,6 +16,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.hayashima.MenuState;
+import jp.fujitaya.zunko.hayashima.MenuState;
 import jp.fujitaya.zunko.util.Image;
 
 public class Field{
@@ -36,6 +38,7 @@ public class Field{
     int powerUpCount=0;
     int maxFieldHitPoint=0;
     static int sumAttackPower=0;
+
 
     public Field(String name){
         vect=new PointF(0,0);
@@ -189,6 +192,7 @@ public class Field{
         }
     public void dispose(){
         disposeImage();
+        setMenuState(menuState.None);
     }
     public void disposeImage(){
         image=null;
