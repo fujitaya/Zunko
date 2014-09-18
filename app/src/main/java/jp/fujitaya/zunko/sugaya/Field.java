@@ -20,8 +20,6 @@ import jp.fujitaya.zunko.util.Image;
 
 public class Field{
     PointF vect;
-    //Resources res;
-    //Bitmap image;
     Image image;
     boolean selectFlag=false;
     String fieldName;
@@ -33,8 +31,7 @@ public class Field{
 
     int maxFieldHitPoint=0;
 
-    public Field(/*Resources r*/String name){
-        //this.res=r;
+    public Field(String name){
         vect=new PointF(0,0);
         fieldName=name;
         image=new Image(R.drawable.fd_green);

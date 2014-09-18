@@ -19,8 +19,8 @@ public class FieldManager {
     }
 
     public Field getField(String fieldName){
-        //if (!fieldStore.containsKey(fieldName))
-        //    fieldStore.put(fieldName,new Field(fieldName));
+        if (!fieldStore.containsKey(fieldName))
+            fieldStore.put(fieldName,new Field(fieldName));
         return fieldStore.get(fieldName);
     }
 

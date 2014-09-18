@@ -46,7 +46,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super(context);
         wasOutside = false;
         scheduler = null;
-        scene = new MainScene(this, "Sendai");
+        scene = new SceneMenu(this);
         getHolder().addCallback(this);
     }
 

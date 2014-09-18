@@ -1,12 +1,8 @@
 package jp.fujitaya.zunko.sugaya;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import jp.fujitaya.zunko.R;
@@ -120,7 +116,7 @@ public class MiniZunko extends BasicObject{
 
     void changeDrawImage(){
         //selected
-        if(selectFlag==true &&nowState!=miniZunkoState.wait)  {
+        if(selectFlag && nowState!=miniZunkoState.wait)  {
             image.changeImage(mapImage.get(ImageName.wait));
         }
         if(nowState==miniZunkoState.wait){

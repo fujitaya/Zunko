@@ -1,10 +1,7 @@
 package jp.fujitaya.zunko.sugaya;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
-
-import java.util.ArrayList;
 
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.Image;

@@ -90,6 +90,7 @@ public class MessageWindowScene extends GameScene{
     PointerInfo pi = new PointerInfo();
     @Override
     public void interrupt(MotionEvent event){
+        /*
         pi.update(event);
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
@@ -102,6 +103,7 @@ public class MessageWindowScene extends GameScene{
                 break;
             default: break;
         }
+        */
     }
 
     Rect canvasRect = new Rect();
