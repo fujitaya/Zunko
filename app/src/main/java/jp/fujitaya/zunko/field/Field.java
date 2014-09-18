@@ -16,6 +16,7 @@ public abstract class Field {
     public abstract int getNowHP();
     public abstract int getInitialHP();
     public abstract int getTotalZunkoNum();
+    public abstract FieldData getFieldData();
 
     public abstract void clearZunko();
     public abstract void update();

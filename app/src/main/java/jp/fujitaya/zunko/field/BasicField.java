@@ -231,7 +231,7 @@ public class BasicField extends Field {
     }
 
     public void moveTo(float x, float y){
-        if(x < 0) x = 0;
+        if(x > 0) x = 0;
         else if(x + GameView.VIEW_WIDTH >= width) x = width - GameView.VIEW_WIDTH;
         if(y < 0) y = 0;
         else if(y + GameView.VIEW_HEIGHT >= height) y = height - GameView.VIEW_HEIGHT;
@@ -261,7 +261,7 @@ public class BasicField extends Field {
             if(y+h < 0) continue;
             for (int x = 0; x < GameView.VIEW_WIDTH; x+=w) {
                 if(x+w < 0) continue;
-                canvas.drawBitmap(bg, x, y, null);
+                canvas.drawBitmap(bg, pos.x+x, pos.y+y, null);
             }
         }
 

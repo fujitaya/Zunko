@@ -46,12 +46,12 @@ public class SceneSelect extends GameScene implements OnGestureListener{
 
     @Override
     public void dispose() {
-        synchronized (map) {
+//        synchronized (map) {
             map.dispose();
             gestureDetector = null;
             parent = null;
             fieldManager = null;
-        }
+//        }
     }
 
     @Override

@@ -19,10 +19,9 @@ public class FieldManager {
         return fieldStore.get(fieldName);
     }
     public void setEndField(String fieldName){
-        Field f=fieldStore.get(fieldName);
+        Field f = fieldStore.get(fieldName);
         fieldStore.remove(fieldName);
-        FieldData fd = createFD(fieldName);
-        fieldStore.put(fieldName, new EndField(fd));
+        fieldStore.put(fieldName, new EndField(f.getFieldData()));
     }
 
     public boolean isWorking(String fieldName){
