@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.field.zunko.StatusAll;
 
 public class FieldManager {
     public static synchronized FieldManager getInstance(){
@@ -27,6 +28,27 @@ public class FieldManager {
     public boolean isWorking(String fieldName){
         return fieldStore.containsKey(fieldName);
     }
+    public StatusAll getStatusAll(){
+        StatusAll statusAll = new StatusAll();
+        double totalScore = 0.0;
+        long zunkoAll = 0;
+        int stageNum = 0;
+        int clearedNum = 0;
+
+        for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()){
+            Field field = fieldEntry.getValue();
+            totalScore += 1.0-((double)field.getNowHP()/field.getInitialHP());
+            zunkoAll += field.getTotalZunkoNum();
+            stageNum++;
+            if (field.getNowHP() == 0) clearedNum++;
+        }
+        statusAll.cleared = clearedNum;
+        statusAll.zunkoAll = zunkoAll;
+        if (stageNum == 0) statusAll.progress = 0.0;
+        else statusAll.progress = totalScore / stageNum;
+
+        return statusAll;
+    }
 
     public void update(){
 
@@ -35,7 +57,7 @@ public class FieldManager {
         }
         //change Field to EndField
         for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()){
-            if(fieldEntry.getValue().getNowHP() == 0){
+            if(fieldEntry.getValue().getNowHP() <= 0){
                 setEndField(fieldEntry.getValue().getFieldName());
             }
         }

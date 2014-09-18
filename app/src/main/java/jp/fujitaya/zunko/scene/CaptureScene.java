@@ -14,11 +14,16 @@ public class CaptureScene extends GameScene {
     private FieldManager fm;
     private CaptureMessageWindowScene message;
     private Field field;
+    private int clearCount=0;
+    private boolean[] messageflag;
 
     public CaptureScene(GameView parent, String fieldName){
         super(parent);
         fm = FieldManager.getInstance();
         message = new CaptureMessageWindowScene(parent);
+        messageflag=new boolean[5];
+        for(boolean f:messageflag)f=false;
+
 
         ImageLoader ld = ImageLoader.getInstance();
         ld.load(R.drawable.cz_tatsu);
@@ -57,6 +62,9 @@ public class CaptureScene extends GameScene {
     public void update(){
         fm.update();
         message.update();
+        stageClear();
+        setMessage();
+        if(field.getNowHP()<=0)clearCount++;
     }
     @Override
     public void draw(Canvas canvas){
@@ -86,6 +94,32 @@ public class CaptureScene extends GameScene {
     public void dispose(){
         field.dispose();
     }
+    void stageClear(){
+        if(field.getNowHP()<=0){
+            if(clearCount==60) {
+                    changeScene();
+                }
+        }
+    }
+    void setMessage(){
+        //clear message
+        if(field.getNowHP()<=0&&clearCount==0){
+            message.appendMessage("ずんだ,広まりましたっ！！");
+        }
+        else if(field.getNowHP()*3<=field.getInitialHP()*2 &&messageflag[0]==false){
+            message.appendMessage("ずんだが注目されています");
+            messageflag[0]=true;
+        }
+        else if(field.getNowHP()*2<=field.getInitialHP() &&messageflag[1]==false){
+            message.appendMessage("あと半分、がんばれがんばれ");
+            messageflag[1]=true;
+        }
+        else if(field.getNowHP()*4<=field.getInitialHP() &&messageflag[2]==false){
+            message.appendMessage("");
+            messageflag[2]=true;
+        }
+    }
+
 
     void changeScene(){
         parent.changeScene(new SceneSelect(parent));
