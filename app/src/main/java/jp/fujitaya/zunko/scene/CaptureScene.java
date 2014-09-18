@@ -43,7 +43,11 @@ public class CaptureScene extends GameScene {
         ld.load(R.drawable.cz_mochi03);
         ld.load(R.drawable.cz_mochi04);
         ld.load(R.drawable.cz_mochi05);
-
+        ld.createHrevImage(R.drawable.cz_mochi01, R.drawable.cz_mochi01_r);
+        ld.createHrevImage(R.drawable.cz_mochi02, R.drawable.cz_mochi02_r);
+        ld.createHrevImage(R.drawable.cz_mochi03, R.drawable.cz_mochi03_r);
+        ld.createHrevImage(R.drawable.cz_mochi04, R.drawable.cz_mochi04_r);
+        ld.createHrevImage(R.drawable.cz_mochi05, R.drawable.cz_mochi05_r);
         ld.load(R.drawable.ef_kemuri1);
         ld.load(R.drawable.ef_kemuri2);
         ld.load(R.drawable.ef_kemuri3);

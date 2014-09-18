@@ -29,7 +29,7 @@ public class ChibiZunko extends FieldBaseObject {
         alive = true;
         target = null;
 
-        setHP(100);
+        setHP(2);
         setCollision(new RectF(0, 0, COL_WID, COL_HEI));
 
         state = new ChibiZunkoStateSpawn(this);
@@ -66,7 +66,9 @@ public class ChibiZunko extends FieldBaseObject {
     }
 
     public void activateAttackState(FieldBaseObject target){
-        if(state.getStateName() == ChibiZunkoState.StateName.ATTACK) return;
+        if(state.getStateName() == ChibiZunkoState.StateName.ATTACK
+                || state.getStateName() == ChibiZunkoState.StateName.REST)
+            return;
 
         this.target = target;
         state = new ChibiZunkoStateAttack(this);
