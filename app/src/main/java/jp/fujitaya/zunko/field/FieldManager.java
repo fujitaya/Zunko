@@ -62,8 +62,10 @@ public class FieldManager {
 
         fd.name = name;
         fd.fieldImageId = R.drawable.fd_green;
-        fd.fieldWidth = 720*2;
-        fd.fieldHeight = (int)(1280*1.5);
+        fd.fieldWidth = 720*2+50;
+        fd.fieldHeight = (int)(1280*1.5)+50;
+        fd.initX = -50;
+        fd.initY = -50;
 
         fd.maxZunkoExistNum = 200;
         fd.initialZunkoPower = 1;
@@ -72,24 +74,26 @@ public class FieldManager {
         FieldData.CreatorData cd = fd.createCreatorData();
         cd.imageId = R.drawable.ic_launcher;
         cd.scale = 1;
-        cd.fieldX = 100;
-        cd.fieldY = 100;
-        cd.spawnTime = 60*10;
+        cd.fieldX = 150;
+        cd.fieldY = 150;
+        cd.spawnTime = 60*5;
         cd.spawnRange = 300;
 
         FieldData.BuildingData bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
         bd.hp = 180;
+        bd.maxHP = 180;
         bd.scale = 4;
-        bd.fieldX = 500;
-        bd.fieldY = 500;
+        bd.fieldX = 550;
+        bd.fieldY = 550;
 
         bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
         bd.hp = 180;
+        bd.maxHP = 180;
         bd.scale = 4;
-        bd.fieldX = 200;
-        bd.fieldY = 800;
+        bd.fieldX = 250;
+        bd.fieldY = 850;
 
         return fd;
     }

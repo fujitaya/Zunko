@@ -7,7 +7,6 @@ import jp.fujitaya.zunko.field.FieldBaseObject;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 class ChibiZunkoStateChase extends ChibiZunkoState {
-    int imageId;
     float vx, vy;
     static final float VEL = 2;
     static final int FLIP_INTERVAL = 30;
@@ -45,11 +44,6 @@ class ChibiZunkoStateChase extends ChibiZunkoState {
             return new ChibiZunkoStateWait(zunko);
 
         return null;
-    }
-
-    @Override
-    Bitmap getImage(ImageLoader loader){
-        return loader.load(imageId);
     }
 
     void flipImage(){

@@ -7,7 +7,6 @@ import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 class ChibiZunkoStateRandomWalk extends ChibiZunkoState {
-    int imageId;
     private float vx, vy;
     int resetInterval;
     int time;
@@ -36,11 +35,6 @@ class ChibiZunkoStateRandomWalk extends ChibiZunkoState {
         }
         zunko.moveOffset(vx, vy);
         return null;
-    }
-
-    @Override
-    Bitmap getImage(ImageLoader loader){
-        return loader.load(imageId);
     }
 
     void flipImage(){

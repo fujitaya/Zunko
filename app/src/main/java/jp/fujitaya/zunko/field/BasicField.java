@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
@@ -16,10 +17,15 @@ import jp.fujitaya.zunko.field.zunko.ChibiZunko;
 import jp.fujitaya.zunko.util.ImageLoader;
 import jp.fujitaya.zunko.util.PointerInfo;
 
-public class BasicField extends Field {
+public abstract class BasicField extends Field {
     protected PointF pos;
-    protected Bitmap bg;  // Create TileImage class instead?
-    protected int width, height;
+    protected Bitmap bg;
+    protected int fieldImageId;
+    protected int width, height, initX, initY;
+
+    protected int maxZunkoExistNum;
+    protected float initialZunkoPower;
+    protected int initialZunkoNum;
 
     ArrayList<ChibiZunko> listZunko;
     ArrayList<Building> listBuilding;
@@ -36,9 +42,47 @@ public class BasicField extends Field {
         listCreator = new ArrayList<Creator>();
 
         loader = ImageLoader.getInstance();
-        bg = loader.load(fd.fieldImageId);
+        fieldImageId = fd.fieldImageId;
+        bg = loader.load(fieldImageId);
 
         init(fd);
+    }
+
+    @Override public FieldData getFieldData(){
+        FieldData fd = new FieldData();
+
+        fd.name = name;
+        fd.fieldImageId = fieldImageId;
+        fd.fieldWidth = width;
+        fd.fieldHeight = height;
+        fd.initX = initX;
+        fd.initY = initY;
+
+        fd.maxZunkoExistNum = maxZunkoExistNum;
+        fd.initialZunkoPower = initialZunkoPower;
+        fd.initialZunkoNum = initialZunkoNum;
+
+        for(Creator c: listCreator){
+            FieldData.CreatorData cd = fd.createCreatorData();
+            cd.imageId = c.getImageId();
+            cd.scale = c.getScale();
+            cd.fieldX = c.getX();
+            cd.fieldY = c.getY();
+            cd.spawnTime = c.getSpawnTime();
+            cd.spawnRange = c.getSpawnRange();
+        }
+
+        for(Building b: listBuilding){
+            FieldData.BuildingData bd = fd.createBuildingData();
+            bd.imageId = b.getImageId();
+            bd.scale = b.getScale();
+            bd.fieldX = b.getX();
+            bd.fieldY = b.getY();
+            bd.hp = b.getHP();
+            bd.maxHP = b.getInitialHP();
+        }
+
+        return fd;
     }
 
     @Override public int getNowHP(){
@@ -69,6 +113,9 @@ public class BasicField extends Field {
 
         width = fd.fieldWidth;
         height = fd.fieldHeight;
+        initX = fd.initX;
+        initY = fd.initY;
+        moveTo(initX, initY);
 
         for(FieldData.CreatorData e: fd.creators){
             listCreator.add(new Creator(e));
@@ -81,11 +128,17 @@ public class BasicField extends Field {
             for (int i = 0; i < fd.initialZunkoNum; ++i)
                 addZunko(listCreator.get(0));
         }
+
+        maxZunkoExistNum = fd.maxZunkoExistNum;
+        initialZunkoPower = fd.initialZunkoPower;
+        initialZunkoNum = fd.initialZunkoNum;
     }
 
     public void dispose(){
     }
 
+    private int sortCounter = 0;
+    private static final int SORT_INTERVAL = 120;
     private int touchedCounter = 0;
     private ChibiZunko touchedZunko = null;
     private ArrayList<ChibiZunko> selectedQueue = new ArrayList<ChibiZunko>();
@@ -120,9 +173,28 @@ public class BasicField extends Field {
             if(e.isCreatable()) addZunko(e);
         }
 
-        // zunko update
-        for(ChibiZunko e: listZunko) e.update();
+        // zunko update and remove check
+        Iterator<ChibiZunko> iter = listZunko.iterator();
+        while(iter.hasNext()){
+            ChibiZunko zunko = iter.next();
+            zunko.update();
+            if(zunko.isRest()) iter.remove();
+        }
+
+        // Z sort
+        if(++sortCounter == 120){
+            sortCounter = 0;
+            Collections.sort(listZunko, new Comparator<ChibiZunko>(){
+                public int compare(ChibiZunko a, ChibiZunko b){
+                    float da = a.getX()*a.getX() + a.getY()*a.getY();
+                    float db = b.getX()*b.getX() + b.getY()*b.getY();
+                    if(da <= db) return -1;
+                    return 1;
+                }
+            });
+        }
     }
+
     private void startSelectChain(ChibiZunko top){
         touchedCounter = 0;
         selectedQueue.add(touchedZunko);
@@ -231,10 +303,10 @@ public class BasicField extends Field {
     }
 
     public void moveTo(float x, float y){
-        if(x > 0) x = 0;
-        else if(x + GameView.VIEW_WIDTH >= width) x = width - GameView.VIEW_WIDTH;
-        if(y < 0) y = 0;
-        else if(y + GameView.VIEW_HEIGHT >= height) y = height - GameView.VIEW_HEIGHT;
+        if(x+width < GameView.VIEW_WIDTH) x = GameView.VIEW_WIDTH - width;
+        else if(x > 0) x = 0;
+        if(y+height < GameView.VIEW_HEIGHT) y = GameView.VIEW_HEIGHT - height;
+        else if(y > 0) y = 0;
         pos.set(x, y);
     }
     public void moveOffset(float x, float y){
@@ -257,11 +329,13 @@ public class BasicField extends Field {
         // backgrond
         int w = bg.getWidth();
         int h = bg.getHeight();
-        for(int y=0; y < GameView.VIEW_HEIGHT; y+=h) {
-            if(y+h < 0) continue;
-            for (int x = 0; x < GameView.VIEW_WIDTH; x+=w) {
-                if(x+w < 0) continue;
-                canvas.drawBitmap(bg, pos.x+x, pos.y+y, null);
+        float bx = pos.x;
+        float by = pos.y;
+        while(bx+w < 0) bx += w;
+        while(by+h < 0) by += h;
+        for(float dy=by; dy < GameView.VIEW_HEIGHT; dy+=h) {
+            for(float dx=bx; dx < GameView.VIEW_WIDTH; dx+=w) {
+                canvas.drawBitmap(bg, dx, dy, null);
             }
         }
 

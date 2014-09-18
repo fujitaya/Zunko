@@ -7,6 +7,8 @@ public class FieldData {
     public int fieldImageId;
     public int fieldWidth;
     public int fieldHeight;
+    public int initX;
+    public int initY;
 
     public int maxZunkoExistNum;
     public float initialZunkoPower;
@@ -22,6 +24,7 @@ public class FieldData {
     }
     public class BuildingData extends ObjectData{
         public int hp;
+        public int maxHP;
     }
     public class CreatorData extends ObjectData{
         public int spawnTime;

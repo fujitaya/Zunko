@@ -15,6 +15,7 @@ public class ChibiZunko extends FieldBaseObject {
     private int power;
     private boolean selected;
     private boolean leftFace;
+    private boolean alive;
     private FieldBaseObject target;
 
     private ChibiZunkoState state;
@@ -25,12 +26,13 @@ public class ChibiZunko extends FieldBaseObject {
         power = 1;
         selected = false;
         leftFace = true;
+        alive = true;
         target = null;
 
         setHP(100);
         setCollision(new RectF(0, 0, COL_WID, COL_HEI));
 
-        state = new ChibiZunkoStateWait(this);
+        state = new ChibiZunkoStateSpawn(this);
         ld = ImageLoader.getInstance();
     }
 
@@ -88,6 +90,13 @@ public class ChibiZunko extends FieldBaseObject {
     }
     public boolean isSelected(){
         return selected;
+    }
+
+    public void rest(){
+        alive = false;
+    }
+    public boolean isRest(){
+        return !alive;
     }
 
     public void draw(Canvas canvas, float baseX, float baseY){

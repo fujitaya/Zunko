@@ -39,6 +39,13 @@ public class CaptureScene extends GameScene {
         ld.load(R.drawable.cz_mochi04);
         ld.load(R.drawable.cz_mochi05);
 
+        ld.load(R.drawable.ef_kemuri1);
+        ld.load(R.drawable.ef_kemuri2);
+        ld.load(R.drawable.ef_kemuri3);
+        ld.load(R.drawable.ef_hikari1);
+        ld.load(R.drawable.ef_hikari2);
+        ld.load(R.drawable.ef_hikari3);
+
         field = fm.getField(fieldName);
     }
 

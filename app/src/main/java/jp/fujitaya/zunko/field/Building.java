@@ -13,18 +13,26 @@ public class Building extends FieldBaseObject {
     Building(FieldData.BuildingData data){
         super();
 
-        image = ImageLoader.getInstance().load(data.imageId);
+        imageId = data.imageId;
+        image = ImageLoader.getInstance().load(imageId);
         scale = data.scale;
-        setHP(data.hp);
+        hp = data.hp;
+        initHP = data.maxHP;
         moveTo(data.fieldX, data.fieldY);
         setCollision(new RectF(0, 0, image.getWidth()*scale, image.getHeight()*scale));
+    }
+    public float getScale(){
+        return scale;
     }
 
     @Override
     public void update(){
         if(hp <= 0){
-
         }
+    }
+
+    public boolean isAlive(){
+        return hp>0;
     }
 
     RectF drawRect = new RectF();

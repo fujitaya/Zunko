@@ -10,13 +10,19 @@ public abstract class FieldBaseObject {
     protected int hp;
     protected int initHP;
     protected RectF col;
+    protected int imageId;
 
     public FieldBaseObject(){
         pos = new PointF();
         pos.set(0, 0);
         hp = 1;
         initHP = 1;
+        imageId = -1;
         col = null;
+    }
+
+    public int getImageId(){
+        return imageId;
     }
 
     public abstract void update();

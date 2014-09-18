@@ -15,7 +15,8 @@ public class Creator extends FieldBaseObject {
     public Creator(FieldData.CreatorData data) {
         super();
 
-        image = ImageLoader.getInstance().load(data.imageId);
+        imageId = data.imageId;
+        image = ImageLoader.getInstance().load(imageId);
         scale = data.scale;
         moveTo(data.fieldX, data.fieldY);
         spawnTime = data.spawnTime;
@@ -28,6 +29,13 @@ public class Creator extends FieldBaseObject {
     }
     public void reset(){
         spawnCounter = 0;
+    }
+
+    public float getScale(){
+        return scale;
+    }
+    public int getSpawnTime(){
+        return spawnTime;
     }
     public float getSpawnRange(){
         return spawnRange;
