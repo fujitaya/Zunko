@@ -13,6 +13,8 @@ public abstract class Field {
         return name;
     }
 
+    public abstract boolean isCaptureField();
+
     public abstract int getNowHP();
     public abstract int getInitialHP();
     public abstract int getTotalZunkoNum();

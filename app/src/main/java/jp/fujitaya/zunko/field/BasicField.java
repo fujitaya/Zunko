@@ -70,6 +70,7 @@ public abstract class BasicField extends Field {
             cd.fieldY = c.getY();
             cd.spawnTime = c.getSpawnTime();
             cd.spawnRange = c.getSpawnRange();
+            fd.addCreatorData(cd);
         }
 
         for(Building b: listBuilding){
@@ -80,6 +81,7 @@ public abstract class BasicField extends Field {
             bd.fieldY = b.getY();
             bd.hp = b.getHP();
             bd.maxHP = b.getInitialHP();
+            fd.addBuildingData(bd);
         }
 
         return fd;

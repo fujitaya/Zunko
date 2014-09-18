@@ -10,6 +10,10 @@ public class EndField extends BasicField {
     public EndField(FieldData fd){
         super(fd);
     }
+
+    public boolean isCaptureField(){
+        return false;
+    }
     /*void addOneAttackPower() {
         listMiniZunko.get((int) (Math.random() * listMiniZunko.size())).addAttackPower(1);
     }*/

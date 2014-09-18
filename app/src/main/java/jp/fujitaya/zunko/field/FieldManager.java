@@ -26,8 +26,9 @@ public class FieldManager {
     }
     public void updateToEndField(){
         for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()){
-            if(fieldEntry.getValue().getNowHP() <= 0){
-                setEndField(fieldEntry.getValue().getFieldName());
+            Field f = fieldEntry.getValue();
+            if(f.isCaptureField() && f.getNowHP() <= 0){
+                setEndField(f.getFieldName());
             }
         }
     }

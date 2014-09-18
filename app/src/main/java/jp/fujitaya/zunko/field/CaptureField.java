@@ -4,4 +4,8 @@ public class CaptureField extends BasicField{
     public CaptureField(FieldData fd){
         super(fd);
     }
+
+    public boolean isCaptureField(){
+        return true;
+    }
 }
