@@ -111,6 +111,10 @@ public class BasicField extends Field {
             }
         }
 
+        // field objects update
+        for(Building build: listBuilding) build.update();
+        for(Creator creator: listCreator) creator.update();
+
         // check to create ChibiZunko
         for(Creator e: listCreator){
             if(e.isCreatable()) addZunko(e);

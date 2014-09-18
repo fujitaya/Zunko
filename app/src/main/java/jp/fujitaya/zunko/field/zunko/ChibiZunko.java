@@ -9,17 +9,9 @@ import jp.fujitaya.zunko.field.FieldBaseObject;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 public class ChibiZunko extends FieldBaseObject {
-//    public enum ImageName{
-//        WAIT,
-//        LOOK1, LOOK2,
-//        MOVE1, MOVE2,
-//        ATTACK1, ATTACK2,
-//        REST1, REST2,
-//    }
     public static final int COL_WID = 100;
     public static final int COL_HEI = 100;
 
-    private PointF pos;
     private int power;
     private boolean selected;
     private boolean leftFace;

@@ -75,6 +75,8 @@ public class FieldManager {
         cd.scale = 1;
         cd.fieldX = 100;
         cd.fieldY = 100;
+        cd.spawnTime = 60*10;
+        cd.spawnRange = 300;
 
         FieldData.BuildingData bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
