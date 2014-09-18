@@ -18,7 +18,7 @@ public class InsideCircleF implements InsideStrategy {
     public void move(float x, float y) {
         center.set(center.x + x, center.y + y);
     }
-
+    @Override public void moveOffSet(float x,float y){}
     @Override
     public boolean isInside(PointF point) {
         float distanceX = point.x - center.x;

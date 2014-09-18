@@ -49,6 +49,10 @@ public class Image {
         pos.offset(x, y);
         if(collision != null) collision.move(pos.x, pos.y);
     }
+    public void moveOffset2(float x,float y){
+        pos.set(x,y);
+        if(collision != null) collision.moveOffSet(pos.x, pos.y);
+    }
     public void setScale(float sx, float sy) {
         textureRect.right = bitmap.getWidth() * sx;
         textureRect.bottom = bitmap.getHeight() * sy;
