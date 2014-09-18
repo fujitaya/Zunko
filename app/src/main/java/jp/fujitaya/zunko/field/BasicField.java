@@ -168,7 +168,27 @@ public abstract class BasicField extends Field {
             }
         }
 
-        //
+        // check if build is dead.
+        Iterator<Building> iterb = listBuilding.iterator();
+        while(iterb.hasNext()){
+            Building b = iterb.next();
+            if(b.isCollapsed()){
+                for(ChibiZunko zunko: listZunko){
+                    if(b == zunko.getTarget()) zunko.tryEndAttackState();
+                }
+
+                FieldData.CreatorData cd = (new FieldData()).createCreatorData();
+                cd.imageId = R.drawable.cz_zunda;
+                cd.scale = b.getScale();
+                cd.fieldX = b.getX();
+                cd.fieldY = b.getY();
+                cd.spawnTime = 60*5;
+                cd.spawnRange = 300;
+
+                listCreator.add(new Creator(cd));
+                iterb.remove();
+            }
+        }
 
         // check to create ChibiZunko
         for(Creator e: listCreator){
@@ -181,13 +201,13 @@ public abstract class BasicField extends Field {
         for(Creator creator: listCreator) creator.update();
 
         // zunko update and remove check
-        Iterator<ChibiZunko> iter = listZunko.iterator();
-        while(iter.hasNext()){
-            ChibiZunko zunko = iter.next();
+        Iterator<ChibiZunko> iterz = listZunko.iterator();
+        while(iterz.hasNext()){
+            ChibiZunko zunko = iterz.next();
             zunko.update();
             if(zunko.isRest()){
                 if(zunko == touchedZunko) touchedZunko = null;
-                iter.remove();
+                iterz.remove();
             }
         }
 

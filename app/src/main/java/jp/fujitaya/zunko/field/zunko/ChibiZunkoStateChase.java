@@ -25,7 +25,7 @@ class ChibiZunkoStateChase extends ChibiZunkoState {
         ++counter;
         if(counter%FLIP_INTERVAL == 0) flipImage();
 
-        FieldBaseObject target = zunko.getChaseTarget();
+        FieldBaseObject target = zunko.getTarget();
 
         float dx = target.getX() - zunko.getX();
         float dy = target.getY() - zunko.getY();

@@ -35,14 +35,19 @@ public class FieldData {
         buildings = new ArrayList<BuildingData>();
         creators = new ArrayList<CreatorData>();
     }
+    public void addBuildingData(BuildingData build){
+        buildings.add(build);
+    }
+    public void addCreatorData(CreatorData creator){
+        creators.add(creator);
+    }
+
     public BuildingData createBuildingData(){
         BuildingData bd = new BuildingData();
-        buildings.add(bd);
         return bd;
     }
     public CreatorData createCreatorData(){
         CreatorData cd = new CreatorData();
-        creators.add(cd);
         return cd;
     }
 }

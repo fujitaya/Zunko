@@ -100,22 +100,25 @@ public class FieldManager {
         cd.fieldY = 150;
         cd.spawnTime = 60*5;
         cd.spawnRange = 300;
+        fd.addCreatorData(cd);
 
         FieldData.BuildingData bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
-        bd.hp = 180;
+        bd.hp = 2;//180;
         bd.maxHP = 180;
         bd.scale = 4;
         bd.fieldX = 550;
         bd.fieldY = 550;
+        fd.addBuildingData(bd);
 
         bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
-        bd.hp = 180;
+        bd.hp = 2;//180;
         bd.maxHP = 180;
         bd.scale = 4;
         bd.fieldX = 250;
         bd.fieldY = 850;
+        fd.addBuildingData(bd);
 
         return fd;
     }

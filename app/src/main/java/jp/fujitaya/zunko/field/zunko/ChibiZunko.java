@@ -57,7 +57,7 @@ public class ChibiZunko extends FieldBaseObject {
         this.target = target;
         state = new ChibiZunkoStateChase(this);
     }
-    public FieldBaseObject getChaseTarget(){
+    public FieldBaseObject getTarget(){
         return target;
     }
     public void tryUnsetChasing(){

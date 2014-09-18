@@ -15,7 +15,7 @@ class ChibiZunkoStateAttack extends ChibiZunkoState {
     ChibiZunkoState execute() {
         updateCounter();
         if(counter == 45){
-            zunko.getChaseTarget().damage(zunko.getPower());
+            zunko.getTarget().damage(zunko.getPower());
             zunko.damage(1);
         }
         if(counter==0 && zunko.getHP()<=0)

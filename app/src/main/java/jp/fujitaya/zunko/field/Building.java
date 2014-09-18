@@ -27,12 +27,10 @@ public class Building extends FieldBaseObject {
 
     @Override
     public void update(){
-        if(hp <= 0){
-        }
     }
 
-    public boolean isAlive(){
-        return hp>0;
+    public boolean isCollapsed(){
+        return hp<=0;
     }
 
     private static RectF drawRect = new RectF();
