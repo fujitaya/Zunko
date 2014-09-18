@@ -1,14 +1,12 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
+import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.jimmy.FieldManager;
-import jp.fujitaya.zunko.jimmy.SceneSelect;
+import jp.fujitaya.zunko.field.FieldManager;
 import jp.fujitaya.zunko.field.Field;
-import jp.fujitaya.zunko.util.GameScene;
-import jp.fujitaya.zunko.util.GameView;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 public class CaptureScene extends GameScene {
@@ -40,15 +38,11 @@ public class CaptureScene extends GameScene {
         ld.load(R.drawable.cz_mochi04);
         ld.load(R.drawable.cz_mochi05);
 
-        field = FieldManager.getInstance().getField(fieldName);
-        field.init();
-//        field = new CaptureField(fieldName);
-
-    };
+        field = fm.getField(fieldName);
+    }
 
     @Override
     public void update(){
-//        field.update();
         fm.update();
         message.update();
     }

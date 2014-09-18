@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.jimmy;
+package jp.fujitaya.zunko.scene;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -9,9 +9,10 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.hayashima.CaptureScene;
-import jp.fujitaya.zunko.util.GameView;
+import jp.fujitaya.zunko.util.InsideRectF;
+import jp.fujitaya.zunko.util.TouchableBitmap;
 
 import static android.view.GestureDetector.OnGestureListener;
 

@@ -1,13 +1,12 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-import jp.fujitaya.zunko.jimmy.FieldManager;
-import jp.fujitaya.zunko.sugaya.EndField;
-import jp.fujitaya.zunko.util.GameView;
+import jp.fujitaya.zunko.GameView;
+import jp.fujitaya.zunko.field.FieldManager;
 
 
 public class MenuWindow extends StatusWindow{

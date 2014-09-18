@@ -1,11 +1,11 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field.zunko;
 
 import android.graphics.Bitmap;
 
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.ImageLoader;
 
-class ChibiZunkoStateLookAround extends ChibiZunkoState{
+class ChibiZunkoStateLookAround extends ChibiZunkoState {
     private static final int LOOK_INTERVAL = 20;
     private int lookCount;
 
@@ -25,11 +25,9 @@ class ChibiZunkoStateLookAround extends ChibiZunkoState{
             --lookCount;
             if(lookCount <= 0)
                 return new ChibiZunkoStateRandomWalk(zunko);
-//                return StateName.RANDOM_WALK;//return new ChibiZunkoStateRandomWalk(zunko);
         }
 
         return null;
-//        return StateName.STAY;
     }
 
     @Override

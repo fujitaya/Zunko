@@ -1,12 +1,10 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.scene;
 
 import android.graphics.PointF;
-import android.view.Menu;
 import android.view.MotionEvent;
 
-import jp.fujitaya.zunko.util.GameView;
+;import jp.fujitaya.zunko.GameView;
 
-;
 public class MainMessageWindowScene extends MessageWindowScene {
 
     static MenuState nowMenuState=MenuState.None;

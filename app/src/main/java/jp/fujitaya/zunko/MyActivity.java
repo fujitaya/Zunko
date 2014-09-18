@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 
-import jp.fujitaya.zunko.util.GameView;
 import jp.fujitaya.zunko.util.ImageLoader;
 import jp.fujitaya.zunko.util.Sound;
 

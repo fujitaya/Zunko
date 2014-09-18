@@ -1,10 +1,12 @@
-package jp.fujitaya.zunko.jimmy;
+package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
+
+import jp.fujitaya.zunko.util.InsideRectF;
+import jp.fujitaya.zunko.util.InsideStrategy;
 
 public class NoticeWindow {
     private RectF drawRect;

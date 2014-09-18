@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.jimmy;
+package jp.fujitaya.zunko.util;
 
 import android.graphics.PointF;
 import android.graphics.RectF;

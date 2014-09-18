@@ -1,11 +1,10 @@
-package jp.fujitaya.zunko.jimmy;
+package jp.fujitaya.zunko.field;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import jp.fujitaya.zunko.field.CaptureField;
-import jp.fujitaya.zunko.sugaya.EndField;
-import jp.fujitaya.zunko.field.Field;
+//import jp.fujitaya.zunko.sugaya.EndField;
+
 
 public class FieldManager {
     private static FieldManager instance;
@@ -29,7 +28,7 @@ public class FieldManager {
     public void setEndField(String fieldName){
         Field f=fieldStore.get(fieldName);
         fieldStore.remove(fieldName);
-        fieldStore.put(fieldName,new EndField(f));
+//        fieldStore.put(fieldName,new EndField(f));
     }
 
     public void update(){

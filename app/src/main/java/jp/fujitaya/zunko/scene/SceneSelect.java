@@ -1,13 +1,11 @@
-package jp.fujitaya.zunko.jimmy;
+package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
-import android.graphics.PointF;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
-import jp.fujitaya.zunko.hayashima.MessageWindowScene;
-import jp.fujitaya.zunko.util.GameScene;
-import jp.fujitaya.zunko.util.GameView;
+import jp.fujitaya.zunko.GameView;
+import jp.fujitaya.zunko.field.FieldManager;
 
 import static android.view.GestureDetector.OnGestureListener;
 

@@ -1,22 +1,18 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.scene;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
 import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.jimmy.InsideRectF;
-import jp.fujitaya.zunko.util.GameScene;
-import jp.fujitaya.zunko.util.GameView;
+import jp.fujitaya.zunko.util.InsideRectF;
 import jp.fujitaya.zunko.util.Image;
 import jp.fujitaya.zunko.util.PointerInfo;
-import jp.fujitaya.zunko.util.Sound;
 
 public class MessageWindowScene extends GameScene{
     public static enum ImageName{

@@ -1,49 +1,40 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field.zunko;
 
 import android.graphics.Bitmap;
 
+
 import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.field.FieldBaseObject;
 import jp.fujitaya.zunko.util.ImageLoader;
 
-class ChibiZunkoStateChase extends ChibiZunkoState{
+class ChibiZunkoStateRandomWalk extends ChibiZunkoState {
     int imageId;
-    float vx, vy;
-    static final float VEL = 2;
-    static final int FLIP_INTERVAL = 30;
-
-    ChibiZunkoStateChase(ChibiZunko zunko){
+    private float vx, vy;
+    int resetInterval;
+    int time;
+    ChibiZunkoStateRandomWalk(ChibiZunko zunko){
         super(zunko);
-        vx = vy = 0;
+        counter = 0;
+        time =  (int)(360.0*(Math.random()+0.5));
+        resetInterval = (int)(60.0*(Math.random()+0.5));
+        resetVel();
         flipImage();
     }
 
     @Override
-    StateName getStateName(){return StateName.CHASE_TARGET;}
+    StateName getStateName(){return StateName.RANDOM_WALK;}
 
     @Override
     ChibiZunkoState execute(){
         ++counter;
-        if(counter%FLIP_INTERVAL == 0) flipImage();
-
-        FieldBaseObject target = zunko.getChaseTarget();
-
-        float dx = target.getX() - zunko.getX();
-        float dy = target.getY() - zunko.getY();
-
-        double len = Math.sqrt(dx*dx+dy*dy);
-        double ux = dx/len;
-        double uy = dy/len;
-
-        vx = (float)(ux*VEL);
-        vy = (float)(uy*VEL);
-
+        if (counter % resetInterval == 0){
+            resetVel();
+            resetTime();
+            flipImage();
+        }
+        if (counter >= time){
+            return new ChibiZunkoStateLookAround(zunko);
+        }
         zunko.moveOffset(vx, vy);
-        if(target.isOverwrapped(zunko.getX(), zunko.getY(),
-                zunko.getX()+ChibiZunko.COL_WID,
-                zunko.getY()+ChibiZunko.COL_HEI))
-            return new ChibiZunkoStateWait(zunko);
-
         return null;
     }
 
@@ -79,5 +70,13 @@ class ChibiZunkoStateChase extends ChibiZunkoState{
             else
                 imageId = R.drawable.cz_aruku01_r;
         }
+    }
+
+    private void resetVel(){
+        vx = (float)(Math.random() * 2f-1f);
+        vy = (float)(Math.random() * 2f-1f);
+    }
+    private void resetTime(){
+        resetInterval = (int)(60.0*(Math.random()+0.5));
     }
 }

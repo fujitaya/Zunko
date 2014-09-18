@@ -1,11 +1,11 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field.zunko;
 
 import android.graphics.Bitmap;
 
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.util.ImageLoader;
 
-class ChibiZunkoStateWait extends ChibiZunkoState{
+class ChibiZunkoStateWait extends ChibiZunkoState {
     private static final int MAX_WAIT_TIME = 100;
 
 

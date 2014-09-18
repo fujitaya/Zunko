@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

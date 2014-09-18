@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field.zunko;
 
 import android.graphics.Bitmap;
 

@@ -1,13 +1,12 @@
-package jp.fujitaya.zunko.jimmy;
+package jp.fujitaya.zunko.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
+
+import jp.fujitaya.zunko.util.InsideRectF;
+import jp.fujitaya.zunko.util.InsideStrategy;
 
 import static android.view.GestureDetector.OnGestureListener;
 

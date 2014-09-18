@@ -1,41 +1,49 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field.zunko;
 
 import android.graphics.Bitmap;
-import android.util.Log;
-
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.field.FieldBaseObject;
 import jp.fujitaya.zunko.util.ImageLoader;
 
-class ChibiZunkoStateRandomWalk extends ChibiZunkoState{
+class ChibiZunkoStateChase extends ChibiZunkoState {
     int imageId;
-    private float vx, vy;
-    int resetInterval;
-    int time;
-    ChibiZunkoStateRandomWalk(ChibiZunko zunko){
+    float vx, vy;
+    static final float VEL = 2;
+    static final int FLIP_INTERVAL = 30;
+
+    ChibiZunkoStateChase(ChibiZunko zunko){
         super(zunko);
-        counter = 0;
-        time =  (int)(360.0*(Math.random()+0.5));
-        resetInterval = (int)(60.0*(Math.random()+0.5));
-        resetVel();
+        vx = vy = 0;
         flipImage();
     }
 
     @Override
-    StateName getStateName(){return StateName.RANDOM_WALK;}
+    StateName getStateName(){return StateName.CHASE_TARGET;}
 
     @Override
     ChibiZunkoState execute(){
         ++counter;
-        if (counter % resetInterval == 0){
-            resetVel();
-            resetTime();
-            flipImage();
-        }
-        if (counter >= time){
-            return new ChibiZunkoStateLookAround(zunko);
-        }
+        if(counter%FLIP_INTERVAL == 0) flipImage();
+
+        FieldBaseObject target = zunko.getChaseTarget();
+
+        float dx = target.getX() - zunko.getX();
+        float dy = target.getY() - zunko.getY();
+
+        double len = Math.sqrt(dx*dx+dy*dy);
+        double ux = dx/len;
+        double uy = dy/len;
+
+        vx = (float)(ux*VEL);
+        vy = (float)(uy*VEL);
+
         zunko.moveOffset(vx, vy);
+        if(target.isOverwrapped(zunko.getX(), zunko.getY(),
+                zunko.getX()+ChibiZunko.COL_WID,
+                zunko.getY()+ChibiZunko.COL_HEI))
+            return new ChibiZunkoStateWait(zunko);
+
         return null;
     }
 
@@ -71,13 +79,5 @@ class ChibiZunkoStateRandomWalk extends ChibiZunkoState{
             else
                 imageId = R.drawable.cz_aruku01_r;
         }
-    }
-
-    private void resetVel(){
-        vx = (float)(Math.random() * 2f-1f);
-        vy = (float)(Math.random() * 2f-1f);
-    }
-    private void resetTime(){
-        resetInterval = (int)(60.0*(Math.random()+0.5));
     }
 }

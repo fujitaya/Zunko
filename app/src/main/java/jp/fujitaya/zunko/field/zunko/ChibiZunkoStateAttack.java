@@ -1,11 +1,13 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field.zunko;
 
 import android.graphics.Bitmap;
 
 import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.field.zunko.ChibiZunko;
+import jp.fujitaya.zunko.field.zunko.ChibiZunkoState;
 import jp.fujitaya.zunko.util.ImageLoader;
 
-public class ChibiZunkoStateAttack extends ChibiZunkoState{
+public class ChibiZunkoStateAttack extends ChibiZunkoState {
     int imageId;
     ChibiZunkoStateAttack(ChibiZunko zunko){
         super(zunko);
@@ -17,10 +19,8 @@ public class ChibiZunkoStateAttack extends ChibiZunkoState{
 
     @Override
     ChibiZunkoState execute() {
-        ++counter;
-
-        updateImage();
-        zunko.getChaseTarget().damage(1);
+        updateCounter();
+        if(counter == 45) zunko.getChaseTarget().damage(zunko.getPower());
 
         return null;
     }
@@ -30,7 +30,8 @@ public class ChibiZunkoStateAttack extends ChibiZunkoState{
         return loader.load(imageId);
     }
 
-    void updateImage(){
+    void updateCounter(){
+        ++counter;
         int id;
 //        if(zunko.isLeftFace()){
             if(counter < 20) id = R.drawable.cz_mochi01;
@@ -41,6 +42,7 @@ public class ChibiZunkoStateAttack extends ChibiZunkoState{
 //        }else{
 //
 //        }
+        if(counter >= 120) counter = 0;
         imageId = id;
     }
 }

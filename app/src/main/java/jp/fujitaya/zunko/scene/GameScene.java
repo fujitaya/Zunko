@@ -1,7 +1,9 @@
-package jp.fujitaya.zunko.util;
+package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+
+import jp.fujitaya.zunko.GameView;
 
 public abstract class GameScene {
     protected GameView parent;

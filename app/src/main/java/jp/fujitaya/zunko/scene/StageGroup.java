@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.jimmy;
+package jp.fujitaya.zunko.scene;
 
 public enum StageGroup {
     Miyagi,

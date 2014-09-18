@@ -3,10 +3,7 @@ package jp.fujitaya.zunko.util;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
-
-import jp.fujitaya.zunko.jimmy.InsideStrategy;
 
 public class Image {
     private Bitmap bitmap;

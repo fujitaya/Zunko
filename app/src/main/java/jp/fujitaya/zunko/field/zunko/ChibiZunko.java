@@ -1,4 +1,4 @@
-package jp.fujitaya.zunko.hayashima;
+package jp.fujitaya.zunko.field.zunko;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -6,6 +6,9 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 
 import jp.fujitaya.zunko.field.FieldBaseObject;
+import jp.fujitaya.zunko.hayashima.ChibiZunkoState;
+import jp.fujitaya.zunko.hayashima.ChibiZunkoStateChase;
+import jp.fujitaya.zunko.hayashima.ChibiZunkoStateWait;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 public class ChibiZunko extends FieldBaseObject {
@@ -20,7 +23,7 @@ public class ChibiZunko extends FieldBaseObject {
     public static final int COL_HEI = 100;
 
     private PointF pos;
-    private float power;
+    private int power;
     private boolean selected;
     private boolean leftFace;
     private FieldBaseObject target;
@@ -30,7 +33,7 @@ public class ChibiZunko extends FieldBaseObject {
 
     public ChibiZunko(){
         super();
-        power = 0;
+        power = 1;
         selected = false;
         leftFace = true;
         target = null;
@@ -40,6 +43,13 @@ public class ChibiZunko extends FieldBaseObject {
 
         state = new ChibiZunkoStateWait(this);
         ld = ImageLoader.getInstance();
+    }
+
+    public void setPower(int val){
+        power = val;
+    }
+    public int getPower(){
+        return power;
     }
 
     public void update(){

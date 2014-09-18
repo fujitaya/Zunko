@@ -1,10 +1,9 @@
-package jp.fujitaya.zunko;
+package jp.fujitaya.zunko.scene;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -13,11 +12,10 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-import jp.fujitaya.zunko.jimmy.InsideRectF;
-import jp.fujitaya.zunko.jimmy.SceneSelect;
-import jp.fujitaya.zunko.jimmy.TouchableBitmap;
-import jp.fujitaya.zunko.util.GameScene;
-import jp.fujitaya.zunko.util.GameView;
+import jp.fujitaya.zunko.GameView;
+import jp.fujitaya.zunko.R;
+import jp.fujitaya.zunko.util.InsideRectF;
+import jp.fujitaya.zunko.util.TouchableBitmap;
 
 import static android.view.GestureDetector.OnGestureListener;
 
