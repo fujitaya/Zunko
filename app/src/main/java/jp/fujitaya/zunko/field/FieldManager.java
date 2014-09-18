@@ -91,7 +91,7 @@ public class FieldManager {
 
         fd.maxZunkoExistNum = 200;
         fd.initialZunkoPower = 1;
-        fd.initialZunkoNum = 1;
+        fd.initialZunkoNum = 5;
 
         FieldData.CreatorData cd = fd.createCreatorData();
         cd.imageId = R.drawable.ic_launcher;

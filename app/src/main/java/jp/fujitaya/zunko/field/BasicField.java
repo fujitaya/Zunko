@@ -159,6 +159,10 @@ public abstract class BasicField extends Field {
             for(Building build: listBuilding){
                 if(zunko.isOverwrapped(build.getX(), build.getY(),
                         build.getCollision())){
+                    int idx = selectedQueue.indexOf(zunko);
+                    if(idx >= 0) selectedQueue.remove(idx);
+                    idx = selectWaitingQueue.indexOf(idx);
+                    if(idx >= 0) selectWaitingQueue.remove(idx);
                     zunko.activateAttackState(build);
                 }
             }
@@ -178,7 +182,10 @@ public abstract class BasicField extends Field {
         while(iter.hasNext()){
             ChibiZunko zunko = iter.next();
             zunko.update();
-            if(zunko.isRest()) iter.remove();
+            if(zunko.isRest()){
+                if(zunko == touchedZunko) touchedZunko = null;
+                iter.remove();
+            }
         }
 
         // Z sort

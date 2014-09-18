@@ -4,11 +4,12 @@ import jp.fujitaya.zunko.R;
 
 class ChibiZunkoStateLookAround extends ChibiZunkoState {
     private static final int LOOK_INTERVAL = 20;
-    private int lookCount;
+    private int lookCount, lookInterval;
 
     ChibiZunkoStateLookAround(ChibiZunko zunko){
         super(zunko);
         lookCount = (int)Math.random()*3+1;
+        lookInterval = (int)((Math.random()+0.5)*LOOK_INTERVAL);
         flipImage();
     }
 
@@ -19,8 +20,9 @@ class ChibiZunkoStateLookAround extends ChibiZunkoState {
     ChibiZunkoState execute(){
         ++counter;
 
-        if(counter%LOOK_INTERVAL == 0){
+        if(counter%lookInterval == 0){
             --lookCount;
+            lookInterval = (int)((Math.random()+0.5)*LOOK_INTERVAL);
             flipImage();
             if(lookCount <= 0)
                 return new ChibiZunkoStateRandomWalk(zunko);
