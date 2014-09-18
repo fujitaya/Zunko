@@ -12,8 +12,10 @@ public abstract class FieldBaseObject {
     protected RectF col;
 
     public FieldBaseObject(){
+        pos = new PointF();
         pos.set(0, 0);
         hp = 1;
+        initHP = 1;
         col = null;
     }
 
