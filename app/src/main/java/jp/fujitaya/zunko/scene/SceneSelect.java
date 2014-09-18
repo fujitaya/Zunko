@@ -29,30 +29,36 @@ public class SceneSelect extends GameScene implements OnGestureListener{
 
     @Override
     public void update() {
-        map.update();
+        synchronized (map) {
+            map.update();
+        }
         fieldManager.update();
         message.update();
     }
 
     @Override
     public void draw(Canvas canvas) {
-        map.draw(canvas);
+        synchronized (map) {
+            map.draw(canvas);
+        }
         message.draw(canvas);
     }
 
     @Override
     public void dispose() {
-        map.dispose();
-        gestureDetector = null;
-        parent = null;
-        fieldManager = null;
+        synchronized (map) {
+            map.dispose();
+            gestureDetector = null;
+            parent = null;
+            fieldManager = null;
+        }
     }
 
     @Override
     public void interrupt(MotionEvent event) {
-        //synchronized (map) {
+        synchronized (map) {
             gestureDetector.onTouchEvent(event);
-        //}
+        }
         message.interrupt(event);
     }
 
