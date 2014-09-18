@@ -93,7 +93,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void changeScene(GameScene next){
         if(scene != null){
             scene.dispose();
-            scene.parent = null;
+            scene.setParent(null);
         }
         scene = next;
     }

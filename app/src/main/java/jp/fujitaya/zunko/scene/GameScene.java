@@ -11,6 +11,9 @@ public abstract class GameScene {
     public GameScene(GameView parent){
         this.parent = parent;
     }
+    public void setParent(GameView parent){
+        this.parent = parent;
+    }
     public abstract void update();
     public abstract void draw(Canvas canvas);
     public abstract void dispose();

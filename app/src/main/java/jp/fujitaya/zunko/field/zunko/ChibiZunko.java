@@ -6,9 +6,6 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 
 import jp.fujitaya.zunko.field.FieldBaseObject;
-import jp.fujitaya.zunko.hayashima.ChibiZunkoState;
-import jp.fujitaya.zunko.hayashima.ChibiZunkoStateChase;
-import jp.fujitaya.zunko.hayashima.ChibiZunkoStateWait;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 public class ChibiZunko extends FieldBaseObject {

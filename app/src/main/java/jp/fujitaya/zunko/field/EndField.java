@@ -8,8 +8,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import jp.fujitaya.zunko.R;
-import jp.fujitaya.zunko.hayashima.ChibiZunko;
-import jp.fujitaya.zunko.sugaya.Creator;
+import jp.fujitaya.zunko.field.zunko.ChibiZunko;
 import jp.fujitaya.zunko.util.ImageLoader;
 
 public class EndField extends Field {
@@ -50,8 +49,6 @@ public class EndField extends Field {
         for(FieldData.ObjectData e: listImageObject){
             loader.load(e.imageId);
         }
-
-        init();
     }
 
 
