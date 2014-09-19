@@ -147,10 +147,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public void surfaceCreated(final SurfaceHolder holder) {
         //スケール
         setScale();
-        //フルスクリーン
-        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.KITKAT)
-        setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY | SYSTEM_UI_FLAG_FULLSCREEN
-                | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         fpswatch = new FpsCounter();
         drawFlag = true;
@@ -167,12 +163,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 }
             }
         },100,INTERVAL,TimeUnit.NANOSECONDS);
+
+        setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int i) {
+                setFullScreen();
+            }
+        });
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         //スケール更新
         setScale();
+        //フルスクリーン
+        setFullScreen();
+    }
+
+    public void setFullScreen(){
+        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.KITKAT)
+            setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | SYSTEM_UI_FLAG_FULLSCREEN
+                    | SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | SYSTEM_UI_FLAG_LAYOUT_STABLE );
     }
 
     @Override
