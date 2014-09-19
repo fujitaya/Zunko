@@ -103,7 +103,7 @@ public class FieldManager {
         fd.initX = -50;
         fd.initY = -50;
 
-        fd.maxZunkoExistNum = 200;
+        fd.maxZunkoExistNum = 100;
         fd.initialZunkoPower = 1;
         fd.initialZunkoNum = 5;
 
@@ -118,7 +118,7 @@ public class FieldManager {
 
         FieldData.BuildingData bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
-        bd.hp = 180;
+        bd.hp = 2;
         bd.maxHP = 180;
         bd.scale = 4;
         bd.fieldX = 550;
