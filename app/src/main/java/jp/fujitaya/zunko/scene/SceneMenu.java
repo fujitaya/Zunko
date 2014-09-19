@@ -30,6 +30,7 @@ public class SceneMenu extends GameScene implements OnGestureListener{
         super(parent);
         init();
         Sound.getInstance().loadBGM(R.raw.title_theme_02);
+        Sound.getInstance().playBGM();
     }
 
     public void init() {
@@ -101,9 +102,11 @@ public class SceneMenu extends GameScene implements OnGestureListener{
     private int counter = 0;
     @Override
     public void update() {
-        if(++counter == 30 && !Sound.getInstance().isBGMPlaying()){
-            Sound.getInstance().playBGM();
-        }
+//        if(counter < 30){
+//            if(++counter == 30 && !Sound.getInstance().isBGMPlaying()) {
+//                Sound.getInstance().playBGM();
+//            }
+//        }
     }
 
     @Override
