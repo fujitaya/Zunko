@@ -149,8 +149,8 @@ public class FieldManager {
         FieldData.CreatorData cd = fd.createCreatorData();
         cd.imageId = R.drawable.cz_zunda;
         cd.scale = 3;
-        cd.fieldX =600;
-        cd.fieldY = 600;
+        cd.fieldX =700;
+        cd.fieldY = 700;
         cd.spawnTime = 60 * 5;
         cd.spawnRange = 300;
         fd.addCreatorData(cd);
@@ -160,8 +160,8 @@ public class FieldManager {
         bd.hp = 100;
         bd.maxHP = 100;
         bd.scale = 3;
-        bd.fieldX = 300;
-        bd.fieldY = 300;
+        bd.fieldX = 250;
+        bd.fieldY = 250;
         fd.addBuildingData(bd);
 
         bd = fd.createBuildingData();
@@ -169,7 +169,7 @@ public class FieldManager {
         bd.hp = 200;//180;
         bd.maxHP = 200;
         bd.scale = 4;
-        bd.fieldX = 1800;
+        bd.fieldX = 1500;
         bd.fieldY = 300;
         fd.addBuildingData(bd);
 
@@ -178,8 +178,8 @@ public class FieldManager {
             bd.hp = 200;
             bd.maxHP = 200;
             bd.scale = 4;
-            bd.fieldX = 400;
-            bd.fieldY = 1700;
+            bd.fieldX = 300;
+            bd.fieldY = 1500;
             fd.addBuildingData(bd);
 
             bd = fd.createBuildingData();
@@ -187,8 +187,8 @@ public class FieldManager {
             bd.hp = 100;
             bd.maxHP = 100;
             bd.scale = 3;
-            bd.fieldX =1000;
-            bd.fieldY = 2200;
+            bd.fieldX =1100;
+            bd.fieldY = 1800;
             fd.addBuildingData(bd);
 
             bd = fd.createBuildingData();
@@ -196,8 +196,8 @@ public class FieldManager {
             bd.hp = 500;
             bd.maxHP = 500;
             bd.scale = 6;
-            bd.fieldX =1800;
-            bd.fieldY = 2000;
+            bd.fieldX =1500;
+            bd.fieldY = 1500;
             fd.addBuildingData(bd);
     }
 
