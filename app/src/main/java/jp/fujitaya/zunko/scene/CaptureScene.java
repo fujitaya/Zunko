@@ -1,6 +1,8 @@
 package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -86,6 +88,20 @@ public class CaptureScene extends GameScene {
         if(clearCount>0){
             message.drawClearMessage(canvas);
         }
+        Paint paint = new Paint();
+        paint.setColor(Color.BLACK);
+        paint.setAlpha(180);
+        canvas.drawRect(new RectF(0f,0f,GameView.VIEW_WIDTH,100f),paint);
+        paint = new Paint();
+        paint.setTextSize(50);
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if(field.getFieldName()=="Sendai") {
+            canvas.drawText("仙台",30,80,paint);
+        }
+        else if(field.getFieldName()=="Matsushima"){
+            canvas.drawText("松島",30,80,paint);
+        }
     }
 
     @Override
@@ -121,6 +137,12 @@ public class CaptureScene extends GameScene {
     }
     void setMessage(){
         if(randomMessageCount==1){
+            if(field.getFieldName()=="Sendai"){
+                message.appendMessage("仙台に入りました");
+            }
+            else if(field.getFieldName()=="Matsushima"){
+                message.appendMessage("松島に入りました");
+            }
             message.appendMessage("ずんだを広めていきましょう");
             message.appendMessage("ずん子を助けてくださいね");
         }

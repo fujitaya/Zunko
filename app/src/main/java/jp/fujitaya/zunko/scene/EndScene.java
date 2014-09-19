@@ -1,6 +1,8 @@
 package jp.fujitaya.zunko.scene;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
@@ -21,13 +23,17 @@ public class EndScene extends GameScene{
 
     private boolean[] messageflag;
     int randomMessageCount=1;
-    int messageSpan=30*20;
+    int messageSpan=30*30;
     String[] randomMessage={
-            "明らかに飛行できない形なのに","合体ロボのパーツは飛ぶ。飛ばねば",
-            "「やったか？」はやってないし","「力が欲しいか」の力はろくでもない",
-            "いいか！タイムトラベルしたら","その時代の人間とは接触するなよ！？",
-            "全裸でも堂々としていれば","割と邪な気持ちにならない（通報はする)",
-            "全国都道府県女子高生","スカート膝上ランキング、東北一位は宮城県"
+            "明らかに飛行できない形なのに",
+            "「やったか？」はやってないし","いいか！タイムトラベルしたら",
+            "全裸でも堂々としていれば",
+            "全国都道府県女子高生",
+            "合体ロボのパーツは飛ぶ。飛ばねば"
+            ,"「力が欲しいか」の力はろくでもない",
+            "その時代の人間とは接触するなよ！？",
+            "割と邪な気持ちにならない（通報はする)",
+            "スカート膝上ランキング、東北一位は宮城県"
     };
 
     public EndScene(GameView parent, String fieldName){
@@ -70,7 +76,21 @@ public class EndScene extends GameScene{
     public void draw(Canvas canvas){
         field.draw(canvas);
         message.draw(canvas);
-    }
+            Paint paint = new Paint();
+            paint.setColor(Color.BLACK);
+            paint.setAlpha(180);
+            canvas.drawRect(new RectF(0f,0f,GameView.VIEW_WIDTH,100f),paint);
+            paint = new Paint();
+            paint.setTextSize(50);
+            paint.setColor(Color.WHITE);
+            paint.setAntiAlias(true);
+        if(field.getFieldName()=="Sendai") {
+            canvas.drawText("仙台",30,80,paint);
+        }
+        else if(field.getFieldName()=="Matsushima"){
+            canvas.drawText("松島",30,80,paint);
+        }
+            }
 
     @Override
     public void interrupt(MotionEvent event) {
@@ -88,6 +108,8 @@ public class EndScene extends GameScene{
             }
             y+=diffy*2;
             if(new RectF(x,y,x+dx*30,y+diffy).contains(event.getX(),event.getY())){
+                //FieldManager.getInstance().powerUp();
+                field.clearZunko();
             return;
             }
         }
@@ -102,6 +124,14 @@ public class EndScene extends GameScene{
 
     void setMessage(){
         if(randomMessageCount==1){
+
+            if(field.getFieldName()=="Sendai"){
+                message.appendMessage("仙台に入りました");
+            }
+
+            else if(field.getFieldName()=="Matsushima"){
+                message.appendMessage("松島に入りました");
+            }
             message.appendMessage("ここはずんだが十分に広まっています");
             message.appendMessage("メニューからずん子を集め");
             message.appendMessage("他の場所にもずんだを広めましょう！");
@@ -110,9 +140,9 @@ public class EndScene extends GameScene{
     }
     void setRandomMessage(){
         if(randomMessageCount%messageSpan==0){
-            int rand=(int)(Math.random()*randomMessage.length/2);
+            int rand=(int)(Math.random()*randomMessage.length);
             message.appendMessage(randomMessage[rand]);
-            message.appendMessage(randomMessage[rand+1]);
+            message.appendMessage(randomMessage[rand*2]);
         }
         randomMessageCount++;
     }
