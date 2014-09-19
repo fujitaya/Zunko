@@ -42,6 +42,9 @@ public abstract class BasicField extends Field {
     ArrayList<Sound.SoundCard> spawnSE;
     ArrayList<Sound.SoundCard> attackSE;
     ArrayList<Sound.SoundCard> vanishSE;
+    Sound.SoundCard fanfare;
+
+    boolean fanfareFlag;
 
     BasicField(FieldData fd){
         super(fd.name);
@@ -67,7 +70,11 @@ public abstract class BasicField extends Field {
         listBuilding = new ArrayList<Building>();
         listCreator = new ArrayList<Creator>();
 
+        fanfareFlag = true;
+
         init(fd);
+
+        if(fanfareFlag) fanfare = sound.loadSE(R.raw.se_fanfare);
     }
 
     @Override public FieldData getFieldData(){
@@ -153,10 +160,20 @@ public abstract class BasicField extends Field {
                 listCreator.add(new Creator(makeCreatorFromBuilding(b)));
             }
         }
+        if(listBuilding.size() == 0) fanfareFlag = false;
 
         if(listCreator.size() > 0) {
-            for (int i = 0; i < fd.initialZunkoNum; ++i) {
-                addZunko(listCreator.get(0), fd.initialZunkoPower);
+            int cNum = listCreator.size();
+            int total = fd.initialZunkoNum;
+            int[] spawnNum = new int[cNum];
+            for(int i=0; i < cNum-1; ++i){
+                spawnNum[i] = total/cNum;
+            }
+            spawnNum[cNum-1] = total - (cNum-1)*(total/cNum);
+            for(int i=0; i < cNum; ++i){
+                for(int j=0; j < spawnNum[i]; ++j){
+                    addZunko(listCreator.get(i), fd.initialZunkoPower);
+                }
             }
         }
 
@@ -186,6 +203,8 @@ public abstract class BasicField extends Field {
         for(Sound.SoundCard sc: spawnSE) sound.stopSE(sc);
         for(Sound.SoundCard sc: attackSE) sound.stopSE(sc);
         for(Sound.SoundCard sc: vanishSE) sound.stopSE(sc);
+
+        if(fanfare != null) sound.stopSE(fanfare);
 
 //        spawnSE.clear();
 //        attackSE.clear();
@@ -280,6 +299,11 @@ public abstract class BasicField extends Field {
                     return 1;
                 }
             });
+        }
+
+        if(fanfareFlag && isCaptureField() && getNowHP() <= 0){
+            fanfareFlag = false;
+            sound.playSE(fanfare);
         }
 
         updateSoundCounter();
