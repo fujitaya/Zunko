@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Build;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -147,9 +148,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         //スケール
         setScale();
         //フルスクリーン
-//        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.KITKAT)
-//        setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY | SYSTEM_UI_FLAG_FULLSCREEN
-//                | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        if (Build.VERSION.SDK_INT  >= Build.VERSION_CODES.KITKAT)
+        setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE_STICKY | SYSTEM_UI_FLAG_FULLSCREEN
+                | SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         fpswatch = new FpsCounter();
         drawFlag = true;
