@@ -33,4 +33,5 @@ public abstract class Field {
     public abstract void interrupt(MotionEvent event);
     public abstract void draw(Canvas canvas);
     public abstract void dispose();
+    public abstract void addPower();
 }

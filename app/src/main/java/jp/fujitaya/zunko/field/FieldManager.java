@@ -70,6 +70,12 @@ public class FieldManager {
             }
         }*/
     }
+    public void powerUp(){
+        //fieldStore.get((int)(Math.random()*fieldStore.size())).addPower();
+        for (Map.Entry<String, Field> fieldEntry : fieldStore.entrySet()) {
+            fieldEntry.getValue().addPower();
+        }
+    }
 
     public void save(){
         //TODO;現在のフィールドデータを保存
