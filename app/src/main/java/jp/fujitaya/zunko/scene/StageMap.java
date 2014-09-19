@@ -30,7 +30,8 @@ import jp.fujitaya.zunko.util.TouchableBitmapWithText;
 import static android.view.GestureDetector.OnGestureListener;
 
 public class StageMap implements OnGestureListener{
-    public final RectF drawRectSendai = new RectF(600f,800f,850f,1050f);
+    public final RectF drawRectSendai = new RectF(550f,900f,800f,1150f);
+    public final RectF drawRectMatsushima = new RectF(750f,670f,1000f,920f);
     public final RectF stageDetailSize = new RectF(0f,0f,400f,400f);
     public final RectF changeSceneButtonDef = new RectF(50f,280f,350f,380f);
     public final Rect cutMiyagi = new Rect(1200,1900,2000,2800);
@@ -78,7 +79,7 @@ public class StageMap implements OnGestureListener{
 
                 addFieldButton(
                         "Sendai",new TouchableBitmapWithText(
-                            BitmapFactory.decodeResource(res, R.drawable.mc_mig),
+                            BitmapFactory.decodeResource(res, R.drawable.btnstg_sendai),
                             new RectF(drawRectSendai),
                             new InsideRectF(new RectF(drawRectSendai)),
                             res.getString(R.string.sendai),
@@ -112,6 +113,42 @@ public class StageMap implements OnGestureListener{
                                 }
                             }
                 ));
+                addFieldButton(
+                        "Matsushima",new TouchableBitmapWithText(
+                                BitmapFactory.decodeResource(res, R.drawable.btnstg_matsushima),
+                                new RectF(drawRectMatsushima),
+                                new InsideRectF(new RectF(drawRectMatsushima)),
+                                res.getString(R.string.matsushima),
+                                60,
+                                70f,
+                                200f,
+                                Color.WHITE,
+                                Color.BLACK,
+                                200,
+                                new OnGestureListener() {
+                                    @Override
+                                    public boolean onDown(MotionEvent motionEvent) {
+                                        return false;
+                                    }
+                                    @Override
+                                    public void onShowPress(MotionEvent motionEvent) { }
+                                    @Override
+                                    public boolean onSingleTapUp(MotionEvent motionEvent) {
+                                        openStageDetail("Matsushima");
+                                        return false;
+                                    }
+                                    @Override
+                                    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                                        return false;
+                                    }
+                                    @Override
+                                    public void onLongPress(MotionEvent motionEvent) { }
+                                    @Override
+                                    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                                        return false;
+                                    }
+                                }
+                        ));
                 break;
             case Tohoku:
                 backGround = BitmapFactory.decodeResource(res, R.drawable.map_miyagi);
@@ -127,8 +164,11 @@ public class StageMap implements OnGestureListener{
         if (stageDetail != null){
             if (fieldManager.isWorking(focus)){
                 Field focusField = fieldManager.getField(focus);
+                String progress;
+                if (focusField.getNowHP() <= 0) progress = "クリア";
+                else progress = "進行中";
 
-                String message = "進行中" +
+                String message = progress +
                         "\n総パワー : " + Integer.toString(focusField.getTotalZunkoNum()) +
                         "\n攻略度 :" + NumberFormat.getPercentInstance().format(
                         1.0-((double)focusField.getNowHP()/focusField.getInitialHP()));
@@ -140,55 +180,56 @@ public class StageMap implements OnGestureListener{
         }
     }
 
-    public void openStageDetail(String fieldName){
-        closeStageDetail();
+    public void openStageDetail(final String fieldName){
+        RectF windowRect = new RectF(stageDetailSize);
+        windowRect.offset(offset.x, offset.y);
         if (fieldName == "Sendai"){
-            setFocus("Sendai");
-
-            RectF windowRect = new RectF(stageDetailSize);
-            windowRect.offset(offset.x, offset.y);
             windowRect.offset(drawRectSendai.left,drawRectSendai.top);
-            stageDetail = new NoticeWindow(windowRect,"", Color.BLUE,150,Color.WHITE);
-
-            RectF buttonRect = new RectF(changeSceneButtonDef);
-            buttonRect.offset(stageDetail.getRect().left,stageDetail.getRect().top);
-            changeSceneButton = new TouchableBitmap(
-                    changeSceneImage,
-                    buttonRect,
-                    new OnGestureListener() {
-                        @Override
-                        public boolean onDown(MotionEvent motionEvent) {
-                            return true;
-                        }
-                        @Override
-                        public void onShowPress(MotionEvent motionEvent) {
-                        }
-                        @Override
-                        public boolean onSingleTapUp(MotionEvent motionEvent) {
-                            //parentView.changeScene(new MainScene(parentView,"Sendai"));
-                            if(FieldManager.getInstance().getField("Sendai").getNowHP()>0){
-                                parentView.changeScene(new CaptureScene(parentView,"Sendai"));
-                            }
-                            else{
-                                parentView.changeScene(new EndScene(parentView,"Sendai"));
-                            }
-                            //parentView.changeScene(new CaptureScene(parentView,"Sendai"));
-                            return false;
-                        }
-                        @Override
-                        public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
-                            return true;
-                        }
-                        @Override
-                        public void onLongPress(MotionEvent motionEvent) {
-                        }
-                        @Override
-                        public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
-                            return true;
-                        }
-                    }
-            );
         }
+        else if (fieldName == "Matsushima"){
+            windowRect.offset(drawRectMatsushima.left,drawRectMatsushima.top);
+        }
+        setFocus(fieldName);
+
+        closeStageDetail();
+        stageDetail = new NoticeWindow(windowRect,"", Color.BLUE,150,Color.WHITE);
+
+        RectF buttonRect = new RectF(changeSceneButtonDef);
+        buttonRect.offset(stageDetail.getRect().left,stageDetail.getRect().top);
+        changeSceneButton = new TouchableBitmap(
+                changeSceneImage,
+                buttonRect,
+                new OnGestureListener() {
+                    @Override
+                    public boolean onDown(MotionEvent motionEvent) {
+                            return true;
+                        }
+                    @Override
+                    public void onShowPress(MotionEvent motionEvent) {
+                    }
+                    @Override
+                    public boolean onSingleTapUp(MotionEvent motionEvent) {
+                        if(FieldManager.getInstance().getField(fieldName).getNowHP()>0){
+                            parentView.changeScene(new CaptureScene(parentView,fieldName));
+                        }
+                        else{
+                            parentView.changeScene(new EndScene(parentView,fieldName));
+                        }
+                        return false;
+                    }
+                    @Override
+                    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                        return true;
+                    }
+                    @Override
+                    public void onLongPress(MotionEvent motionEvent) {
+                    }
+                    @Override
+                    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float v, float v2) {
+                        return true;
+                    }
+                }
+        );
     }
     public void closeStageDetail(){
         if(stageDetail != null) {
