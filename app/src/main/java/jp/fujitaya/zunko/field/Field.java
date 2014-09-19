@@ -5,15 +5,23 @@ import android.view.MotionEvent;
 
 public abstract class Field {
     protected String name;
+    protected boolean active;
 
     public Field(String name){
         this.name = name;
+        active = false;
     }
     public String getFieldName(){
         return name;
     }
 
     public abstract boolean isCaptureField();
+    public void activate(boolean flag){
+        active = flag;
+    }
+    public boolean isActive(){
+        return active;
+    }
 
     public abstract int getNowHP();
     public abstract int getInitialHP();

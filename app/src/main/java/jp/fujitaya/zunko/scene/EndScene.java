@@ -56,6 +56,7 @@ public class EndScene extends GameScene{
         ld.load(R.drawable.cz_mochi05);
 
         field = fm.getField(fieldName);
+        field.activate(true);
     }
 
     @Override

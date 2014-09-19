@@ -103,6 +103,15 @@ public class ChibiZunko extends FieldBaseObject {
         return !alive;
     }
 
+    public boolean isAttacking(){
+        return state.getStateName()==ChibiZunkoState.StateName.ATTACK &&
+                state.counter==45;
+    }
+    public boolean isSpawning(){
+        return state.getStateName()== ChibiZunkoState.StateName.SPAWN &&
+                state.counter==1;
+    }
+
     private static RectF dr = new RectF();
     public void draw(Canvas canvas, float baseX, float baseY){
         Bitmap image = state.getImage(ld);

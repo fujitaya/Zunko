@@ -29,9 +29,6 @@ public abstract class BasicField extends Field {
     protected int initialZunkoPower;
     protected int initialZunkoNum;
 
-    protected boolean active;
-    protected HashMap<String, Sound.SoundCard> seMap;
-
     ArrayList<ChibiZunko> listZunko;
     ArrayList<Building> listBuilding;
     ArrayList<Creator> listCreator;
@@ -39,33 +36,38 @@ public abstract class BasicField extends Field {
     ImageLoader loader;
     Sound sound;
 
-    ArrayList<Sound.SoundCard> cards;
+    int spawnSECounter;
+    int attackSECounter;
+    int vanishSECounter;
+    ArrayList<Sound.SoundCard> spawnSE;
+    ArrayList<Sound.SoundCard> attackSE;
+    ArrayList<Sound.SoundCard> vanishSE;
 
     BasicField(FieldData fd){
         super(fd.name);
         active = false;
+
+        sound = Sound.getInstance();
+        spawnSE = new ArrayList<Sound.SoundCard>();
+        attackSE = new ArrayList<Sound.SoundCard>();
+        vanishSE = new ArrayList<Sound.SoundCard>();
+        for(int i=0; i < 5; ++i) spawnSE.add(sound.loadSE(R.raw.se_spawn));
+        for(int i=0; i < 5; ++i) attackSE.add(sound.loadSE(R.raw.se_attack));
+        for(int i=0; i < 5; ++i) vanishSE.add(sound.loadSE(R.raw.se_vanish));
+        spawnSECounter = 0;
+        attackSECounter = 0;
+        vanishSECounter = 0;
+
+        loader = ImageLoader.getInstance();
+        fieldImageId = fd.fieldImageId;
+        bg = loader.load(fieldImageId);
 
         pos = new PointF();
         listZunko = new ArrayList<ChibiZunko>();
         listBuilding = new ArrayList<Building>();
         listCreator = new ArrayList<Creator>();
 
-        sound = Sound.getInstance();
-        cards = new ArrayList<Sound.SoundCard>();
-        for(int i=0; i < 10; ++i) cards.add(sound.loadSE(R.raw.se_spawn));
-
-        loader = ImageLoader.getInstance();
-        fieldImageId = fd.fieldImageId;
-        bg = loader.load(fieldImageId);
-
         init(fd);
-    }
-
-    public void activate(boolean flag){
-        active = flag;
-    }
-    public boolean isActive(){
-        return active;
     }
 
     @Override public FieldData getFieldData(){
@@ -153,8 +155,9 @@ public abstract class BasicField extends Field {
         }
 
         if(listCreator.size() > 0) {
-            for (int i = 0; i < fd.initialZunkoNum; ++i)
+            for (int i = 0; i < fd.initialZunkoNum; ++i) {
                 addZunko(listCreator.get(0), fd.initialZunkoPower);
+            }
         }
 
         maxZunkoExistNum = fd.maxZunkoExistNum;
@@ -174,6 +177,23 @@ public abstract class BasicField extends Field {
     }
 
     public void dispose(){
+        activate(false);
+
+        spawnSECounter = 0;
+        attackSECounter = 0;
+        vanishSECounter = 0;
+
+        for(Sound.SoundCard sc: spawnSE) sound.stopSE(sc);
+        for(Sound.SoundCard sc: attackSE) sound.stopSE(sc);
+        for(Sound.SoundCard sc: vanishSE) sound.stopSE(sc);
+
+//        spawnSE.clear();
+//        attackSE.clear();
+//        vanishSE.clear();
+//
+//        for(int i=0; i < 5; ++i) spawnSE.add(sound.loadSE(R.raw.se_spawn));
+//        for(int i=0; i < 5; ++i) attackSE.add(sound.loadSE(R.raw.se_attack));
+//        for(int i=0; i < 5; ++i) vanishSE.add(sound.loadSE(R.raw.se_vanish));
     }
 
     private int sortCounter = 0;
@@ -217,6 +237,7 @@ public abstract class BasicField extends Field {
                 }
                 b.activateFirstHide();
                 listCreator.add(new Creator(makeCreatorFromBuilding(b)));
+                playSE(R.raw.se_vanish);
             }
         }
 
@@ -224,7 +245,7 @@ public abstract class BasicField extends Field {
         for(Creator e: listCreator){
             if(e.isCreatable() && getTotalZunkoNum()<maxZunkoExistNum) {
                 addZunko(e, 1);
-//                sound.playSE(sound.loadSE(R.raw.se_spawn));
+                playSE(R.raw.se_spawn);
             }
         }
 
@@ -240,6 +261,11 @@ public abstract class BasicField extends Field {
             if(zunko.isRest()){
                 if(zunko == touchedZunko) touchedZunko = null;
                 iterz.remove();
+                playSE(R.raw.se_vanish);
+            }else if(zunko.isAttacking()){
+                playSE(R.raw.se_attack);
+            }else if(zunko.isSpawning()){
+                playSE(R.raw.se_spawn);
             }
         }
 
@@ -255,6 +281,8 @@ public abstract class BasicField extends Field {
                 }
             });
         }
+
+        updateSoundCounter();
     }
 
     private void startSelectChain(ChibiZunko top){
@@ -319,6 +347,40 @@ public abstract class BasicField extends Field {
         selectedQueue.clear();
         selectWaitingQueue.clear();
         touchedCounter = 0;
+    }
+    private void updateSoundCounter(){
+        if(!isActive()) return;
+        if(spawnSECounter >= spawnSE.size()) spawnSECounter = 0;
+        if(attackSECounter >= attackSE.size()) attackSECounter = 0;
+        if(vanishSECounter >= vanishSE.size()) vanishSECounter = 0;
+
+//        if(spawnSECounter >= 60){
+//            spawnSECounter = 0;
+//            spawnSE.clear();
+//            for(int i=0; i < 5; ++i) spawnSE.add(sound.loadSE(R.raw.se_spawn));
+//        }
+//        if(attackSECounter >= 60){
+//            attackSECounter = 0;
+//            attackSE.clear();
+//            for(int i=0; i < 5; ++i) attackSE.add(sound.loadSE(R.raw.se_attack));
+//        }
+//        if(vanishSECounter >= 60){
+//            vanishSECounter = 0;
+//            vanishSE.clear();
+//            for(int i=0; i < 5; ++i) vanishSE.add(sound.loadSE(R.raw.se_vanish));
+//        }
+    }
+    private void playSE(int resId){
+        if(!isActive()) return;
+        switch(resId){
+            case R.raw.se_spawn:
+                if(spawnSECounter < 5) sound.playSE(spawnSE.get(spawnSECounter++)); break;
+            case R.raw.se_attack:
+                if(attackSECounter < 5) sound.playSE(attackSE.get(attackSECounter++)); break;
+            case R.raw.se_vanish:
+                if(vanishSECounter < 5) sound.playSE(vanishSE.get(vanishSECounter++)); break;
+            default: break;
+        }
     }
 
     private PointerInfo pi = new PointerInfo();

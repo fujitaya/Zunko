@@ -112,7 +112,7 @@ public class FieldManager {
 
         FieldData.BuildingData bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
-        bd.hp = 2;//180;
+        bd.hp = 180;
         bd.maxHP = 180;
         bd.scale = 4;
         bd.fieldX = 550;
