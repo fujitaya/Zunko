@@ -81,7 +81,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
                 Color.GRAY,250,Color.BLACK);
         zukanButton = new TouchableBitmap(
                 BitmapFactory.decodeResource(parent.getResources(), R.drawable.btn_zukan),
-                new RectF(295f,827f,505f,900f),
+                new RectF(260f,800f,460f,900f),
                 new OnGestureListener() {
                     @Override
                     public boolean onDown(MotionEvent motionEvent) {
@@ -110,6 +110,7 @@ public class SceneSelect extends GameScene implements OnGestureListener{
         );
         isStatusWindowOpen = false;
         message.show(true);
+        message.appendMessage("ステージを選択してください");
     }
 
     public synchronized void openStatusWindow(){

@@ -26,7 +26,7 @@ public class NoticeWindow {
         this.rectColor = rectColor;
         this.rectAlpha = rectAlpha;
         this.textColor = textColor;
-        this.textSize = 50;
+        this.textSize = 45;
         this.lineInterval = 52;
         this.textOffsetX = 30;
         this.textOffsetY = 60;
