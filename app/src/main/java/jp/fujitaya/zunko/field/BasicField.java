@@ -15,6 +15,7 @@ import java.util.Iterator;
 import jp.fujitaya.zunko.GameView;
 import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.field.zunko.ChibiZunko;
+import jp.fujitaya.zunko.scene.GameScene;
 import jp.fujitaya.zunko.util.ImageLoader;
 import jp.fujitaya.zunko.util.PointerInfo;
 import jp.fujitaya.zunko.util.Sound;
@@ -436,6 +437,10 @@ public abstract class BasicField extends Field {
                 if(touchedZunko == null){
                     moveOffset(dx, dy);
                 }else{
+                    // camera(finger pos) move to center;
+                    // scene pos is needs. not (0,0) fix;
+//                    float dcx = GameView.VIEW_WIDTH/2 - pi.x;
+//                    float dcy = GameView.VIEW_HEIGHT/2 - pi.y;
                     touchedZunko.moveOffset(dx, dy);
                 }
                 oldPi.update(event);
