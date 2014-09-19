@@ -71,7 +71,12 @@ public class Sound {
         mp = MediaPlayer.create(context, resourceId);
         sc.soundId = mp.getAudioSessionId();
         sc.loop = -1;
+
+        bgm = sc;
         return sc;
+    }
+    public void playBGM(){
+        playBGM(bgm);
     }
     public void playBGM(SoundCard card){
         if(mp == null || card.soundId != mp.getAudioSessionId()) return;
@@ -90,6 +95,9 @@ public class Sound {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    public boolean isBGMPlaying(){
+        return isBGMPlaying(bgm);
     }
     public boolean isBGMPlaying(SoundCard card){
         return mp!=null &&
@@ -120,6 +128,7 @@ public class Sound {
     private Context context;
     private SoundPool sp;
     private MediaPlayer mp;
+    private SoundCard bgm;
 
     private static Sound instance = null;
     private Sound(){}

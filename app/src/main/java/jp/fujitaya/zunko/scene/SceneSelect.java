@@ -17,6 +17,7 @@ import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.field.FieldManager;
 import jp.fujitaya.zunko.field.zunko.StatusAll;
 import jp.fujitaya.zunko.util.InsideRectF;
+import jp.fujitaya.zunko.util.Sound;
 import jp.fujitaya.zunko.util.TouchableBitmap;
 import jp.fujitaya.zunko.util.TouchableBitmapWithText;
 
@@ -40,6 +41,9 @@ public class SceneSelect extends GameScene implements OnGestureListener{
         this.fieldManager = FieldManager.getInstance();
         message = new MessageWindowScene(parent);
         init();
+
+        if(Sound.getInstance().isBGMPlaying())
+            Sound.getInstance().playBGM();
     }
 
     public void init(){
