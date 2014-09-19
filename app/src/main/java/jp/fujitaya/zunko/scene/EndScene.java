@@ -23,13 +23,17 @@ public class EndScene extends GameScene{
 
     private boolean[] messageflag;
     int randomMessageCount=1;
-    int messageSpan=30*20;
+    int messageSpan=30*30;
     String[] randomMessage={
-            "明らかに飛行できない形なのに","合体ロボのパーツは飛ぶ。飛ばねば",
-            "「やったか？」はやってないし","「力が欲しいか」の力はろくでもない",
-            "いいか！タイムトラベルしたら","その時代の人間とは接触するなよ！？",
-            "全裸でも堂々としていれば","割と邪な気持ちにならない（通報はする)",
-            "全国都道府県女子高生","スカート膝上ランキング、東北一位は宮城県"
+            "明らかに飛行できない形なのに",
+            "「やったか？」はやってないし","いいか！タイムトラベルしたら",
+            "全裸でも堂々としていれば",
+            "全国都道府県女子高生",
+            "合体ロボのパーツは飛ぶ。飛ばねば"
+            ,"「力が欲しいか」の力はろくでもない",
+            "その時代の人間とは接触するなよ！？",
+            "割と邪な気持ちにならない（通報はする)",
+            "スカート膝上ランキング、東北一位は宮城県"
     };
 
     public EndScene(GameView parent, String fieldName){
@@ -137,9 +141,8 @@ public class EndScene extends GameScene{
     void setRandomMessage(){
         if(randomMessageCount%messageSpan==0){
             int rand=(int)(Math.random()*randomMessage.length);
-            rand=rand;
             message.appendMessage(randomMessage[rand]);
-            message.appendMessage(randomMessage[rand+1]);
+            message.appendMessage(randomMessage[rand*2]);
         }
         randomMessageCount++;
     }
