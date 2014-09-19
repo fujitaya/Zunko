@@ -93,13 +93,52 @@ public class FieldManager {
     private FieldManager(){
         fieldStore = new HashMap<String, Field>();
     }
-    private FieldData createFD(String name){
+    private FieldData createFD(String name) {
         FieldData fd = new FieldData();
 
         fd.name = name;
+        if (name == "Sendai") {
+            fd.fieldImageId = R.drawable.fd_green;
+            fd.fieldWidth = 720 * 2 + 50;
+            fd.fieldHeight = (int) (1280 * 1.5) + 50;
+            fd.initX = -50;
+            fd.initY = -50;
+
+            fd.maxZunkoExistNum = 200;
+            fd.initialZunkoPower = 1;
+            fd.initialZunkoNum = 5;
+
+            FieldData.CreatorData cd = fd.createCreatorData();
+            cd.imageId = R.drawable.cz_zunda;
+            cd.scale = 3;
+            cd.fieldX = 150;
+            cd.fieldY = 150;
+            cd.spawnTime = 60 * 5;
+            cd.spawnRange = 300;
+            fd.addCreatorData(cd);
+
+            FieldData.BuildingData bd = fd.createBuildingData();
+            bd.imageId = R.drawable.mc_mig;
+            bd.hp = 100;
+            bd.maxHP = 100;
+            bd.scale = 3;
+            bd.fieldX = 550;
+            bd.fieldY = 550;
+            fd.addBuildingData(bd);
+
+            bd = fd.createBuildingData();
+            bd.imageId = R.drawable.mc_mig;
+            bd.hp = 180;//180;
+            bd.maxHP = 180;
+            bd.scale = 4;
+            bd.fieldX = 1000;
+            bd.fieldY = 1200;
+            fd.addBuildingData(bd);
+        }
+        else if(name=="Matsushima"){
         fd.fieldImageId = R.drawable.fd_green;
-        fd.fieldWidth = 720*2+50;
-        fd.fieldHeight = (int)(1280*1.5)+50;
+        fd.fieldWidth = 720 * 3 + 50;
+        fd.fieldHeight = (int) (1280 * 2) + 50;
         fd.initX = -50;
         fd.initY = -50;
 
@@ -110,29 +149,57 @@ public class FieldManager {
         FieldData.CreatorData cd = fd.createCreatorData();
         cd.imageId = R.drawable.cz_zunda;
         cd.scale = 3;
-        cd.fieldX = 150;
-        cd.fieldY = 150;
-        cd.spawnTime = 60*5;
+        cd.fieldX =600;
+        cd.fieldY = 600;
+        cd.spawnTime = 60 * 5;
         cd.spawnRange = 300;
         fd.addCreatorData(cd);
 
         FieldData.BuildingData bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
-        bd.hp = 2;
-        bd.maxHP = 180;
-        bd.scale = 4;
-        bd.fieldX = 550;
-        bd.fieldY = 550;
+        bd.hp = 100;
+        bd.maxHP = 100;
+        bd.scale = 3;
+        bd.fieldX = 300;
+        bd.fieldY = 300;
         fd.addBuildingData(bd);
 
         bd = fd.createBuildingData();
         bd.imageId = R.drawable.mc_mig;
-        bd.hp = 2;//180;
-        bd.maxHP = 180;
+        bd.hp = 200;//180;
+        bd.maxHP = 200;
         bd.scale = 4;
-        bd.fieldX = 250;
-        bd.fieldY = 850;
+        bd.fieldX = 1800;
+        bd.fieldY = 300;
         fd.addBuildingData(bd);
+
+            bd = fd.createBuildingData();
+            bd.imageId = R.drawable.mc_mig;
+            bd.hp = 200;
+            bd.maxHP = 200;
+            bd.scale = 4;
+            bd.fieldX = 400;
+            bd.fieldY = 1700;
+            fd.addBuildingData(bd);
+
+            bd = fd.createBuildingData();
+            bd.imageId = R.drawable.mc_mig;
+            bd.hp = 100;
+            bd.maxHP = 100;
+            bd.scale = 3;
+            bd.fieldX =1000;
+            bd.fieldY = 2200;
+            fd.addBuildingData(bd);
+
+            bd = fd.createBuildingData();
+            bd.imageId = R.drawable.mc_mig;
+            bd.hp = 500;
+            bd.maxHP = 500;
+            bd.scale = 6;
+            bd.fieldX =1800;
+            bd.fieldY = 2000;
+            fd.addBuildingData(bd);
+    }
 
         return fd;
     }

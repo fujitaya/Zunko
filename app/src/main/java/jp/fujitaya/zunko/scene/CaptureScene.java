@@ -151,7 +151,7 @@ public class CaptureScene extends GameScene {
             message.appendMessage("ずんだ, 広まりましたっ！！");
             message.appendMessage("他の場所にも広めましょう！");
         }
-        else if(field.getNowHP()*3<=field.getInitialHP()*2 &&messageflag[0]==false){
+        else if(messageflag[0]==false&&field.getNowHP()*3<=field.getInitialHP()*2){
             message.appendMessage("ずんだが注目されています");
             messageflag[0]=true;
         }
