@@ -41,9 +41,6 @@ public class SceneSelect extends GameScene implements OnGestureListener{
         this.fieldManager = FieldManager.getInstance();
         message = new MessageWindowScene(parent);
         init();
-
-        if(Sound.getInstance().isBGMPlaying())
-            Sound.getInstance().playBGM();
     }
 
     public void init(){
