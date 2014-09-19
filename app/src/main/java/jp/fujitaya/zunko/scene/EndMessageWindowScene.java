@@ -19,6 +19,7 @@ public class EndMessageWindowScene extends MessageWindowScene {
         super(parent);
         img.moveCollision(0,1024);
         clearImg=new Image(R.drawable.fd_end);
+        clearImg.moveTo(0,100);
     }
     public void interrupt(MotionEvent event){
         pi.update(event);

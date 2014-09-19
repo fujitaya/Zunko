@@ -116,6 +116,7 @@ public abstract class BasicField extends Field {
         return fd;
     }
 
+
     @Override public int getNowHP(){
         int hp = 0;
         for(FieldBaseObject e: listBuilding){
@@ -494,5 +495,7 @@ public abstract class BasicField extends Field {
 
         // zunko
         for(ChibiZunko e: listZunko){e.draw(canvas, pos.x, pos.y);}
+    }
+    public void addPower(){
     }
 }

@@ -51,4 +51,7 @@ public class FieldData {
         CreatorData cd = new CreatorData();
         return cd;
     }
+    public void addinitialZunkoPower(){
+        initialZunkoPower+=1;
+    }
 }
