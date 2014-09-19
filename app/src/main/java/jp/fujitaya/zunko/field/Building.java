@@ -9,9 +9,12 @@ import jp.fujitaya.zunko.util.ImageLoader;
 public class Building extends FieldBaseObject {
     private float scale;
     private Bitmap image;
+    private boolean firstHide;
 
     Building(FieldData.BuildingData data){
         super();
+
+        firstHide = data.firstHide;
 
         imageId = data.imageId;
         image = ImageLoader.getInstance().load(imageId);
@@ -32,10 +35,18 @@ public class Building extends FieldBaseObject {
     public boolean isCollapsed(){
         return hp<=0;
     }
+    public boolean isFirstHided(){
+        return firstHide;
+    }
+    public void activateFirstHide(){
+        firstHide = true;
+    }
 
     private static RectF drawRect = new RectF();
     @Override
     public void draw(Canvas canvas, float baseX, float baseY){
+        if(firstHide || isCollapsed()) return;
+
         drawRect.left = baseX + pos.x;
         drawRect.top = baseY + pos.y;
         drawRect.right = baseX + pos.x + image.getWidth()*scale;

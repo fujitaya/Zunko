@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import jp.fujitaya.zunko.GameView;
@@ -16,6 +17,7 @@ import jp.fujitaya.zunko.R;
 import jp.fujitaya.zunko.field.zunko.ChibiZunko;
 import jp.fujitaya.zunko.util.ImageLoader;
 import jp.fujitaya.zunko.util.PointerInfo;
+import jp.fujitaya.zunko.util.Sound;
 
 public abstract class BasicField extends Field {
     protected PointF pos;
@@ -27,25 +29,43 @@ public abstract class BasicField extends Field {
     protected int initialZunkoPower;
     protected int initialZunkoNum;
 
+    protected boolean active;
+    protected HashMap<String, Sound.SoundCard> seMap;
+
     ArrayList<ChibiZunko> listZunko;
     ArrayList<Building> listBuilding;
     ArrayList<Creator> listCreator;
 
     ImageLoader loader;
+    Sound sound;
+
+    ArrayList<Sound.SoundCard> cards;
 
     BasicField(FieldData fd){
         super(fd.name);
+        active = false;
 
         pos = new PointF();
         listZunko = new ArrayList<ChibiZunko>();
         listBuilding = new ArrayList<Building>();
         listCreator = new ArrayList<Creator>();
 
+        sound = Sound.getInstance();
+        cards = new ArrayList<Sound.SoundCard>();
+        for(int i=0; i < 10; ++i) cards.add(sound.loadSE(R.raw.se_spawn));
+
         loader = ImageLoader.getInstance();
         fieldImageId = fd.fieldImageId;
         bg = loader.load(fieldImageId);
 
         init(fd);
+    }
+
+    public void activate(boolean flag){
+        active = flag;
+    }
+    public boolean isActive(){
+        return active;
     }
 
     @Override public FieldData getFieldData(){
@@ -90,7 +110,9 @@ public abstract class BasicField extends Field {
     @Override public int getNowHP(){
         int hp = 0;
         for(FieldBaseObject e: listBuilding){
-            hp += e.getHP();
+            int bhp = e.getHP();
+            if(bhp < 0) bhp = 0;
+            hp += bhp;
         }
         return hp;
     }
@@ -123,7 +145,11 @@ public abstract class BasicField extends Field {
             listCreator.add(new Creator(e));
         }
         for(FieldData.BuildingData e: fd.buildings){
-            listBuilding.add(new Building(e));
+            Building b = new Building(e);
+            listBuilding.add(b);
+            if(e.firstHide) {
+                listCreator.add(new Creator(makeCreatorFromBuilding(b)));
+            }
         }
 
         if(listCreator.size() > 0) {
@@ -134,6 +160,17 @@ public abstract class BasicField extends Field {
         maxZunkoExistNum = fd.maxZunkoExistNum;
         initialZunkoPower = fd.initialZunkoPower;
         initialZunkoNum = fd.initialZunkoNum;
+    }
+    private FieldData.CreatorData makeCreatorFromBuilding(Building b){
+        FieldData.CreatorData cd = (new FieldData()).createCreatorData();
+        cd.imageId = R.drawable.cz_zunda;
+        cd.scale = b.getScale();
+        cd.fieldX = b.getX();
+        cd.fieldY = b.getY();
+        cd.spawnTime = 60*5;
+        cd.spawnRange = 300;
+
+        return cd;
     }
 
     public void dispose(){
@@ -159,8 +196,8 @@ public abstract class BasicField extends Field {
         // collision check
         for(ChibiZunko zunko: listZunko){
             for(Building build: listBuilding){
-                if(zunko.isOverwrapped(build.getX(), build.getY(),
-                        build.getCollision())){
+                if(!build.isCollapsed() &&
+                        zunko.isOverwrapped(build.getX(), build.getY(), build.getCollision())){
                     int idx = selectedQueue.indexOf(zunko);
                     if(idx >= 0) selectedQueue.remove(idx);
                     idx = selectWaitingQueue.indexOf(idx);
@@ -174,28 +211,21 @@ public abstract class BasicField extends Field {
         Iterator<Building> iterb = listBuilding.iterator();
         while(iterb.hasNext()){
             Building b = iterb.next();
-            if(b.isCollapsed()){
+            if(!b.isFirstHided() && b.isCollapsed()){
                 for(ChibiZunko zunko: listZunko){
                     if(b == zunko.getTarget()) zunko.tryEndAttackState();
                 }
-
-                FieldData.CreatorData cd = (new FieldData()).createCreatorData();
-                cd.imageId = R.drawable.cz_zunda;
-                cd.scale = b.getScale();
-                cd.fieldX = b.getX();
-                cd.fieldY = b.getY();
-                cd.spawnTime = 60*5;
-                cd.spawnRange = 300;
-
-                listCreator.add(new Creator(cd));
-                iterb.remove();
+                b.activateFirstHide();
+                listCreator.add(new Creator(makeCreatorFromBuilding(b)));
             }
         }
 
         // check to create ChibiZunko
         for(Creator e: listCreator){
-            if(e.isCreatable() && getTotalZunkoNum()<maxZunkoExistNum)
+            if(e.isCreatable() && getTotalZunkoNum()<maxZunkoExistNum) {
                 addZunko(e, 1);
+//                sound.playSE(sound.loadSE(R.raw.se_spawn));
+            }
         }
 
         // field objects update

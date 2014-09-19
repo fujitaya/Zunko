@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 
 public class Sound {
-    public static final int MAX_SE_SIMULTANEOUS_PLAY_NUM = 5;
+    public static final int MAX_SE_SIMULTANEOUS_PLAY_NUM = 20;
 
     public class SoundCard{
         public static final int TAG_SE = 1;

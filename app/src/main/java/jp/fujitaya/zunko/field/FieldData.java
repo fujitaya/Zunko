@@ -25,6 +25,7 @@ public class FieldData {
     public class BuildingData extends ObjectData{
         public int hp;
         public int maxHP;
+        public boolean firstHide;
     }
     public class CreatorData extends ObjectData{
         public int spawnTime;
