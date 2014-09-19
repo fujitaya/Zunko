@@ -29,8 +29,8 @@ public class SceneMenu extends GameScene implements OnGestureListener{
     public SceneMenu(GameView parent){
         super(parent);
         init();
-//        Sound.SoundCard sc = Sound.getInstance().loadBGM(R.raw.title_theme_02);
-//        Sound.getInstance().playBGM(sc);
+        Sound.SoundCard sc = Sound.getInstance().loadBGM(R.raw.title_theme_02);
+        Sound.getInstance().playBGM(sc);
     }
 
     public void init() {

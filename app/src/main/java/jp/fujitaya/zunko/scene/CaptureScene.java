@@ -69,6 +69,7 @@ public class CaptureScene extends GameScene {
         ld.load(R.drawable.ef_hikari3);
 
         field = fm.getField(fieldName);
+        field.activate(true);
     }
 
     @Override
